@@ -185,3 +185,28 @@
     });
   });
 })();
+
+/* ---------- Карта офиса ----------
+   Виджет Яндекса подключается только по клику: иначе он тянет свой скрипт
+   и тайлы у каждого посетителя, включая тех, кто до контактов не дошёл. */
+(function () {
+  var box = document.getElementById('map');
+  if (!box) return;
+  var btn = box.querySelector('.map__load');
+  if (!btn) return;
+
+  btn.addEventListener('click', function () {
+    var ll = box.getAttribute('data-ll');
+    var frame = document.createElement('iframe');
+    frame.src = 'https://yandex.uz/map-widget/v1/?ll=' + encodeURIComponent(ll) +
+                '&z=17&pt=' + encodeURIComponent(ll) + ',pm2rdm';
+    frame.title = document.documentElement.lang === 'uz'
+      ? 'Toshkentdagi ofis xaritada' : 'Офис в Ташкенте на карте';
+    frame.loading = 'lazy';
+    frame.setAttribute('allowfullscreen', '');
+    frame.referrerPolicy = 'no-referrer-when-downgrade';
+    box.innerHTML = '';
+    box.style.background = 'none';
+    box.appendChild(frame);
+  });
+})();

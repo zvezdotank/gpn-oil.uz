@@ -54,7 +54,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=10">
+<link rel="stylesheet" href="/site.css?v=11">
 {jsonld}</head>
 <body>
 
@@ -241,7 +241,7 @@ def page(path, fname, title, desc, body, active=None, ogimage="/img/og.jpg",
             + body + MGR
             + (CTA.format(tg=TG) if cta else "")
             + TAIL.format(insta=INSTA, saleshub=SALESHUB, tg=TG)
-            + '\n<script src="/site.js?v=10" defer></script>\n</body>\n</html>\n')
+            + '\n<script src="/site.js?v=11" defer></script>\n</body>\n</html>\n')
     with io.open(os.path.join(OUT, fname), "w", encoding="utf-8") as f:
         f.write(html)
     return len(html)
@@ -1121,7 +1121,7 @@ page("/blog", "blog.html", "Блог — подбор масел и смазок
 
 # --------------------------------------------------------------- контакты
 LOCAL_LD = """<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","name":"Smart Energy Eco Trade — Газпромнефть Узбекистан","url":"https://gpn-oil.uz/contacts","image":"https://gpn-oil.uz/img/hero.webp","telephone":"+998908085972","email":"t.yarulin@s-energy.uz","address":{"@type":"PostalAddress","addressLocality":"Ташкент","addressCountry":"UZ"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"18:00"}],"priceRange":"$$","sameAs":["https://instagram.com/gpn_oil.uz"]}
+{"@context":"https://schema.org","@type":"LocalBusiness","name":"Smart Energy Eco Trade — Газпромнефть Узбекистан","url":"https://gpn-oil.uz/contacts","image":"https://gpn-oil.uz/img/hero.webp","telephone":"+998908085972","email":"t.yarulin@s-energy.uz","address":{"@type":"PostalAddress","addressLocality":"Ташкент","addressRegion":"Мирзо-Улугбекский район","postalCode":"100000","addressCountry":"UZ"},"geo":{"@type":"GeoCoordinates","latitude":41.3230571,"longitude":69.312125},"hasMap":"https://yandex.uz/maps/?ll=69.312125%2C41.3230571&z=17","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"18:00"}],"priceRange":"$$","sameAs":["https://instagram.com/gpn_oil.uz"]}
 </script>
 """
 
@@ -1142,13 +1142,22 @@ contacts = """
       <dl class="meta">
         <div class="meta__item"><dt>Почта</dt><dd><a href="mailto:t.yarulin@s-energy.uz">t.yarulin@s-energy.uz</a></dd></div>
         <div class="meta__item"><dt>Время работы</dt><dd>Пн–Пт, 09:00–18:00</dd></div>
-        <div class="meta__item"><dt>Адрес</dt><dd>Ташкент, Узбекистан</dd></div>
+        <div class="meta__item"><dt>Адрес</dt><dd>Ташкент, Мирзо-Улугбекский район</dd></div>
         <div class="meta__item"><dt>Компания</dt><dd>ООО «Smart Energy Eco Trade»</dd></div>
         <div class="meta__item"><dt>Instagram</dt><dd><a href="{insta}" rel="noopener">@gpn_oil.uz</a></dd></div>
       </dl>
     </div>
 
     <div class="contacts__col">
+      <div class="map" id="map" data-ll="69.312125,41.3230571">
+        <button class="map__load" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+          <b>Показать карту</b>
+          <span>Ташкент, Мирзо-Улугбекский район</span>
+        </button>
+      </div>
+      <p class="map__link"><a href="https://yandex.uz/maps/?ll=69.312125%2C41.3230571&amp;z=17&amp;pt=69.312125,41.3230571" rel="noopener">Открыть в Яндекс.Картах →</a></p>
+
       <div class="asidebox" style="padding:30px">
         <h2 style="font-size:19px">Как с нами работать</h2>
         <div style="gap:14px;color:var(--muted);font-size:15px;line-height:1.6">
