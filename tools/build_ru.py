@@ -201,6 +201,36 @@ def crumbs_ld(items):
 
 
 
+def products_ld(rows, path, img, brand="Gazpromneft"):
+    """Позиции категории списком товаров.
+
+    Цен на сайте нет — они по запросу, — поэтому Offer с ценой не выдумываем.
+    Размечаем то, что правда: название позиции, марку, характеристику, фасовку,
+    наличие и продавца. Поиск из этого понимает, что страница коммерческая,
+    а не статья, и связывает позиции с брендом.
+    """
+    if not rows:
+        return ""
+    items = []
+    for i, r in enumerate(rows, 1):
+        name = r[0].replace('"', "'")
+        spec = " · ".join(str(x).replace('"', "'") for x in r[1:] if x)
+        b = "G-Energy" if name.startswith("G-Energy") else brand
+        items.append(
+            '{"@type":"ListItem","position":%d,"item":{"@type":"Product",'
+            '"name":"%s","brand":{"@type":"Brand","name":"%s"},'
+            '"description":"%s","image":"%s/img/%s.webp","url":"%s%s",'
+            '"offers":{"@type":"Offer","availability":"https://schema.org/InStock",'
+            '"priceCurrency":"UZS","areaServed":"UZ","url":"%s%s",'
+            '"seller":{"@type":"Organization","name":"Smart Energy Eco Trade"}}}}'
+            % (i, name, b, spec, SITE, img, SITE, path, SITE, path))
+    return ('<script type="application/ld+json">\n'
+            '{"@context":"https://schema.org","@type":"ItemList",'
+            '"itemListOrder":"https://schema.org/ItemListUnordered",'
+            '"numberOfItems":%d,"itemListElement":[%s]}\n</script>\n'
+            % (len(items), ",".join(items)))
+
+
 def faq_html(items):
     """Вопрос-ответ на <details>: работает без скрипта, раскрыт для поисковика."""
     out = ['        <div class="faq">']
@@ -495,7 +525,8 @@ def category(path, fname, crumb, h1, title, desc, lead, img, img_size, alt,
     return page(path, fname, title, desc, body, active=active, formhref="#zayavka",
                 ogimage="/img/og.jpg",
                 preload=("/img/%s.webp" % img) if img else None,
-                jsonld=crumbs_ld(crumb_items) + (faq_ld(faq) if faq else ""))
+                jsonld=crumbs_ld(crumb_items) + (faq_ld(faq) if faq else "")
+                       + products_ld(rows, path, img))
 
 
 INDUSTRIAL_ROWS = [
@@ -740,7 +771,7 @@ home = """
         <a class="btn btn--outline" href="/podbor">Как проходит подбор</a>
       </div>
     </div>
-    <picture><source type="image/avif" srcset="/img/podbor-sm.avif 390w, /img/podbor.avif 780w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="/img/podbor-sm.webp 390w, /img/podbor.webp 780w" sizes="(max-width:900px) 100vw, 50vw"><img class="split__media" src="/img/podbor.webp" alt="Оператор на линии розлива масла Газпромнефть" width="{podborw}" height="{podborh}" loading="lazy" decoding="async"></picture>
+    <picture><source type="image/avif" srcset="/img/podbor-sm.avif 450w, /img/podbor.avif 900w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="/img/podbor-sm.webp 450w, /img/podbor.webp 900w" sizes="(max-width:900px) 100vw, 50vw"><img class="split__media" src="/img/podbor.webp" alt="Лаборатория Газпромнефть: испытание масла на четырёхшариковой машине трения" width="{podborw}" height="{podborh}" loading="lazy" decoding="async"></picture>
   </section>
 
   <section class="section section--tight" id="industries">
@@ -879,7 +910,7 @@ products = """
 
   <div class="wrap page">
     <div class="pagehero">
-      <picture><source type="image/avif" srcset="/img/products-sm.avif 700w, /img/products-md.avif 960w, /img/products.avif 1400w" sizes="100vw"><source type="image/webp" srcset="/img/products-sm.webp 700w, /img/products-md.webp 960w, /img/products.webp 1400w" sizes="100vw"><img src="/img/products.webp" alt="Склад смазочных материалов Газпромнефть" width="{pw}" height="{ph}" fetchpriority="high" decoding="async"></picture>
+      <picture><source type="image/avif" srcset="/img/products-sm.avif 700w, /img/products-md.avif 960w, /img/products.avif 1400w" sizes="100vw"><source type="image/webp" srcset="/img/products-sm.webp 700w, /img/products-md.webp 960w, /img/products.webp 1400w" sizes="100vw"><img src="/img/products.webp" alt="Резервуарный парк завода смазочных материалов Газпромнефть" width="{pw}" height="{ph}" fetchpriority="high" decoding="async"></picture>
     </div>
     <div class="page__head">
       <h1>Продукция Газпромнефть в Узбекистане</h1>
