@@ -68,7 +68,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=12">
+<link rel="stylesheet" href="/site.css?v=13">
 {jsonld}</head>
 <body>
 
@@ -239,7 +239,7 @@ def page(path, fname, title, desc, body, active=None, ogimage="/img/og.jpg",
             + body + MGR
             + (CTA.format(tg=TG) if cta else "")
             + TAIL.format(insta=INSTA, saleshub=SALESHUB, tg=TG)
-            + '\n<script src="/site.js?v=12" defer></script>\n</body>\n</html>\n')
+            + '\n<script src="/site.js?v=13" defer></script>\n</body>\n</html>\n')
     os.makedirs(os.path.dirname(os.path.join(UZDIR, fname)) or UZDIR, exist_ok=True)
     io.open(os.path.join(UZDIR, fname), "w", encoding="utf-8").write(html)
 
@@ -776,6 +776,29 @@ home = """
         </div>
       </div>
 {form}
+    </div>
+  </section>
+
+  <section class="section section--tight" id="where">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <h2>Bizni qayerdan topasiz</h2>
+          <p class="section__sub">Ofis va ombor Toshkentda — ariza kelgandan keyin bir kun ichida joʻnatamiz</p>
+        </div>
+        <a class="section__link" href="/uz/contacts">Barcha aloqalar →</a>
+      </div>
+      <div class="findus">
+        <div class="findus__info">
+          <div class="findus__row"><b>Manzil</b><span>Toshkent, Mirzo Ulugʻbek tumani</span></div>
+          <div class="findus__row"><b>Ish vaqti</b><span>Du–Ju, 09:00–18:00</span></div>
+          <div class="findus__row"><b>Korporativ menejer</b><a href="tel:+998908085972">+998 90 808 59 72</a><span>Timur Yarullin</span></div>
+          <div class="findus__row"><b>Savdo boʻlimi</b><a href="tel:+998935048490">+998 93 504 84 90</a></div>
+          <div class="findus__row"><b>Pochta</b><a href="mailto:t.yarulin@s-energy.uz">t.yarulin@s-energy.uz</a></div>
+          <a class="btn btn--outline" href="https://yandex.uz/maps/?ll=69.312125%2C41.3230571&amp;z=17&amp;pt=69.312125,41.3230571" rel="noopener">Marshrut tuzish</a>
+        </div>
+        <div class="map"><iframe src="https://yandex.uz/map-widget/v1/?ll=69.312125%2C41.3230571&amp;z=16&amp;pt=69.312125,41.3230571,pm2rdm" title="Toshkentdagi ofis va ombor xaritada" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      </div>
     </div>
   </section>
 

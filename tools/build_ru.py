@@ -54,7 +54,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=12">
+<link rel="stylesheet" href="/site.css?v=13">
 {jsonld}</head>
 <body>
 
@@ -241,7 +241,7 @@ def page(path, fname, title, desc, body, active=None, ogimage="/img/og.jpg",
             + body + MGR
             + (CTA.format(tg=TG) if cta else "")
             + TAIL.format(insta=INSTA, saleshub=SALESHUB, tg=TG)
-            + '\n<script src="/site.js?v=12" defer></script>\n</body>\n</html>\n')
+            + '\n<script src="/site.js?v=13" defer></script>\n</body>\n</html>\n')
     with io.open(os.path.join(OUT, fname), "w", encoding="utf-8") as f:
         f.write(html)
     return len(html)
@@ -814,6 +814,29 @@ home = """
         </div>
       </div>
 {form}
+    </div>
+  </section>
+
+  <section class="section section--tight" id="where">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <h2>Где нас найти</h2>
+          <p class="section__sub">Офис и склад в Ташкенте — отгрузка в течение суток после заявки</p>
+        </div>
+        <a class="section__link" href="/contacts">Все контакты →</a>
+      </div>
+      <div class="findus">
+        <div class="findus__info">
+          <div class="findus__row"><b>Адрес</b><span>Ташкент, Мирзо-Улугбекский район</span></div>
+          <div class="findus__row"><b>Время работы</b><span>Пн–Пт, 09:00–18:00</span></div>
+          <div class="findus__row"><b>Корпоративный менеджер</b><a href="tel:+998908085972">+998 90 808 59 72</a><span>Тимур Яруллин</span></div>
+          <div class="findus__row"><b>Отдел продаж</b><a href="tel:+998935048490">+998 93 504 84 90</a></div>
+          <div class="findus__row"><b>Почта</b><a href="mailto:t.yarulin@s-energy.uz">t.yarulin@s-energy.uz</a></div>
+          <a class="btn btn--outline" href="https://yandex.uz/maps/?ll=69.312125%2C41.3230571&amp;z=17&amp;pt=69.312125,41.3230571" rel="noopener">Построить маршрут</a>
+        </div>
+        <div class="map"><iframe src="https://yandex.uz/map-widget/v1/?ll=69.312125%2C41.3230571&amp;z=16&amp;pt=69.312125,41.3230571,pm2rdm" title="Офис и склад в Ташкенте на карте" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      </div>
     </div>
   </section>
 
