@@ -72,13 +72,16 @@ JOBS = [
     ("oils-row.jpeg",    "company",         1.34, 1200),   # специалисты у бочки
     ("tank-farm.jpg",    "products",        1.78, 1400),   # парк резервуаров завода
 
-    # карточки каталога
+    # Карточки каталога. Ширина 900: на макете карточка занимает не больше
+    # 440 точек, на экране с удвоенной плотностью ей нужно 880. Раньше здесь
+    # стояло 1200-1280, и браузер честно тянул лишние килобайты — на главной
+    # шесть таких карточек.
     ("industrial.jpg",   "cat-industrial",  1.9,   800),
-    ("canister.jpg",     "cat-gpn",         1.9,  1200),
-    ("g-energy-1.jpg",   "cat-g-energy",    1.9,  1024),
-    ("grease-photo.png", "cat-grease",      1.9,  1280),
-    ("reductor.jpg",     "cat-transmission",1.9,  1200),
-    ("coolant.jpg",      "cat-fluids",      1.9,  1200),
+    ("canister.jpg",     "cat-gpn",         1.9,   900),
+    ("g-energy-1.jpg",   "cat-g-energy",    1.9,   900),
+    ("grease-photo.png", "cat-grease",      1.9,   900),
+    ("reductor.jpg",     "cat-transmission",1.9,   900),
+    ("coolant.jpg",      "cat-fluids",      1.9,   900),
 
     # шапки страниц
     ("industrial.jpg",   "industrial",      2.6,   800),
