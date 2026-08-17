@@ -68,7 +68,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=6">
+<link rel="stylesheet" href="/site.css?v=7">
 {jsonld}</head>
 <body>
 
@@ -239,7 +239,7 @@ def page(path, fname, title, desc, body, active=None, ogimage="/img/og.jpg",
             + body + MGR
             + (CTA.format(tg=TG) if cta else "")
             + TAIL.format(insta=INSTA, saleshub=SALESHUB, tg=TG)
-            + '\n<script src="/site.js?v=6" defer></script>\n</body>\n</html>\n')
+            + '\n<script src="/site.js?v=7" defer></script>\n</body>\n</html>\n')
     os.makedirs(os.path.dirname(os.path.join(UZDIR, fname)) or UZDIR, exist_ok=True)
     io.open(os.path.join(UZDIR, fname), "w", encoding="utf-8").write(html)
 
