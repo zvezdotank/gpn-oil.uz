@@ -446,6 +446,13 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
 .form small{font-size:13px;color:var(--muted-2);line-height:1.5}
 .form button{width:100%;padding:17px;border:0;border-radius:var(--r);background:var(--accent);color:#fff;font:inherit;font-size:16px;font-weight:600;cursor:pointer}
 .form button:hover{background:var(--accent-dark)}
+/* Сообщение под формой: подтверждение или, если приёмник недоступен,
+   телефон и телеграм — чтобы человек не ушёл ни с чем. */
+.formnote{padding:12px 14px;border-radius:var(--r);font-size:14px;line-height:1.5}
+.formnote--fail{background:#FDF0E6;border:1px solid #F0C9A3;color:#8A4708}
+.formnote--ok{background:#E8F2E9;border:1px solid #B7D8BC;color:#28613A}
+.formnote a{color:var(--blue);font-weight:600;white-space:nowrap}
+
 /* Ловушка для ботов: поле видно только скрипту, человек его не заполняет */
 .trap{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 

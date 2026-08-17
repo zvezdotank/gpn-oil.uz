@@ -128,3 +128,60 @@
     });
   });
 })();
+
+/* ---------- Отправка форм ----------
+   Обычный POST при недоступном приёмнике показывает человеку ошибку браузера,
+   и заявка просто теряется. Отправляем сами и, если не дошло, показываем
+   телефон и телеграм прямо в форме — контакт не должен пропадать из-за того,
+   что у нас что-то не работает. */
+(function () {
+  var forms = document.querySelectorAll('.leadform, .form');
+  if (!forms.length || !window.fetch) return;
+
+  var TEL = '+998 90 808 59 72';
+  var TEL_HREF = 'tel:+998908085972';
+  var TG = 'https://t.me/GPN_OIL_UZ';
+  var UZ = document.documentElement.lang === 'uz';
+
+  var TEXT = UZ ? {
+    sending: 'Yuborilmoqda…',
+    fail: 'Ariza yuborilmadi — bizning tomonda nosozlik. Iltimos, qoʻngʻiroq qiling yoki Telegramga yozing, darhol javob beramiz.',
+    done: 'Rahmat, arizani qabul qildik. Ish vaqtida javob beramiz.'
+  } : {
+    sending: 'Отправляем…',
+    fail: 'Заявка не ушла — сбой на нашей стороне. Позвоните или напишите в Telegram, ответим сразу.',
+    done: 'Спасибо, заявку приняли. Ответим в рабочее время.'
+  };
+
+  function notice(form, html, ok) {
+    var box = form.querySelector('.formnote');
+    if (!box) {
+      box = document.createElement('p');
+      box.className = 'formnote';
+      form.appendChild(box);
+    }
+    box.className = 'formnote' + (ok ? ' formnote--ok' : ' formnote--fail');
+    box.innerHTML = html;
+  }
+
+  Array.prototype.forEach.call(forms, function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('button[type=submit], button');
+      var label = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = TEXT.sending; }
+
+      fetch(form.action, { method: 'POST', body: new FormData(form), mode: 'cors' })
+        .then(function (r) {
+          if (!r.ok && r.type !== 'opaque') throw new Error('bad status');
+          // приёмник сам уводит на страницу «спасибо»
+          window.location.href = (UZ ? '/uz/spasibo' : '/spasibo');
+        })
+        .catch(function () {
+          notice(form, TEXT.fail + ' <a href="' + TEL_HREF + '">' + TEL +
+                 '</a> · <a href="' + TG + '" rel="noopener">Telegram</a>', false);
+          if (btn) { btn.disabled = false; btn.textContent = label; }
+        });
+    });
+  });
+})();
