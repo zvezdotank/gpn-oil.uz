@@ -54,7 +54,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=13">
+<link rel="stylesheet" href="/site.css?v=14">
 {jsonld}</head>
 <body>
 
@@ -241,7 +241,7 @@ def page(path, fname, title, desc, body, active=None, ogimage="/img/og.jpg",
             + body + MGR
             + (CTA.format(tg=TG) if cta else "")
             + TAIL.format(insta=INSTA, saleshub=SALESHUB, tg=TG)
-            + '\n<script src="/site.js?v=13" defer></script>\n</body>\n</html>\n')
+            + '\n<script src="/site.js?v=14" defer></script>\n</body>\n</html>\n')
     with io.open(os.path.join(OUT, fname), "w", encoding="utf-8") as f:
         f.write(html)
     return len(html)
@@ -1175,7 +1175,6 @@ contacts = """
       <div class="map">
         <iframe src="https://yandex.uz/map-widget/v1/?ll=69.312125%2C41.3230571&amp;z=17&amp;pt=69.312125,41.3230571,pm2rdm" title="Офис в Ташкенте на карте" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
-      <p class="map__link"><a href="https://yandex.uz/maps/?ll=69.312125%2C41.3230571&amp;z=17&amp;pt=69.312125,41.3230571" rel="noopener">Открыть в Яндекс.Картах →</a></p>
 
       <div class="asidebox" style="padding:30px">
         <h2 style="font-size:19px">Как с нами работать</h2>

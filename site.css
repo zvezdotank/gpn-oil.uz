@@ -468,8 +468,6 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
 .findus .map{min-height:380px}
 .findus .map iframe{min-height:380px}
 
-.map__link{margin-top:10px;font-size:14px}
-.map__link a{color:var(--blue);font-weight:600}
 
 /* Форма заявки */
 .form{display:flex;flex-direction:column;gap:12px;padding:26px;background:#fff;border:1px solid var(--rule);border-radius:var(--r)}

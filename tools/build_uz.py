@@ -68,7 +68,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=13">
+<link rel="stylesheet" href="/site.css?v=14">
 {jsonld}</head>
 <body>
 
@@ -239,7 +239,7 @@ def page(path, fname, title, desc, body, active=None, ogimage="/img/og.jpg",
             + body + MGR
             + (CTA.format(tg=TG) if cta else "")
             + TAIL.format(insta=INSTA, saleshub=SALESHUB, tg=TG)
-            + '\n<script src="/site.js?v=13" defer></script>\n</body>\n</html>\n')
+            + '\n<script src="/site.js?v=14" defer></script>\n</body>\n</html>\n')
     os.makedirs(os.path.dirname(os.path.join(UZDIR, fname)) or UZDIR, exist_ok=True)
     io.open(os.path.join(UZDIR, fname), "w", encoding="utf-8").write(html)
 
@@ -1319,7 +1319,6 @@ contacts_body = """
       <div class="map">
         <iframe src="https://yandex.uz/map-widget/v1/?ll=69.312125%2C41.3230571&amp;z=17&amp;pt=69.312125,41.3230571,pm2rdm" title="Toshkentdagi ofis xaritada" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
-      <p class="map__link"><a href="https://yandex.uz/maps/?ll=69.312125%2C41.3230571&amp;z=17&amp;pt=69.312125,41.3230571" rel="noopener">Yandex Xaritalarda ochish →</a></p>
 
       <div class="asidebox" style="padding:26px">
         <h2 style="font-size:19px">Biz bilan qanday ishlash mumkin</h2>
