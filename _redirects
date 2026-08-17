@@ -1,0 +1,20 @@
+# Переезд со старого сайта на Tilda. Работает на Cloudflare Pages и Netlify.
+# На GitHub Pages файл игнорируется — там редиректы делаются на уровне DNS
+# (Cloudflare Bulk Redirects), см. README.
+#
+# Адреса, которые были в индексе и остались прежними, здесь не нужны:
+# /company /products /gpn /g-energy /g-energy-retail /transmission
+# /industrial /hydralic /reductor /compressor /grease /price /contacts
+# отдаются теми же путями, поэтому позиции не рвутся.
+
+# Дубль страницы /gpn — тот же title, тот же текст
+/page57584865.html   /gpn    301
+
+# Служебная страница Tilda
+/blocked             /       301
+
+# Лента новостей Tilda: восемь перепечаток пресс-релизов «Газпром нефти»
+/tpost/*             /blog   301
+
+# Хвост от статики
+/index.html          /       301
