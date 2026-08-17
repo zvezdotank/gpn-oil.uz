@@ -54,7 +54,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=11">
+<link rel="stylesheet" href="/site.css?v=12">
 {jsonld}</head>
 <body>
 
@@ -241,7 +241,7 @@ def page(path, fname, title, desc, body, active=None, ogimage="/img/og.jpg",
             + body + MGR
             + (CTA.format(tg=TG) if cta else "")
             + TAIL.format(insta=INSTA, saleshub=SALESHUB, tg=TG)
-            + '\n<script src="/site.js?v=11" defer></script>\n</body>\n</html>\n')
+            + '\n<script src="/site.js?v=12" defer></script>\n</body>\n</html>\n')
     with io.open(os.path.join(OUT, fname), "w", encoding="utf-8") as f:
         f.write(html)
     return len(html)
@@ -1149,12 +1149,8 @@ contacts = """
     </div>
 
     <div class="contacts__col">
-      <div class="map" id="map" data-ll="69.312125,41.3230571">
-        <button class="map__load" type="button">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
-          <b>Показать карту</b>
-          <span>Ташкент, Мирзо-Улугбекский район</span>
-        </button>
+      <div class="map">
+        <iframe src="https://yandex.uz/map-widget/v1/?ll=69.312125%2C41.3230571&amp;z=17&amp;pt=69.312125,41.3230571,pm2rdm" title="Офис в Ташкенте на карте" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
       <p class="map__link"><a href="https://yandex.uz/maps/?ll=69.312125%2C41.3230571&amp;z=17&amp;pt=69.312125,41.3230571" rel="noopener">Открыть в Яндекс.Картах →</a></p>
 
