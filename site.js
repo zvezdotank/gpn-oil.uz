@@ -1,5 +1,99 @@
-/* Весь скрипт сайта: мобильное меню, окно менеджера, поиск по документам.
-   Один файл с defer — на отрисовку первого экрана не влияет. */
+/* Весь скрипт сайта: мобильное меню, окно менеджера, поиск по документам,
+   аналитика. Один файл с defer — на отрисовку первого экрана не влияет. */
+
+/* ---------- Аналитика: загрузка счётчика ----------
+   Библиотека gtag.js весит больше, чем весь остальной сайт вместе с
+   картинками, и в критическом пути ей делать нечего. Очередь dataLayer
+   заведена инлайном в <head>, поэтому всё, что случилось до загрузки
+   библиотеки, не теряется — она разберёт очередь сама, включая просмотр
+   страницы с правильным адресом и источником перехода.
+
+   Грузим по первому из двух событий: человек что-то сделал или страница
+   догрузилась. Сайт грузится быстрее секунды, так что счётчик почти всегда
+   успевает; при этом на скорость отрисовки он не влияет вообще. */
+(function () {
+  var ID = 'G-4VH1EV5FQB';
+  var done = false;
+
+  function load() {
+    if (done) return;
+    done = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + ID;
+    document.head.appendChild(s);
+  }
+
+  ['pointerdown', 'keydown', 'touchstart', 'scroll'].forEach(function (t) {
+    window.addEventListener(t, load, { once: true, passive: true });
+  });
+  if (document.readyState === 'complete') setTimeout(load, 0);
+  else window.addEventListener('load', function () { setTimeout(load, 0); });
+})();
+
+/* ---------- Аналитика: целевые действия ----------
+   Считаем то, ради чего сайт существует: звонок, телеграм, отправленную
+   заявку. Ключевые события в GA4 — phone_click, telegram_click,
+   generate_lead. К каждому идёт параметр place: без него видно «было
+   40 звонков», но не видно, откуда именно звонят — из шапки, из окна
+   менеджера или из подвала, — а это ровно то, что нужно, чтобы решать,
+   что усиливать. */
+(function () {
+  window.gpnTrack = function (name, params) {
+    try { window.gtag('event', name, params || {}); } catch (e) {}
+  };
+
+  function place(el) {
+    if (el.closest('.mgr')) return 'Окно менеджера';
+    if (el.closest('.formnote')) return 'Сбой формы';
+    if (el.closest('.topbar')) return 'Верхняя полоса';
+    if (el.closest('.masthead')) return 'Шапка';
+    if (el.closest('.hero')) return 'Первый экран';
+    if (el.closest('.cta')) return 'Полоса «нужен расчёт»';
+    if (el.closest('.footer')) return 'Подвал';
+    if (el.closest('.findus')) return 'Блок контактов';
+    return 'Тело страницы';
+  }
+  window.gpnPlace = place;
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    var p = { place: place(a) };
+
+    if (href.indexOf('tel:') === 0) {
+      p.number = href.slice(4);
+      window.gpnTrack('phone_click', p);
+    } else if (href.indexOf('mailto:') === 0) {
+      window.gpnTrack('email_click', p);
+    } else if (href.indexOf('t.me/') !== -1) {
+      window.gpnTrack('telegram_click', p);
+    } else if (href.indexOf('instagram.com') !== -1) {
+      window.gpnTrack('instagram_click', p);
+    } else if (href.indexOf('yandex.') !== -1) {
+      window.gpnTrack('map_click', p);
+    } else if (a.classList.contains('lang__off')) {
+      // на какой язык ушли и с какой страницы: если узбекскую версию
+      // включают часто — её стоит развивать, если почти никогда — нет
+      window.gpnTrack('lang_switch', {
+        lang_to: (a.getAttribute('lang') || '').toUpperCase(),
+        from_page: location.pathname
+      });
+    }
+  }, true);
+
+  // Начатая, но брошенная форма — отдельный сигнал: если form_start сильно
+  // больше generate_lead, дело не в трафике, а в самой форме.
+  var started = [];
+  document.addEventListener('focusin', function (e) {
+    var form = e.target.closest && e.target.closest('.leadform, .form');
+    if (!form || started.indexOf(form) !== -1) return;
+    started.push(form);
+    var src = form.querySelector('[name="_form"]');
+    window.gpnTrack('form_start', { form_name: src ? src.value : 'Форма' });
+  });
+})();
 
 /* ---------- Мобильное меню ----------
    Кнопка рисуется только здесь: без скрипта раскрыть список нечем,
@@ -50,6 +144,7 @@
     }
     var open = box.classList.toggle('is-open');
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open && window.gpnTrack) window.gpnTrack('manager_open', {});
   });
 
   close.addEventListener('click', function () {
@@ -171,13 +266,36 @@
       var label = btn ? btn.textContent : '';
       if (btn) { btn.disabled = true; btn.textContent = TEXT.sending; }
 
+      var src = form.querySelector('[name="_form"]');
+      var need = form.querySelector('[name="need"]');
+      var about = {
+        form_name: src ? src.value : 'Форма',
+        product: need ? need.value : ''
+      };
+
       fetch(form.action, { method: 'POST', body: new FormData(form), mode: 'cors' })
         .then(function (r) {
           if (!r.ok && r.type !== 'opaque') throw new Error('bad status');
-          // приёмник сам уводит на страницу «спасибо»
-          window.location.href = (UZ ? '/uz/spasibo' : '/spasibo');
+          // приёмник сам уводит на страницу «спасибо». Уходим не сразу:
+          // сначала даём счётчику отправить заявку, иначе переход обрывает
+          // запрос и половина конверсий не доезжает. Ждём максимум 900 мс —
+          // человека нельзя держать из-за аналитики.
+          var gone = false;
+          var go = function () {
+            if (gone) return;
+            gone = true;
+            window.location.href = (UZ ? '/uz/spasibo' : '/spasibo');
+          };
+          if (window.gpnTrack) {
+            about.event_callback = go;
+            window.gpnTrack('generate_lead', about);
+            setTimeout(go, 900);
+          } else {
+            go();
+          }
         })
         .catch(function () {
+          if (window.gpnTrack) window.gpnTrack('form_error', about);
           notice(form, TEXT.fail + ' <a href="' + TEL_HREF + '">' + TEL +
                  '</a> · <a href="' + TG + '" rel="noopener">Telegram</a>', false);
           if (btn) { btn.disabled = false; btn.textContent = label; }
