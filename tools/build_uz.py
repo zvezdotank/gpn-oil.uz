@@ -196,7 +196,7 @@ TAIL = """
 """
 
 ORG_LD = """<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"Smart Energy Eco Trade","alternateName":"Gazpromneft Oʻzbekiston","url":"https://gpn-oil.uz/uz/","logo":"https://gpn-oil.uz/img/logo-mark.svg","description":"«Gazpromneft — moylash materiallari»ning Oʻzbekiston Respublikasidagi rasmiy distribyutori","areaServed":"UZ","address":{"@type":"PostalAddress","addressLocality":"Toshkent","addressCountry":"UZ"},"contactPoint":[{"@type":"ContactPoint","telephone":"+998908085972","contactType":"sales","name":"Timur Yarullin, korporativ menejer","email":"t.yarulin@s-energy.uz","availableLanguage":["uz","ru"]}],"sameAs":["https://instagram.com/gpn_oil.uz","https://t.me/GPN_OIL_UZ"]}
+{"@context":"https://schema.org","@type":"Organization","name":"Smart Energy Eco Trade","legalName":"«Smart Energy Eco Trade» MChJ","alternateName":["Gazpromneft Oʻzbekiston","Gazpromneft Uzbekistan","GPN Uzbekistan","Газпромнефть Узбекистан","Смарт Энерджи Эко Трейд"],"foundingDate":"2023-04-27","foundingLocation":{"@type":"Place","name":"Toshkent, Oʻzbekiston"},"url":"https://gpn-oil.uz/uz/","logo":"https://gpn-oil.uz/img/logo-mark.svg","description":"«Gazpromneft — moylash materiallari»ning Oʻzbekiston Respublikasidagi rasmiy distribyutori","areaServed":"UZ","address":{"@type":"PostalAddress","addressLocality":"Toshkent","addressCountry":"UZ"},"contactPoint":[{"@type":"ContactPoint","telephone":"+998908085972","contactType":"sales","name":"Timur Yarullin, korporativ menejer","email":"t.yarulin@s-energy.uz","availableLanguage":["uz","ru"]}],"sameAs":["https://instagram.com/gpn_oil.uz","https://t.me/GPN_OIL_UZ"]}
 </script>
 """
 
@@ -694,7 +694,7 @@ home = """
 
   <div class="stats">
     <div class="wrap stats__in">
-      <div class="stats__item"><div class="stats__num">9 yil</div><div class="stats__label">Oʻzbekistonga yetkazib beramiz</div></div>
+      <div class="stats__item"><div class="stats__num">3 yil</div><div class="stats__label">Oʻzbekistonga yetkazib beramiz</div></div>
       <div class="stats__item"><div class="stats__num">600+</div><div class="stats__label">omborda pozitsiya</div></div>
       <div class="stats__item"><div class="stats__num">24 soat</div><div class="stats__label">arizadan joʻnatishgacha</div></div>
       <div class="stats__item"><div class="stats__num">NKMK, UzAuto</div><div class="stats__label">buyurtmachilarimiz orasida</div></div>
@@ -1220,7 +1220,7 @@ company_body = """
 
   <div class="stats">
     <div class="wrap stats__in">
-      <div class="stats__item"><div class="stats__num">2017</div><div class="stats__label">yetkazib berish boshlangan yil</div></div>
+      <div class="stats__item"><div class="stats__num">2023</div><div class="stats__label">yetkazib berish boshlangan yil</div></div>
       <div class="stats__item"><div class="stats__num">600+</div><div class="stats__label">assortiment pozitsiyasi</div></div>
       <div class="stats__item"><div class="stats__num">12 hudud</div><div class="stats__label">yetkazib berish geografiyasi</div></div>
       <div class="stats__item"><div class="stats__num">100%</div><div class="stats__label">rasmiy mahsulot</div></div>
@@ -1272,7 +1272,7 @@ company_body = """
 """
 
 page("/uz/company", "company.html", "Kompaniya haqida — Smart Energy Eco Trade",
-     "«Smart Energy Eco Trade» MChJ — 2017 yildan Gazpromneft moylash materiallarining Oʻzbekistondagi rasmiy distribyutori. 12 hududga yetkazib beramiz.",
+     "«Smart Energy Eco Trade» MChJ — 2023 yildan Gazpromneft moylash materiallarining Oʻzbekistondagi rasmiy distribyutori. 12 hududga yetkazib beramiz.",
      company_body.format(companyform=leadform("«Kompaniya» sahifasidan ariza (uz)", "Ishni boshlash",
                                               "Nima kerakligini yozing — tanlov va narx bilan qaytamiz.",
                                               "Ariza yuborish", cls=" leadform--aside", anchor="zayavka")),

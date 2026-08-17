@@ -186,7 +186,7 @@ TAIL = """
 """
 
 ORG_LD = """<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"Smart Energy Eco Trade","alternateName":"Газпромнефть Узбекистан","url":"https://gpn-oil.uz/","logo":"https://gpn-oil.uz/img/logo-mark.svg","description":"Официальный дистрибьютор «Газпромнефть — смазочные материалы» в Республике Узбекистан","areaServed":"UZ","address":{"@type":"PostalAddress","addressLocality":"Ташкент","addressCountry":"UZ"},"contactPoint":[{"@type":"ContactPoint","telephone":"+998908085972","contactType":"sales","name":"Тимур Яруллин, корпоративный менеджер","email":"t.yarulin@s-energy.uz","availableLanguage":["ru","uz"]},{"@type":"ContactPoint","telephone":"+998935048490","contactType":"customer service","availableLanguage":["ru","uz"]}],"sameAs":["https://instagram.com/gpn_oil.uz"]}
+{"@context":"https://schema.org","@type":"Organization","name":"Smart Energy Eco Trade","legalName":"ООО «Smart Energy Eco Trade»","alternateName":["Газпромнефть Узбекистан","Смарт Энерджи Эко Трейд","Gazpromneft Uzbekistan","Gazpromneft Oʻzbekiston","GPN Uzbekistan","Газпромнефть смазочные материалы Узбекистан"],"foundingDate":"2023-04-27","foundingLocation":{"@type":"Place","name":"Ташкент, Узбекистан"},"url":"https://gpn-oil.uz/","logo":"https://gpn-oil.uz/img/logo-mark.svg","description":"Официальный дистрибьютор «Газпромнефть — смазочные материалы» в Республике Узбекистан","areaServed":"UZ","address":{"@type":"PostalAddress","addressLocality":"Ташкент","addressCountry":"UZ"},"contactPoint":[{"@type":"ContactPoint","telephone":"+998908085972","contactType":"sales","name":"Тимур Яруллин, корпоративный менеджер","email":"t.yarulin@s-energy.uz","availableLanguage":["ru","uz"]},{"@type":"ContactPoint","telephone":"+998935048490","contactType":"customer service","availableLanguage":["ru","uz"]}],"sameAs":["https://instagram.com/gpn_oil.uz"]}
 </script>
 """
 
@@ -735,7 +735,7 @@ home = """
 
   <div class="stats">
     <div class="wrap stats__in">
-      <div class="stats__item"><div class="stats__num">9 лет</div><div class="stats__label">поставок в Узбекистане</div></div>
+      <div class="stats__item"><div class="stats__num">3 года</div><div class="stats__label">поставок в Узбекистане</div></div>
       <div class="stats__item"><div class="stats__num">600+</div><div class="stats__label">позиций на складе</div></div>
       <div class="stats__item"><div class="stats__num">24 часа</div><div class="stats__label">от заявки до отгрузки</div></div>
       <div class="stats__item"><div class="stats__num">НГМК, УзАвто</div><div class="stats__label">среди наших заказчиков</div></div>
@@ -1024,7 +1024,7 @@ company = """
 
   <div class="stats">
     <div class="wrap stats__in">
-      <div class="stats__item"><div class="stats__num">2017</div><div class="stats__label">год начала поставок</div></div>
+      <div class="stats__item"><div class="stats__num">2023</div><div class="stats__label">год начала поставок</div></div>
       <div class="stats__item"><div class="stats__num">600+</div><div class="stats__label">позиций ассортимента</div></div>
       <div class="stats__item"><div class="stats__num">12 регионов</div><div class="stats__label">география поставок</div></div>
       <div class="stats__item"><div class="stats__num">100%</div><div class="stats__label">официальная продукция</div></div>
@@ -1076,7 +1076,7 @@ company = """
 """
 
 page("/company", "company.html", "О компании — Smart Energy Eco Trade, дистрибьютор Газпромнефть",
-     "ООО «Smart Energy Eco Trade» — официальный дистрибьютор «Газпромнефть — смазочные материалы» в Узбекистане с 2017 года. Поставки по 12 регионам.",
+     "ООО «Smart Energy Eco Trade» — официальный дистрибьютор «Газпромнефть — смазочные материалы» в Узбекистане с 2023 года. Поставки по 12 регионам.",
      body=company.format(companyform=leadform("Заявка со страницы «О компании»", "Начать работу",
                                         "Напишите, что требуется, — вернёмся с подбором и ценой.",
                                         "Отправить заявку", cls=" leadform--aside", anchor="zayavka")),
@@ -1194,7 +1194,7 @@ page("/blog", "blog.html", "Блог — подбор масел и смазок
 
 # --------------------------------------------------------------- контакты
 LOCAL_LD = """<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","name":"Smart Energy Eco Trade — Газпромнефть Узбекистан","url":"https://gpn-oil.uz/contacts","image":"https://gpn-oil.uz/img/hero.webp","telephone":"+998908085972","email":"t.yarulin@s-energy.uz","address":{"@type":"PostalAddress","addressLocality":"Ташкент","addressRegion":"Мирзо-Улугбекский район","postalCode":"100000","addressCountry":"UZ"},"geo":{"@type":"GeoCoordinates","latitude":41.3230571,"longitude":69.312125},"hasMap":"https://yandex.uz/maps/?ll=69.312125%2C41.3230571&z=17","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"18:00"}],"priceRange":"$$","sameAs":["https://instagram.com/gpn_oil.uz"]}
+{"@context":"https://schema.org","@type":"LocalBusiness","name":"Smart Energy Eco Trade — Газпромнефть Узбекистан","legalName":"ООО «Smart Energy Eco Trade»","alternateName":["Смарт Энерджи Эко Трейд","Gazpromneft Uzbekistan","GPN Uzbekistan"],"foundingDate":"2023-04-27","url":"https://gpn-oil.uz/contacts","image":"https://gpn-oil.uz/img/hero.webp","telephone":"+998908085972","email":"t.yarulin@s-energy.uz","address":{"@type":"PostalAddress","addressLocality":"Ташкент","addressRegion":"Мирзо-Улугбекский район","postalCode":"100000","addressCountry":"UZ"},"geo":{"@type":"GeoCoordinates","latitude":41.3230571,"longitude":69.312125},"hasMap":"https://yandex.uz/maps/?ll=69.312125%2C41.3230571&z=17","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"18:00"}],"priceRange":"$$","sameAs":["https://instagram.com/gpn_oil.uz"]}
 </script>
 """
 
