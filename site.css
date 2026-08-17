@@ -75,17 +75,6 @@ p{margin:0}
 .wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
 .only-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-/* Заглушки под фотографии. Штриховка + подпись, что именно сюда встаёт:
-   пока снимков нет, страница всё равно читается как макет, а не как дыра.
-   Замена — просто <img> вместо блока .ph. */
-.ph{
-  background:repeating-linear-gradient(135deg,#eef2f6 0 10px,#e6ebf1 10px 20px);
-  display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;
-}
-.ph span{font-family:var(--mono);font-size:11px;color:var(--muted-2);letter-spacing:.02em}
-.ph--dark{background:repeating-linear-gradient(135deg,#16456b 0 12px,#123c5e 12px 24px)}
-.ph--dark span{color:#7fa8c7;font-size:12px}
-
 /* Фотографии встают в те же слоты, что и заглушки: класс задаёт размер,
    картинка кроется по нему. Размеры проставлены атрибутами в разметке,
    поэтому при загрузке ничего не прыгает. */
@@ -222,7 +211,6 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
 .section--tight,.formband,.cta,.footer{content-visibility:auto;contain-intrinsic-size:auto 480px}
 .section--tight{padding-top:52px;padding-bottom:52px}
 .section--grey{background:var(--surface)}
-.section--white{background:#fff}
 .section__head{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;margin-bottom:24px}
 .section__head div{display:flex;flex-direction:column;gap:10px}
 .section h2{font-size:clamp(26px,2.7vw,38px)}
@@ -233,12 +221,10 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .card{display:flex;flex-direction:column;gap:12px;padding:0 0 24px;background:#fff;overflow:hidden;transition:box-shadow .2s ease,transform .2s ease}
 .card:hover{color:inherit;box-shadow:0 10px 30px rgba(12,26,36,.10)}
-.card__title,.card__text,.card__meta{padding-left:28px;padding-right:28px}
 .card__media{height:180px;transition:transform .5s ease}
 .card:hover .card__media{transform:scale(1.04)}
 .card__title{font-size:20px;font-weight:600;line-height:1.25}
 .card__text{font-size:15px;line-height:1.45;color:var(--muted)}
-.card__meta{margin-top:auto;font-size:13px;font-weight:600;color:var(--blue)}
 
 /* Подбор: текст + фото на всю половину экрана */
 .split{display:grid;grid-template-columns:1fr 1fr;background:#fff}
@@ -302,8 +288,6 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
 .chips{display:flex;gap:10px;flex-wrap:wrap}
 .chip{padding:9px 16px;border:1px solid var(--rule-2);font-size:14px}
 .chip:hover{border-color:var(--navy);color:inherit}
-.chip--on{background:var(--navy);border-color:var(--navy);color:#fff;font-weight:600}
-.chip--on:hover{color:#fff}
 
 /* Таблицы продукции и документов.
    Ширины колонок задаются на .table и наследуются строками, чтобы шапка
@@ -410,10 +394,6 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
 .intro__body{display:flex;flex-direction:column;gap:20px}
 .intro__body p{font-size:18px;line-height:1.6;color:var(--muted)}
 .intro__media{height:380px}
-.certs{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.cert{display:flex;flex-direction:column;gap:14px;padding:28px;background:#fff;border:1px solid var(--rule);border-radius:var(--r)}
-.cert__media{height:180px}
-.cert b{font-size:17px;font-weight:600}
 .logos{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;align-items:center}
 .logos img{
   width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;background:#fff;
@@ -467,7 +447,6 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
 .findus__info .btn{margin-top:auto;width:100%}
 .findus .map{min-height:380px}
 .findus .map iframe{min-height:380px}
-
 
 /* Форма заявки */
 .form{display:flex;flex-direction:column;gap:12px;padding:26px;background:#fff;border:1px solid var(--rule);border-radius:var(--r)}
@@ -557,7 +536,9 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
 .cta__actions{display:flex;flex-wrap:wrap;gap:14px}
 
 .footer{background:var(--navy);color:var(--on-dark-2);font-size:14px;line-height:1.6}
-.footer__logo{height:52px;width:auto;margin-bottom:4px}
+/* В подвале тот же логотип, что и в шапке, только белый: отдельный файл
+   ради смены цвета — лишние 8 КБ и лишний запрос. */
+.footer__logo{height:52px;width:auto;margin-bottom:4px;filter:brightness(0) invert(1);opacity:.92}
 .footer__in{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;padding-top:44px;padding-bottom:40px}
 .footer__col{display:flex;flex-direction:column;gap:8px}
 .footer__col b{color:#fff;font-weight:600}
@@ -604,7 +585,6 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
   .stats__item:nth-child(2n){border-right:0}
   .stats__item:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.16)}
   .footer__in{grid-template-columns:1fr 1fr;gap:32px}
-  .certs{grid-template-columns:1fr}
   .logos{grid-template-columns:repeat(3,1fr)}
 }
 

@@ -23,8 +23,11 @@
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="/img/products.webp" imagesrcset="/img/products-sm.webp 700w, /img/products-md.webp 960w, /img/products.webp 1400w" imagesizes="100vw" fetchpriority="high">
-<link rel="stylesheet" href="/site.css?v=14">
+<link rel="preload" as="image" type="image/avif" href="/img/products.avif" imagesrcset="/img/products-sm.avif 700w, /img/products-md.avif 960w, /img/products.avif 1400w" imagesizes="100vw" fetchpriority="high">
+<link rel="stylesheet" href="/site.css?v=18">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"href_matches":"/*"},"eagerness":"moderate"}]}
+</script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Bosh sahifa","item":"https://gpn-oil.uz/uz/"},{"@type":"ListItem","position":2,"name":"Mahsulotlar","item":"https://gpn-oil.uz/uz/products"}]}
 </script>
@@ -70,7 +73,7 @@
 
   <div class="wrap page">
     <div class="pagehero">
-      <img src="/img/products.webp" srcset="/img/products-sm.webp 700w, /img/products-md.webp 960w, /img/products.webp 1400w" sizes="100vw" alt="Gazpromneft moylash materiallari ombori" width="1400" height="786" fetchpriority="high" decoding="async">
+      <picture><source type="image/avif" srcset="/img/products-sm.avif 700w, /img/products-md.avif 960w, /img/products.avif 1400w" sizes="100vw"><source type="image/webp" srcset="/img/products-sm.webp 700w, /img/products-md.webp 960w, /img/products.webp 1400w" sizes="100vw"><img src="/img/products.webp" alt="Gazpromneft moylash materiallari ombori" width="1400" height="786" fetchpriority="high" decoding="async"></picture>
     </div>
     <div class="page__head">
       <h1>Oʻzbekistonda Gazpromneft mahsulotlari</h1>
@@ -79,32 +82,32 @@
 
     <div class="cards">
       <a class="card" href="/uz/industrial">
-        <img class="card__media" src="/img/cat-industrial.webp" srcset="/img/cat-industrial-sm.webp 400w, /img/cat-industrial.webp 800w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw" alt="Industrial moylar Gazpromneft" width="800" height="340" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="/img/cat-industrial-sm.avif 400w, /img/cat-industrial.avif 800w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><source type="image/webp" srcset="/img/cat-industrial-sm.webp 400w, /img/cat-industrial.webp 800w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><img class="card__media" src="/img/cat-industrial.webp" alt="Industrial moylar Gazpromneft" width="800" height="340" loading="lazy" decoding="async"></picture>
         <div class="card__title">Industrial moylar</div>
         <div class="card__text">Gidravlik, reduktor, kompressor, turbina moylari va issiqlik tashuvchilar</div>
       </a>
       <a class="card" href="/uz/gpn">
-        <img class="card__media" src="/img/cat-gpn.webp" srcset="/img/cat-gpn-sm.webp 440w, /img/cat-gpn.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw" alt="Gazpromneft motor moylari Gazpromneft" width="880" height="374" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="/img/cat-gpn-sm.avif 440w, /img/cat-gpn.avif 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><source type="image/webp" srcset="/img/cat-gpn-sm.webp 440w, /img/cat-gpn.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><img class="card__media" src="/img/cat-gpn.webp" alt="Gazpromneft motor moylari Gazpromneft" width="880" height="374" loading="lazy" decoding="async"></picture>
         <div class="card__title">Gazpromneft motor moylari</div>
         <div class="card__text">Tijorat transporti, maxsus texnika va avtoparklar uchun</div>
       </a>
       <a class="card" href="/uz/g-energy">
-        <img class="card__media" src="/img/cat-g-energy.webp" srcset="/img/cat-g-energy-sm.webp 440w, /img/cat-g-energy.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw" alt="G-Energy motor moylari Gazpromneft" width="880" height="374" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="/img/cat-g-energy-sm.avif 440w, /img/cat-g-energy.avif 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><source type="image/webp" srcset="/img/cat-g-energy-sm.webp 440w, /img/cat-g-energy.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><img class="card__media" src="/img/cat-g-energy.webp" alt="G-Energy motor moylari Gazpromneft" width="880" height="374" loading="lazy" decoding="async"></picture>
         <div class="card__title">G-Energy motor moylari</div>
         <div class="card__text">Yengil transport uchun sintetika va yarim sintetika</div>
       </a>
       <a class="card" href="/uz/grease">
-        <img class="card__media" src="/img/cat-grease.webp" srcset="/img/cat-grease-sm.webp 440w, /img/cat-grease.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw" alt="Plastik moylar Gazpromneft" width="880" height="374" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="/img/cat-grease-sm.avif 440w, /img/cat-grease.avif 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><source type="image/webp" srcset="/img/cat-grease-sm.webp 440w, /img/cat-grease.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><img class="card__media" src="/img/cat-grease.webp" alt="Plastik moylar Gazpromneft" width="880" height="374" loading="lazy" decoding="async"></picture>
         <div class="card__title">Plastik moylar</div>
         <div class="card__text">Litiy, kalsiy, yuqori haroratli moylar va Steelgrease</div>
       </a>
       <a class="card" href="/uz/transmission">
-        <img class="card__media" src="/img/cat-transmission.webp" srcset="/img/cat-transmission-sm.webp 440w, /img/cat-transmission.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw" alt="Transmissiya moylari Gazpromneft" width="880" height="374" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="/img/cat-transmission-sm.avif 440w, /img/cat-transmission.avif 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><source type="image/webp" srcset="/img/cat-transmission-sm.webp 440w, /img/cat-transmission.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><img class="card__media" src="/img/cat-transmission.webp" alt="Transmissiya moylari Gazpromneft" width="880" height="374" loading="lazy" decoding="async"></picture>
         <div class="card__title">Transmissiya moylari</div>
         <div class="card__text">MUK, AUK, koʻpriklar va gidrokuchaytirgich uchun, ATF ham bor</div>
       </a>
       <a class="card" href="/uz/fluids">
-        <img class="card__media" src="/img/cat-fluids.webp" srcset="/img/cat-fluids-sm.webp 440w, /img/cat-fluids.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw" alt="Texnik suyuqliklar va SOJ Gazpromneft" width="880" height="374" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="/img/cat-fluids-sm.avif 440w, /img/cat-fluids.avif 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><source type="image/webp" srcset="/img/cat-fluids-sm.webp 440w, /img/cat-fluids.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><img class="card__media" src="/img/cat-fluids.webp" alt="Texnik suyuqliklar va SOJ Gazpromneft" width="880" height="374" loading="lazy" decoding="async"></picture>
         <div class="card__title">Texnik suyuqliklar va SOJ</div>
         <div class="card__text">Antifrizlar, tormoz suyuqliklari, moylab-sovutuvchi suyuqliklar</div>
       </a>
@@ -209,7 +212,7 @@
   <div class="wrap">
     <div class="footer__in">
       <div class="footer__col footer__brand">
-        <img class="footer__logo" src="/img/logo-footer.svg" alt="Gazpromneft" width="221" height="78" loading="lazy">
+        <img class="footer__logo" src="/img/logo-mark.svg" alt="Gazpromneft" width="221" height="78" loading="lazy">
         <span>«Smart Energy Eco Trade» MChJ — «Gazpromneft» moylash materiallarining Oʻzbekiston Respublikasidagi rasmiy distribyutori.</span>
       </div>
       <div class="footer__col">
@@ -249,6 +252,6 @@
   </div>
 </footer>
 
-<script src="/site.js?v=14" defer></script>
+<script src="/site.js?v=18" defer></script>
 </body>
 </html>

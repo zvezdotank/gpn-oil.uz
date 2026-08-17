@@ -23,8 +23,11 @@
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="/img/gpn.webp" imagesrcset="/img/gpn-sm.webp 700w, /img/gpn-md.webp 960w, /img/gpn.webp 1400w" imagesizes="100vw" fetchpriority="high">
-<link rel="stylesheet" href="/site.css?v=14">
+<link rel="preload" as="image" type="image/avif" href="/img/gpn.avif" imagesrcset="/img/gpn-sm.avif 700w, /img/gpn-md.avif 960w, /img/gpn.avif 1400w" imagesizes="100vw" fetchpriority="high">
+<link rel="stylesheet" href="/site.css?v=18">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"href_matches":"/*"},"eagerness":"moderate"}]}
+</script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://gpn-oil.uz/"},{"@type":"ListItem","position":2,"name":"Продукция","item":"https://gpn-oil.uz/products"},{"@type":"ListItem","position":3,"name":"Моторные масла Газпромнефть","item":"https://gpn-oil.uz/gpn"}]}
 </script>
@@ -73,7 +76,7 @@
 
   <div class="wrap page">
     <div class="pagehero">
-      <img src="/img/gpn.webp" srcset="/img/gpn-sm.webp 700w, /img/gpn-md.webp 960w, /img/gpn.webp 1400w" sizes="100vw" alt="Производство моторных масел Газпромнефть" width="1400" height="538" fetchpriority="high" decoding="async">
+      <picture><source type="image/avif" srcset="/img/gpn-sm.avif 700w, /img/gpn-md.avif 960w, /img/gpn.avif 1400w" sizes="100vw"><source type="image/webp" srcset="/img/gpn-sm.webp 700w, /img/gpn-md.webp 960w, /img/gpn.webp 1400w" sizes="100vw"><img src="/img/gpn.webp" alt="Производство моторных масел Газпромнефть" width="1400" height="538" fetchpriority="high" decoding="async"></picture>
     </div>
     <div class="layout">
       <div class="layout__main">
@@ -239,7 +242,7 @@
   <div class="wrap">
     <div class="footer__in">
       <div class="footer__col footer__brand">
-        <img class="footer__logo" src="/img/logo-footer.svg" alt="Gazpromneft" width="221" height="78" loading="lazy">
+        <img class="footer__logo" src="/img/logo-mark.svg" alt="Gazpromneft" width="221" height="78" loading="lazy">
         <span>ООО «Smart Energy Eco Trade» — официальный дистрибьютор смазочных материалов «Газпромнефть» в Республике Узбекистан.</span>
       </div>
       <div class="footer__col">
@@ -280,6 +283,6 @@
   </div>
 </footer>
 
-<script src="/site.js?v=14" defer></script>
+<script src="/site.js?v=18" defer></script>
 </body>
 </html>

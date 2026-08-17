@@ -68,7 +68,10 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=14">
+<link rel="stylesheet" href="/site.css?v=18">
+<script type="speculationrules">
+{{"prefetch":[{{"source":"document","where":{{"href_matches":"/*"}},"eagerness":"moderate"}}]}}
+</script>
 {jsonld}</head>
 <body>
 
@@ -150,7 +153,7 @@ TAIL = """
   <div class="wrap">
     <div class="footer__in">
       <div class="footer__col footer__brand">
-        <img class="footer__logo" src="/img/logo-footer.svg" alt="Gazpromneft" width="221" height="78" loading="lazy">
+        <img class="footer__logo" src="/img/logo-mark.svg" alt="Gazpromneft" width="221" height="78" loading="lazy">
         <span>«Smart Energy Eco Trade» MChJ — «Gazpromneft» moylash materiallarining Oʻzbekiston Respublikasidagi rasmiy distribyutori.</span>
       </div>
       <div class="footer__col">
@@ -228,8 +231,8 @@ def page(path, fname, title, desc, body, active=None, ogimage="/img/og.jpg",
     pre = ""
     if preload:
         name = preload.split("/")[-1].replace(".webp", "")
-        pre = ('\n<link rel="preload" as="image" href="%s" imagesrcset="%s" imagesizes="%s" fetchpriority="high">'
-               % (preload, srcset(name, dim(name)[0]), preload_sizes))
+        pre = ('\n<link rel="preload" as="image" type="image/avif" href="%s" imagesrcset="%s" imagesizes="%s" fetchpriority="high">'
+               % (preload.replace('.webp', '.avif'), srcset(name, dim(name)[0]).replace('.webp', '.avif'), preload_sizes))
     rupath = "/" if path == "/uz/" else path[3:]
     html = (HEAD.format(title=title, desc=desc, nav=nav, canonical=SITE + path,
                         ruhref=SITE + rupath, rupath=rupath,
@@ -239,7 +242,7 @@ def page(path, fname, title, desc, body, active=None, ogimage="/img/og.jpg",
             + body + MGR
             + (CTA.format(tg=TG) if cta else "")
             + TAIL.format(insta=INSTA, saleshub=SALESHUB, tg=TG)
-            + '\n<script src="/site.js?v=14" defer></script>\n</body>\n</html>\n')
+            + '\n<script src="/site.js?v=18" defer></script>\n</body>\n</html>\n')
     os.makedirs(os.path.dirname(os.path.join(UZDIR, fname)) or UZDIR, exist_ok=True)
     io.open(os.path.join(UZDIR, fname), "w", encoding="utf-8").write(html)
 
@@ -296,15 +299,29 @@ CATS = [
 ]
 
 
+
+def picture(name, w, inner_img):
+    """AVIF первым источником, webp — запасным. Кто не умеет AVIF (старые
+    Safari и часть андроидов), получит webp, разметка одна на всех."""
+    return ('<picture><source type="image/avif" srcset="%s" sizes="%s">%s</picture>'
+            % (srcset(name, w).replace(".webp", ".avif"), _sizes_of(inner_img), inner_img))
+
+
+def _sizes_of(tag):
+    import re as _re
+    m = _re.search(r'sizes="([^"]*)"', tag)
+    return m.group(1) if m else "100vw"
+
+
 def cards_html(indent="        "):
     out = []
     for href, name, img, text in CATS:
         w, h = dim(img)
         out.append("""%s<a class="card" href="%s">
-%s  <img class="card__media" src="/img/%s.webp" srcset="%s" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw" alt="%s Gazpromneft" width="%d" height="%d" loading="lazy" decoding="async">
+%s  <picture><source type="image/avif" srcset="%s" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><source type="image/webp" srcset="%s" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><img class="card__media" src="/img/%s.webp" alt="%s Gazpromneft" width="%d" height="%d" loading="lazy" decoding="async"></picture>
 %s  <div class="card__title">%s</div>
 %s  <div class="card__text">%s</div>
-%s</a>""" % (indent, href, indent, img, srcset(img, w), name, w, h, indent, name, indent, text, indent))
+%s</a>""" % (indent, href, indent, srcset(img, w).replace(".webp", ".avif"), srcset(img, w), img, name, w, h, indent, name, indent, text, indent))
     return "\n".join(out)
 
 
@@ -367,9 +384,9 @@ def category(path, fname, crumb, h1, title, desc, lead, img, alt,
     if img:
         iw, ih = dim(img)
         hero = '''    <div class="pagehero">
-      <img src="/img/%s.webp" srcset="%s" sizes="100vw" alt="%s" width="%d" height="%d" fetchpriority="high" decoding="async">
+      <picture><source type="image/avif" srcset="%s" sizes="100vw"><source type="image/webp" srcset="%s" sizes="100vw"><img src="/img/%s.webp" alt="%s" width="%d" height="%d" fetchpriority="high" decoding="async"></picture>
     </div>
-''' % (img, srcset(img, iw), alt, iw, ih)
+''' % (srcset(img, iw).replace(".webp", ".avif"), srcset(img, iw), img, alt, iw, ih)
 
     chips_html = ""
     if chips:
@@ -640,7 +657,7 @@ home = """
           <span>Oʻzbekiston boʻylab yetkazish</span>
         </div>
       </div>
-      <div class="hero__shot"><img src="/img/hero.webp" srcset="/img/hero-sm.webp 700w, /img/hero-md.webp 960w, /img/hero.webp 1400w" sizes="(max-width:900px) 100vw, 45vw" alt="Gazpromneft moylarini quyish liniyasi" width="{herow}" height="{heroh}" fetchpriority="high" decoding="async"></div>
+      <div class="hero__shot"><picture><source type="image/avif" srcset="/img/hero-sm.avif 700w, /img/hero-md.avif 960w, /img/hero.avif 1400w" sizes="(max-width:900px) 100vw, 45vw"><source type="image/webp" srcset="/img/hero-sm.webp 700w, /img/hero-md.webp 960w, /img/hero.webp 1400w" sizes="(max-width:900px) 100vw, 45vw"><img src="/img/hero.webp" alt="Gazpromneft moylarini quyish liniyasi" width="{herow}" height="{heroh}" fetchpriority="high" decoding="async"></picture></div>
     </div>
   </section>
 
@@ -682,7 +699,7 @@ home = """
         <a class="btn btn--outline" href="/uz/podbor">Tanlash qanday oʻtadi</a>
       </div>
     </div>
-    <img class="split__media" src="/img/podbor.webp" srcset="/img/podbor-sm.webp 400w, /img/podbor.webp 787w" sizes="(max-width:900px) 100vw, 50vw" alt="Gazpromneft moyini quyish liniyasidagi operator" width="{podborw}" height="{podborh}" loading="lazy" decoding="async">
+    <picture><source type="image/avif" srcset="/img/podbor-sm.avif 450w, /img/podbor.avif 900w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="/img/podbor-sm.webp 450w, /img/podbor.webp 900w" sizes="(max-width:900px) 100vw, 50vw"><img class="split__media" src="/img/podbor.webp" alt="Gazpromneft moyini quyish liniyasidagi operator" width="{podborw}" height="{podborh}" loading="lazy" decoding="async"></picture>
   </section>
 
   <section class="section section--tight" id="industries">
@@ -824,7 +841,7 @@ products = """
 
   <div class="wrap page">
     <div class="pagehero">
-      <img src="/img/products.webp" srcset="/img/products-sm.webp 700w, /img/products-md.webp 960w, /img/products.webp 1400w" sizes="100vw" alt="Gazpromneft moylash materiallari ombori" width="{pw}" height="{ph}" fetchpriority="high" decoding="async">
+      <picture><source type="image/avif" srcset="/img/products-sm.avif 700w, /img/products-md.avif 960w, /img/products.avif 1400w" sizes="100vw"><source type="image/webp" srcset="/img/products-sm.webp 700w, /img/products-md.webp 960w, /img/products.webp 1400w" sizes="100vw"><img src="/img/products.webp" alt="Gazpromneft moylash materiallari ombori" width="{pw}" height="{ph}" fetchpriority="high" decoding="async"></picture>
     </div>
     <div class="page__head">
       <h1>Oʻzbekistonda Gazpromneft mahsulotlari</h1>
@@ -878,9 +895,9 @@ def simple(path, fname, crumb, h1, title, desc, active, blocks, faq=None, img=No
     if img:
         iw, ih = dim(img)
         hero = '''    <div class="pagehero">
-      <img src="/img/%s.webp" srcset="%s" sizes="100vw" alt="%s" width="%d" height="%d" fetchpriority="high" decoding="async">
+      <picture><source type="image/avif" srcset="%s" sizes="100vw"><source type="image/webp" srcset="%s" sizes="100vw"><img src="/img/%s.webp" alt="%s" width="%d" height="%d" fetchpriority="high" decoding="async"></picture>
     </div>
-''' % (img, srcset(img, iw), alt, iw, ih)
+''' % (srcset(img, iw).replace(".webp", ".avif"), srcset(img, iw), img, alt, iw, ih)
     faq_block = ""
     if faq:
         faq_block = '\n    <div class="longread"><h2>Koʻp beriladigan savollar</h2></div>\n%s' % faq_html(faq)
@@ -1167,7 +1184,7 @@ company_body = """
       <p>«Gazpromneft — moylash materiallari»ning Oʻzbekiston Respublikasidagi rasmiy distribyutori. Mamlakat boʻylab sanoat korxonalari, avtoparklar va servis markazlariga moy, plastik moylar va texnik suyuqliklar yetkazib beramiz.</p>
       <p>Ishlab chiqaruvchi zavodlari bilan toʻgʻridan-toʻgʻri ishlaymiz: har bir partiya sifat pasporti bilan keladi, texnik mutaxassislar esa mahsulot tanlashga va import markalardan oʻtishga yordam beradi.</p>
     </div>
-    <img class="intro__media" src="/img/company.webp" srcset="/img/company-sm.webp 600w, /img/company-md.webp 960w, /img/company.webp 1200w" sizes="(max-width:900px) 100vw, 50vw" alt="Gazpromneft mutaxassislari moy bochkasi yonida" width="1200" height="896" fetchpriority="high" decoding="async">
+    <picture><source type="image/avif" srcset="/img/company-sm.avif 600w, /img/company-md.avif 960w, /img/company.avif 1200w" sizes="(max-width:900px) 100vw, 50vw"><source type="image/webp" srcset="/img/company-sm.webp 600w, /img/company-md.webp 960w, /img/company.webp 1200w" sizes="(max-width:900px) 100vw, 50vw"><img class="intro__media" src="/img/company.webp" alt="Gazpromneft mutaxassislari moy bochkasi yonida" width="1200" height="896" fetchpriority="high" decoding="async"></picture>
   </div>
 
   <div class="stats">

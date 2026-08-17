@@ -23,8 +23,11 @@
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="/img/products.webp" imagesrcset="/img/products-sm.webp 700w, /img/products-md.webp 960w, /img/products.webp 1400w" imagesizes="100vw" fetchpriority="high">
-<link rel="stylesheet" href="/site.css?v=14">
+<link rel="preload" as="image" type="image/avif" href="/img/products.avif" imagesrcset="/img/products-sm.avif 700w, /img/products-md.avif 960w, /img/products.avif 1400w" imagesizes="100vw" fetchpriority="high">
+<link rel="stylesheet" href="/site.css?v=18">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"href_matches":"/*"},"eagerness":"moderate"}]}
+</script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://gpn-oil.uz/"},{"@type":"ListItem","position":2,"name":"Продукция","item":"https://gpn-oil.uz/products"}]}
 </script>
@@ -70,7 +73,7 @@
 
   <div class="wrap page">
     <div class="pagehero">
-      <img src="/img/products.webp" srcset="/img/products-sm.webp 700w, /img/products-md.webp 960w, /img/products.webp 1400w" sizes="100vw" alt="Склад смазочных материалов Газпромнефть" width="1400" height="786" fetchpriority="high" decoding="async">
+      <picture><source type="image/avif" srcset="/img/products-sm.avif 700w, /img/products-md.avif 960w, /img/products.avif 1400w" sizes="100vw"><source type="image/webp" srcset="/img/products-sm.webp 700w, /img/products-md.webp 960w, /img/products.webp 1400w" sizes="100vw"><img src="/img/products.webp" alt="Склад смазочных материалов Газпромнефть" width="1400" height="786" fetchpriority="high" decoding="async"></picture>
     </div>
     <div class="page__head">
       <h1>Продукция Газпромнефть в Узбекистане</h1>
@@ -79,32 +82,32 @@
 
     <div class="cards">
       <a class="card" href="/industrial">
-        <img class="card__media" src="/img/cat-industrial.webp" srcset="/img/cat-industrial-sm.webp 400w, /img/cat-industrial.webp 800w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw" alt="Индустриальные масла Газпромнефть" width="800" height="340" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="/img/cat-industrial-sm.avif 400w, /img/cat-industrial.avif 800w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><source type="image/webp" srcset="/img/cat-industrial-sm.webp 400w, /img/cat-industrial.webp 800w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><img class="card__media" src="/img/cat-industrial.webp" alt="Индустриальные масла Газпромнефть" width="800" height="340" loading="lazy" decoding="async"></picture>
         <div class="card__title">Индустриальные масла</div>
         <div class="card__text">Гидравлические, редукторные, компрессорные, турбинные, теплоносители</div>
       </a>
       <a class="card" href="/gpn">
-        <img class="card__media" src="/img/cat-gpn.webp" srcset="/img/cat-gpn-sm.webp 440w, /img/cat-gpn.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw" alt="Моторные масла Газпромнефть" width="880" height="374" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="/img/cat-gpn-sm.avif 440w, /img/cat-gpn.avif 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><source type="image/webp" srcset="/img/cat-gpn-sm.webp 440w, /img/cat-gpn.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><img class="card__media" src="/img/cat-gpn.webp" alt="Моторные масла Газпромнефть" width="880" height="374" loading="lazy" decoding="async"></picture>
         <div class="card__title">Моторные масла Газпромнефть</div>
         <div class="card__text">Для коммерческого транспорта, спецтехники и автопарков</div>
       </a>
       <a class="card" href="/g-energy">
-        <img class="card__media" src="/img/cat-g-energy.webp" srcset="/img/cat-g-energy-sm.webp 440w, /img/cat-g-energy.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw" alt="Моторные масла G-Energy" width="880" height="374" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="/img/cat-g-energy-sm.avif 440w, /img/cat-g-energy.avif 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><source type="image/webp" srcset="/img/cat-g-energy-sm.webp 440w, /img/cat-g-energy.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><img class="card__media" src="/img/cat-g-energy.webp" alt="Моторные масла G-Energy" width="880" height="374" loading="lazy" decoding="async"></picture>
         <div class="card__title">Моторные масла G-Energy</div>
         <div class="card__text">Синтетика и полусинтетика для легкового транспорта</div>
       </a>
       <a class="card" href="/grease">
-        <img class="card__media" src="/img/cat-grease.webp" srcset="/img/cat-grease-sm.webp 440w, /img/cat-grease.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw" alt="Пластичные смазки Газпромнефть" width="880" height="374" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="/img/cat-grease-sm.avif 440w, /img/cat-grease.avif 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><source type="image/webp" srcset="/img/cat-grease-sm.webp 440w, /img/cat-grease.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><img class="card__media" src="/img/cat-grease.webp" alt="Пластичные смазки Газпромнефть" width="880" height="374" loading="lazy" decoding="async"></picture>
         <div class="card__title">Пластичные смазки</div>
         <div class="card__text">Литиевые, кальциевые, высокотемпературные, Steelgrease</div>
       </a>
       <a class="card" href="/transmission">
-        <img class="card__media" src="/img/cat-transmission.webp" srcset="/img/cat-transmission-sm.webp 440w, /img/cat-transmission.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw" alt="Трансмиссионные масла Газпромнефть" width="880" height="374" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="/img/cat-transmission-sm.avif 440w, /img/cat-transmission.avif 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><source type="image/webp" srcset="/img/cat-transmission-sm.webp 440w, /img/cat-transmission.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><img class="card__media" src="/img/cat-transmission.webp" alt="Трансмиссионные масла Газпромнефть" width="880" height="374" loading="lazy" decoding="async"></picture>
         <div class="card__title">Трансмиссионные масла</div>
         <div class="card__text">Для МКПП, АКПП, мостов и ГУР, включая ATF</div>
       </a>
       <a class="card" href="/fluids">
-        <img class="card__media" src="/img/cat-fluids.webp" srcset="/img/cat-fluids-sm.webp 440w, /img/cat-fluids.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw" alt="Технические жидкости и СОЖ Газпромнефть" width="880" height="374" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="/img/cat-fluids-sm.avif 440w, /img/cat-fluids.avif 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><source type="image/webp" srcset="/img/cat-fluids-sm.webp 440w, /img/cat-fluids.webp 880w" sizes="(max-width:640px) 100vw, (max-width:1080px) 50vw, 33vw"><img class="card__media" src="/img/cat-fluids.webp" alt="Технические жидкости и СОЖ Газпромнефть" width="880" height="374" loading="lazy" decoding="async"></picture>
         <div class="card__title">Технические жидкости и СОЖ</div>
         <div class="card__text">Антифризы, тормозные жидкости, смазочно-охлаждающие жидкости</div>
       </a>
@@ -211,7 +214,7 @@
   <div class="wrap">
     <div class="footer__in">
       <div class="footer__col footer__brand">
-        <img class="footer__logo" src="/img/logo-footer.svg" alt="Gazpromneft" width="221" height="78" loading="lazy">
+        <img class="footer__logo" src="/img/logo-mark.svg" alt="Gazpromneft" width="221" height="78" loading="lazy">
         <span>ООО «Smart Energy Eco Trade» — официальный дистрибьютор смазочных материалов «Газпромнефть» в Республике Узбекистан.</span>
       </div>
       <div class="footer__col">
@@ -252,6 +255,6 @@
   </div>
 </footer>
 
-<script src="/site.js?v=14" defer></script>
+<script src="/site.js?v=18" defer></script>
 </body>
 </html>
