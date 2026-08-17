@@ -677,7 +677,7 @@ home = """
       <div class="hero__body">
         <span class="hero__badge">Toshkentda ombor · 24 soatda joʻnatish</span>
         <h1>Gazpromneft Oʻzbekiston&nbsp;— Toshkentdagi ombordan moylash materiallari</h1>
-        <p class="hero__lead">Texnikangizga moy tanlab, ombordagi mavjudlik bilan narxlarni 15 daqiqada yuboramiz. Toshkentdagi ombordan, 24 soatda joʻnatish, buxgalteriya va tender uchun toʻliq hujjatlar paketi.</p>
+        <p class="hero__lead">Texnikangizga moy tanlab, ombordagi mavjudlik bilan narxlarni 15 daqiqada yuboramiz. 24 soatda joʻnatish, buxgalteriya va tender uchun toʻliq hujjatlar paketi.</p>
         <div class="hero__actions">
           <a class="btn btn--orange" href="tel:+998908085972">Qoʻngʻiroq qiling: +998 90 808 59 72</a>
           <a class="btn btn--onDark" href="#zayavka">Tanlov va narxlarni olish</a>
