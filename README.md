@@ -55,9 +55,13 @@ Instagram: [@gpn_oil.uz](https://instagram.com/gpn_oil.uz).
 - `/tpost/*` → `/blog` — восемь новостных перепечаток с Tilda;
 - `/blocked` → `/` — служебная страница Tilda.
 
-**На GitHub Pages `_redirects` не работает.** Там эти правила надо завести
-в Cloudflare (Rules → Redirect Rules). Проще держать сайт на Cloudflare Pages:
-`_redirects` подхватится как есть.
+**На GitHub Pages `_redirects` не работает**, поэтому рядом лежат html-заглушки
+с `rel=canonical`, `noindex, follow` и мгновенным переходом: `page57584865.html`,
+`blocked.html` и восемь файлов в `tpost/`. Это слабее настоящего 301, но
+поисковик по ним склеивает страницы, а человек не видит 404.
+
+Если сайт переедет на Cloudflare Pages, подхватится `_redirects` и заглушки
+можно удалить — тогда будут честные 301.
 
 ## Что улучшено против старого сайта
 
