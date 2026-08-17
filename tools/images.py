@@ -38,23 +38,39 @@ def crop_to(im, ratio):
     return im.crop((0, y, w, y + nh))
 
 
-def save(im, name, width, q=78):
+# Страницы, где вёрстка просит промежуточный размер между полным и половинным.
+MD = {"hero", "company", "company-office", "gpn", "grease", "price", "products"}
+
+
+def save(im, name, width, q=78, qa=55):
+    """Пишет каждый размер сразу в WebP и AVIF.
+
+    Раньше AVIF делались отдельным ручным шагом, и это уже приводило к тому,
+    что после замены снимка страница показывала старую картинку: браузер
+    берёт из <picture> первый подходящий источник, а это AVIF.
+    """
     r = im.size[0] / im.size[1]
     width = min(width, im.size[0])
-    big = im.resize((width, round(width / r)), Image.LANCZOS)
-    big.save(os.path.join(OUT, name + ".webp"), "WEBP", quality=q, method=6)
-    half = max(400, width // 2)
-    small = im.resize((half, round(half / r)), Image.LANCZOS)
-    small.save(os.path.join(OUT, name + "-sm.webp"), "WEBP", quality=q, method=6)
-    return big.size
+
+    def write(w, suffix=""):
+        v = im.resize((w, round(w / r)), Image.LANCZOS)
+        v.save(os.path.join(OUT, name + suffix + ".webp"), "WEBP", quality=q, method=6)
+        v.save(os.path.join(OUT, name + suffix + ".avif"), "AVIF", quality=qa)
+        return v.size
+
+    big = write(width)
+    if name in MD and width > 960:
+        write(960, "-md")
+    write(max(400, width // 2), "-sm")
+    return big
 
 
 # исходник, имя, соотношение, ширина. Только крупные и «неглянцевые» кадры.
 JOBS = [
     ("plant-1.jpg",      "hero",            1.34, 1400),   # линия розлива канистр
-    ("canister.jpg",     "podbor",          1.0,   900),   # оператор на линии
+    ("lab-tester.jpg",   "podbor",          1.36,  900),   # испытание масла в лаборатории
     ("oils-row.jpeg",    "company",         1.34, 1200),   # специалисты у бочки
-    ("hero-warehouse.jpg","products",       1.78, 1400),   # ряды бочек на складе
+    ("tank-farm.jpg",    "products",        1.78, 1400),   # парк резервуаров завода
 
     # карточки каталога
     ("industrial.jpg",   "cat-industrial",  1.9,   800),
