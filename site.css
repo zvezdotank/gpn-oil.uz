@@ -394,10 +394,10 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
 .intro__body{display:flex;flex-direction:column;gap:20px}
 .intro__body p{font-size:18px;line-height:1.6;color:var(--muted)}
 .intro__media{height:380px}
-.logos{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;align-items:center}
+.logos{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;align-items:center}
 .logos img{
-  width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;background:#fff;
-  border:1px solid var(--rule);border-radius:var(--r);padding:18px;
+  width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;background:#fff;
+  border:1px solid var(--rule);border-radius:var(--r);padding:10px;
   filter:grayscale(1);opacity:.7;transition:filter .25s ease,opacity .25s ease;
 }
 .logos img:hover{filter:none;opacity:1}

@@ -102,6 +102,10 @@ for src, name, ratio, width in JOBS:
 
 # Логотипы заказчиков: у исходников фон то белый, то прозрачный, то тёмный.
 # Кладём все на одну белую карточку одного размера — тогда ряд не рябит.
+# Карточка квадратная. Логотипы у клиентов разной пропорции: у НГМК почти
+# квадратный, у Enter Engineering широкая узкая полоса. Широким даём больше
+# ширины (360 из 400), высоким ограничиваем высоту (300) — иначе высокий
+# подавляет ряд, а широкий в нём теряется.
 # Цвет оставляем в файле, обесцвечивание делает css, чтобы на наведении
 # логотип возвращался в свой цвет.
 LOGOS = [("logo-ngmk.jpg", "logo-ngmk"), ("logo-ee.png", "logo-enter"),
@@ -115,11 +119,11 @@ for src, name in LOGOS:
     flat = Image.alpha_composite(bg, im).convert("RGB")
     if sum(flat.resize((1, 1)).getpixel((0, 0))) < 240:      # фон тёмный
         flat = ImageOps.invert(flat)
-    card = Image.new("RGB", (360, 180), (255, 255, 255))
-    flat.thumbnail((280, 108), Image.LANCZOS)
-    card.paste(flat, ((360 - flat.size[0]) // 2, (180 - flat.size[1]) // 2))
+    card = Image.new("RGB", (400, 400), (255, 255, 255))
+    flat.thumbnail((360, 300), Image.LANCZOS)
+    card.paste(flat, ((400 - flat.size[0]) // 2, (400 - flat.size[1]) // 2))
     card.save(os.path.join(OUT, name + ".webp"), "WEBP", quality=88, method=6)
-    print(name, (360, 180))
+    print(name, (400, 400))
 
 for junk in ("cat-industrial-sm", "hero-sm"):
     pass

@@ -54,7 +54,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=19">
+<link rel="stylesheet" href="/site.css?v=20">
 <script type="speculationrules">
 {{"prefetch":[{{"source":"document","where":{{"href_matches":"/*"}},"eagerness":"moderate"}}]}}
 </script>
@@ -276,7 +276,7 @@ def page(path, fname, title, desc, body, active=None, ogimage="/img/og.jpg",
             + body + MGR
             + (CTA.format(tg=TG) if cta else "")
             + TAIL.format(insta=INSTA, saleshub=SALESHUB, tg=TG)
-            + '\n<script src="/site.js?v=19" defer></script>\n</body>\n</html>\n')
+            + '\n<script src="/site.js?v=20" defer></script>\n</body>\n</html>\n')
     with io.open(os.path.join(OUT, fname), "w", encoding="utf-8") as f:
         f.write(html)
     return len(html)
@@ -810,11 +810,11 @@ home = """
     <div class="wrap">
       <div class="section__head"><div><h2>Нам доверяют</h2></div></div>
       <div class="logos">
-        <img src="/img/logo-ngmk.webp" alt="Навоийский горно-металлургический комбинат" width="360" height="240" loading="lazy" decoding="async">
-        <img src="/img/logo-enter.webp" alt="Enter Engineering" width="360" height="240" loading="lazy" decoding="async">
-        <img src="/img/logo-ttz.webp" alt="Ташкентский трубный завод имени В. Л. Гальперина" width="360" height="240" loading="lazy" decoding="async">
-        <img src="/img/logo-ahangaran.webp" alt="Akhangarancement" width="360" height="240" loading="lazy" decoding="async">
-        <img src="/img/logo-cement.webp" alt="Namangan Sement" width="360" height="240" loading="lazy" decoding="async">
+        <img src="/img/logo-ngmk.webp" alt="Навоийский горно-металлургический комбинат" width="400" height="400" loading="lazy" decoding="async">
+        <img src="/img/logo-enter.webp" alt="Enter Engineering" width="400" height="400" loading="lazy" decoding="async">
+        <img src="/img/logo-ttz.webp" alt="Ташкентский трубный завод имени В. Л. Гальперина" width="400" height="400" loading="lazy" decoding="async">
+        <img src="/img/logo-ahangaran.webp" alt="Akhangarancement" width="400" height="400" loading="lazy" decoding="async">
+        <img src="/img/logo-cement.webp" alt="Namangan Sement" width="400" height="400" loading="lazy" decoding="async">
       </div>
     </div>
   </section>
@@ -1049,11 +1049,11 @@ company = """
     <div class="wrap">
       <div class="section__head"><div><h2>Нам доверяют</h2></div></div>
       <div class="logos">
-        <img src="/img/logo-ngmk.webp" alt="Навоийский горно-металлургический комбинат" width="360" height="240" loading="lazy" decoding="async">
-        <img src="/img/logo-enter.webp" alt="Enter Engineering" width="360" height="240" loading="lazy" decoding="async">
-        <img src="/img/logo-ttz.webp" alt="Ташкентский трубный завод имени В. Л. Гальперина" width="360" height="240" loading="lazy" decoding="async">
-        <img src="/img/logo-ahangaran.webp" alt="Akhangarancement" width="360" height="240" loading="lazy" decoding="async">
-        <img src="/img/logo-cement.webp" alt="Namangan Sement" width="360" height="240" loading="lazy" decoding="async">
+        <img src="/img/logo-ngmk.webp" alt="Навоийский горно-металлургический комбинат" width="400" height="400" loading="lazy" decoding="async">
+        <img src="/img/logo-enter.webp" alt="Enter Engineering" width="400" height="400" loading="lazy" decoding="async">
+        <img src="/img/logo-ttz.webp" alt="Ташкентский трубный завод имени В. Л. Гальперина" width="400" height="400" loading="lazy" decoding="async">
+        <img src="/img/logo-ahangaran.webp" alt="Akhangarancement" width="400" height="400" loading="lazy" decoding="async">
+        <img src="/img/logo-cement.webp" alt="Namangan Sement" width="400" height="400" loading="lazy" decoding="async">
       </div>
     </div>
   </section>
