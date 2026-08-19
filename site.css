@@ -366,10 +366,14 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
    не украшение — он говорит про объёмы, а рядом стоит подпись про фасовку
    и годовую цену. На узком экране картинка уходит вниз и режется по высоте,
    иначе она вытесняет сами вопросы. */
-.faqgrid{display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:start}
+.faqgrid{display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:stretch}
 .faqside{display:flex;flex-direction:column;border:1px solid var(--rule);
   border-radius:var(--r);overflow:hidden;background:#fff}
-.faqside img{display:block;width:100%;height:auto}
+/* Картинка тянется на всю оставшуюся высоту колонки и обрезается по краям:
+   иначе карточка с бочкой оказывается ниже списка вопросов и низ блока
+   выглядит рваным. Подпись при этом всегда прижата к низу. */
+.faqside picture{display:block;flex:1;min-height:220px}
+.faqside img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 42%}
 .faqside__cap{display:flex;flex-direction:column;gap:6px;padding:18px 20px 20px}
 .faqside__cap b{font-size:17px;line-height:1.25}
 .faqside__cap span{font-size:14px;line-height:1.55;color:var(--muted)}
