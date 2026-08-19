@@ -557,7 +557,7 @@ category("/uz/gpn", "gpn.html", "Gazpromneft motor moylari",
               ("Qanchalik tez joʻnatasiz?",
                "Toshkentdagi omborda bor pozitsiyalarni ariza tushgandan keyin 24 soat ichida joʻnatamiz. Yetkazib berish Oʻzbekiston boʻylab kelishuv asosida.")],
          longread=("Qanday tanlaymiz",
-                   "Avtoparklar uchun belgilangan narx va joʻnatish jadvali bilan yillik spetsifikatsiya tayyorlaymiz. Import markadan oʻtishda texnik mutaxassis ruxsatnoma va qovushqoqlik sinfini solishtirib, tavsiflar bayonnomasini beradi."))
+                   "Avtoparklar uchun pozitsiyalar roʻyxati va joʻnatish jadvalini kelishamiz. Import markadan oʻtishda texnik mutaxassis ruxsatnoma va qovushqoqlik sinfini solishtirib, tavsiflar bayonnomasini beradi."))
 
 category("/uz/g-energy", "g-energy.html", "G-Energy motor moylari",
          "Toshkentda G-Energy motor moylari",
@@ -568,7 +568,7 @@ category("/uz/g-energy", "g-energy.html", "G-Energy motor moylari",
          preset="Yengil transport uchun motor moylari",
          uses=[("Servis markazlari va STO", "Sintetika va yarim sintetika, keng tarqalgan qovushqoqliklar"),
                ("Avtotovarlar doʻkonlari", "Chakana javon uchun 1, 4 va 5 litrlik qadoq"),
-               ("Korporativ avtoparklar", "Belgilangan narx bilan muntazam joʻnatish"),
+               ("Korporativ avtoparklar", "Kelishilgan jadval boʻyicha muntazam joʻnatish"),
                ("Taksi va karsheringlar", "Ogʻir shahar rejimi uchun moylar")],
          faq=[("G-Energy Gazpromneftdan nimasi bilan farq qiladi?",
                "Bu bitta ishlab chiqaruvchining ikki liniyasi: G-Energy yengil transportga, Gazpromneft liniyasi tijorat va sanoat texnikasiga moʻljallangan. Qoʻshimchalar paketi va ruxsatnomalari bilan farq qiladi."),
@@ -577,7 +577,7 @@ category("/uz/g-energy", "g-energy.html", "G-Energy motor moylari",
               ("Asl mahsulotni qalbakidan qanday ajratish mumkin?",
                "Biz rasmiy distribyutormiz va mahsulotni toʻgʻridan-toʻgʻri ishlab chiqaruvchi zavodlaridan olib kelamiz. Har bir partiyada sifat pasporti bor, hujjatlarni yetkazib berishga ilova qilamiz.")],
          longread=("Kimga yetkazamiz",
-                   "Servis markazlari, doʻkonlar va korporativ avtoparklarga. Muntazam joʻnatishlarda narxni davrga belgilaymiz va omborda kelishilgan zaxirani saqlaymiz."))
+                   "Servis markazlari, doʻkonlar va korporativ avtoparklarga. Muntazam joʻnatishlar uchun jadvalni kelishamiz va kerakli pozitsiyalarni omborda saqlaymiz."))
 
 category("/uz/g-energy-retail", "g-energy-retail.html", "G-Energy — chakana tarmoq",
          "Oʻzbekistonda chakana savdo uchun G-Energy",
@@ -753,7 +753,7 @@ home = """
       <div class="seo__text">
         <h2>Oʻzbekistonda Gazpromneft moylash materiallarini qayerdan sotib olish mumkin</h2>
         <p>«Smart Energy Eco Trade» MChJ Gazpromneft, G-Profi va G-Energy mahsulotlarini Toshkent, Samarqand, Buxoro, Navoiy va Fargʻona vodiysi korxonalariga yetkazib beradi. Omborda doimiy ravishda HLP 32, 46 va 68 gidravlik moylari, CLP reduktor moylari, yuk va karyer texnikasi uchun motor moylari, plastik moylar va antifrizlar bir litrdan kub sigʻimgacha qadoqda mavjud.</p>
-        <p>Sanoat korxonalari uchun belgilangan narx bilan yillik spetsifikatsiya tayyorlaymiz, yetkazib berishni shartnoma asosida rasmiylashtiramiz va tender jarayonlari uchun toʻliq hujjatlar paketini beramiz. Texnik mutaxassislar aniq uskunaga moy tanlashga va import markalardan Gazpromneft mahsulotiga oʻtishga yordam beradi.</p>
+        <p>Sanoat korxonalari uchun pozitsiyalar roʻyxati va joʻnatish jadvalini kelishamiz, yetkazib berishni shartnoma asosida rasmiylashtiramiz va tender jarayonlari uchun toʻliq hujjatlar paketini beramiz. Texnik mutaxassislar aniq uskunaga moy tanlashga va import markalardan Gazpromneft mahsulotiga oʻtishga yordam beradi.</p>
       </div>
       <aside class="callout">
         <b>Narxlar roʻyxatini olish</b>
@@ -793,7 +793,7 @@ home = """
         <div class="why__item"><b>Import markalarni almashtirish</b><span>Shell, Mobil, Total va Castrol analoglarini tavsiflar solishtirmasi bilan tanlaymiz.</span></div>
         <div class="why__item"><b>Toshkentda ombor</b><span>Mavjud pozitsiyalarni 24 soatda joʻnatamiz. Boʻlmaganini choʻzmasdan, muddatini darhol aytamiz.</span></div>
         <div class="why__item"><b>Tender uchun hujjatlar</b><span>Shartnoma, hisob-faktura, sifat pasporti, sertifikatlar va distribyutorlik xati. Paketni buyurtmachi talabiga qarab yigʻamiz.</span></div>
-        <div class="why__item"><b>Yillik spetsifikatsiyalar</b><span>Doimiy ehtiyoji bor korxonalar uchun narxni davrga belgilaymiz — har yetkazishni qaytadan kelishish shart emas.</span></div>
+        <div class="why__item"><b>Muntazam joʻnatishlar</b><span>Doimiy ehtiyoji bor korxonalar uchun jadvalni kelishamiz va kerakli pozitsiyalarni omborda saqlaymiz.</span></div>
       </div>
     </div>
   </section>
@@ -811,7 +811,7 @@ home = """
         </picture>
         <div class="faqside__cap">
           <b>Bochka va kubda yetkazamiz</b>
-          <span>Qadoqlash 20 litrdan kub idishlargacha. Doimiy ehtiyoj uchun narxni bir yilga belgilaymiz — har yetkazishni qaytadan kelishish shart emas.</span>
+          <span>Qadoqlash 20 litrdan kub idishlargacha — kanistrdan korxonalarga olib boriladigan hajmlargacha.</span>
         </div>
       </aside>
       </div>
@@ -1005,7 +1005,7 @@ podbor_blocks = '''    <p class="page__lead" style="max-width:760px">Texnika ro�
         <div class="longread">
           <h2>Natijada nima olasiz</h2>
           <p>Tanlov jadvalini: har bir texnika uchun Gazpromneft pozitsiyasi, qovushqoqlik sinfi, sifat darajasi va qadogʻi. Unga TDS texnik tavsifi va MSDS xavfsizlik pasportini, import markadan oʻtishda esa asosiy tavsiflar solishtirmasini ilova qilamiz — muhandis tanlov nimaga asoslanganini koʻrsin.</p>
-          <p>Pozitsiya koʻp boʻlsa, yillik ehtiyojni alohida hisoblab, belgilangan narx bilan spetsifikatsiya taklif qilamiz. Shuningdek: <a href="/uz/analogi" style="color:var(--blue);font-weight:600">import markalarni almashtirish jadvali</a> va <a href="/uz/price" style="color:var(--blue);font-weight:600">narx shartlari</a>.</p>
+          <p>Pozitsiya koʻp boʻlsa, yillik ehtiyojni alohida hisoblaymiz. Shuningdek: <a href="/uz/analogi" style="color:var(--blue);font-weight:600">import markalarni almashtirish jadvali</a> va <a href="/uz/price" style="color:var(--blue);font-weight:600">narx shartlari</a>.</p>
         </div>
       </div>
       <aside class="layout__aside">
@@ -1112,7 +1112,7 @@ otrasli_blocks = '''    <p class="page__lead" style="max-width:820px">Oʻzbekist
         <div class="longread" style="padding-top:0">
           <h2>Tarmoq boʻyicha tanlash narxlar roʻyxati boʻyicha sotishdan nimasi bilan farq qiladi</h2>
           <p>Bitta moy karyerda va sexda oʻzini har xil tutadi. Karyerda chang va zarbali yuklama hal qiladi, sexda — harorat barqarorligi va zichlagichlar bilan moslik, trassada — smena rejimi va yoqilgʻi sifati. Shuning uchun umumiy narxlar roʻyxatini yubormaymiz, balki texnika qayerda va qanday ishlashini soʻraymiz.</p>
-          <p>Doimiy ehtiyoji bor korxonalar uchun yillik spetsifikatsiya tayyorlaymiz: pozitsiyalar roʻyxati, hajmlar va davrga belgilangan narx. Bu har yetkazishni qaytadan kelishish zaruratini olib tashlaydi va byudjetni kurs tebranishidan himoya qiladi.</p>
+          <p>Doimiy ehtiyoji bor korxonalar uchun pozitsiyalar roʻyxati, hajmlar va joʻnatish jadvalini kelishamiz, kerakli mahsulotni omborda saqlaymiz. Shunda har yetkazishni noldan yigʻish shart emas.</p>
           <h2>Sanoat buyurtmachilari uchun hujjatlar</h2>
           <p>Yetkazib berish shartnoma asosida toʻliq paket bilan ketadi: hisob-faktura, tovar-transport hujjatlari, partiyaga sifat pasporti. Tender jarayonlari uchun qoʻshimcha ravishda muvofiqlik sertifikatlari va distribyutorlik xatini yigʻamiz.</p>
         </div>
@@ -1146,7 +1146,7 @@ dostavka_blocks = '''    <p class="page__lead" style="max-width:820px">Toshkentd
       <div class="why__item"><b>Oʻzi olib ketish</b><span>Toshkentdagi ombordan, joʻnatish vaqtini oldindan kelishamiz.</span></div>
       <div class="why__item"><b>Shartnoma asosida</b><span>Har yetkazishga hisob, hisob-faktura va tovar-transport hujjatlari.</span></div>
       <div class="why__item"><b>Sifat pasporti</b><span>Har partiyaga. Kirish nazorati va tenderlar uchun — toʻliq hujjatlar paketi.</span></div>
-      <div class="why__item"><b>Yillik spetsifikatsiyalar</b><span>Doimiy buyurtmachilar uchun davrga belgilangan narx va joʻnatish jadvali.</span></div>
+      <div class="why__item"><b>Muntazam joʻnatishlar</b><span>Doimiy buyurtmachilar uchun yetkazish jadvali va omborda kerakli zaxira.</span></div>
     </div>
 
     <div class="layout" style="margin-top:40px">
@@ -1154,7 +1154,7 @@ dostavka_blocks = '''    <p class="page__lead" style="max-width:820px">Toshkentd
         <div class="longread" style="padding-top:0">
           <h2>Yetkazib berish qanday oʻtadi</h2>
           <p>Siz ariza yuborasiz — pozitsiyalar roʻyxati yoki tanlash uchun texnika. Menejer mavjudlik va narxni tasdiqlaydi, kerak boʻlsa texnik mutaxassis tanlov tayyorlaydi. Keyin hisob chiqaramiz, muddatlarni kelishamiz va ombordan joʻnatamiz.</p>
-          <p>Katta hajm va muntazam yetkazishlar uchun jadval bilan spetsifikatsiya rasmiylashtiramiz: unda pozitsiyalar, hajmlar va davrga narx qayd etiladi. Bu format buyurtmachiga ham, bizga ham qulay — har reysga kamroq kelishuv.</p>
+          <p>Katta hajm va muntazam yetkazishlar uchun pozitsiyalar roʻyxati, hajmlar va joʻnatish jadvalini kelishamiz. Bu format buyurtmachiga ham, bizga ham qulay — har reysga kamroq kelishuv.</p>
           <h2>Qadoqlar</h2>
           <p>Bir litrlik kanistrdan kub sigʻimgacha yetkazamiz: 1, 4, 5, 10 va 20 litrlik kanistrlar, 205 litrlik bochkalar, kub sigʻimlar. Plastik moylar boʻyicha — kartrijdan bochkagacha. Aniq pozitsiya boʻyicha qadoqni tanlash paytida aniqlaymiz, u mahsulotga bogʻliq.</p>
         </div>
@@ -1175,7 +1175,6 @@ simple("/uz/dostavka", "dostavka.html", "Yetkazib berish va toʻlov", "Yetkazib 
 # ------------------------------------------------------------- narxlar
 PRICE_FAQ = [
  ("Nega narxlar toʻgʻridan-toʻgʻri saytda yoʻq?", "Narx tanlab olish hajmi, qadoq va joʻnatish shartlariga bogʻliq: bitta pozitsiya kanistrda va kub sigʻimda har xil turadi. Aniq raqamlar bilan narxlar roʻyxatini soʻrov boʻyicha oʻsha kuni yuboramiz."),
- ("Narxni bir yilga belgilash mumkinmi?", "Doimiy ehtiyoji bor korxonalar uchun belgilangan narx bilan yillik spetsifikatsiya tayyorlaymiz — bu kurs tebranishidan himoya qiladi va har yetkazishni qaytadan kelishish zaruratini olib tashlaydi."),
  ("Yetkazib berish bilan qanday hujjatlar keladi?", "Shartnoma, hisob-faktura, tovar-transport hujjatlari va partiyaga sifat pasporti. Tender uchun qoʻshimcha ravishda muvofiqlik sertifikatlari va distribyutorlik xatini yigʻamiz."),
 ]
 
@@ -1195,7 +1194,7 @@ price_body = """
 
         <div class="longread">
           <h2>Narx nimaga bogʻliq</h2>
-          <p>Qiymatga tanlab olish hajmi, qadoq (kanistr, bochka, kub sigʻim), joʻnatish davriyligi va toʻlov shartlari taʼsir qiladi. Yillik ehtiyoji bor korxonalarga belgilangan narxli spetsifikatsiya foydaliroq: u kurs tebranishidan himoya qiladi va har yetkazishni qaytadan kelishish zaruratini olib tashlaydi.</p>
+          <p>Qiymatga tanlab olish hajmi, qadoq (kanistr, bochka, kub sigʻim), joʻnatish davriyligi va toʻlov shartlari taʼsir qiladi. Tanlov qanchalik yirik va mayda qadoqdagi joʻnatishlar qanchalik kam boʻlsa, shartlar shunchalik qulay — shuning uchun narxni umumiy roʻyxat boʻyicha emas, sizning roʻyxatingizga qarab hisoblaymiz.</p>
           <h2>Buxgalteriya va tender uchun hujjatlar</h2>
           <p>Shartnoma asosida toʻliq paket bilan yetkazamiz: hisob-faktura, tovar-transport hujjatlari, partiyaga sifat pasporti, muvofiqlik sertifikatlari va distribyutorlik xati. Tender jarayonlari uchun buyurtmachi talabiga qarab majmua yigʻamiz.</p>
         </div>
