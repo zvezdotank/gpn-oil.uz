@@ -5,7 +5,7 @@
 // and redirects the visitor to the thank-you page, so the site itself
 // still needs no JavaScript for the form to work.
 //
-// Secrets: BOT_TOKEN (from @BotFather), CHAT_ID (group id, starts with -)
+// Secrets: BOT_TOKEN (from @BotFather), CHAT_ID (group or channel id, starts with -)
 //
 // NB: every Russian string below is written as \uXXXX escapes on purpose.
 // This file gets pasted into the Cloudflare editor through the clipboard,
@@ -39,13 +39,15 @@ export default {
       }
       const chats = {};
       for (const u of data.result || []) {
-        const c = u.message?.chat || u.my_chat_member?.chat;
+        // channel_post is what Telegram sends for channels; without it
+        // /setup finds groups only and a channel stays invisible.
+        const c = u.message?.chat || u.channel_post?.chat || u.my_chat_member?.chat;
         if (c) chats[c.id] = `${c.title || c.username || c.first_name || ''} (${c.type})`;
       }
       const found = Object.entries(chats).map(([id, t]) => `${id}   ${t}`).join('\n');
       return new Response(
-        found ? 'Chats found:\n\n' + found + '\n\nTake the group id (the one with a minus) and add it as the CHAT_ID secret.'
-              : 'No chats visible yet. Add the bot to the group, send any message there, then reload this page.',
+        found ? 'Chats found:\n\n' + found + '\n\nTake the id of your group or channel (the one with a minus) and add it as the CHAT_ID secret.'
+              : 'No chats visible yet. Add the bot to the group or channel, post any message there, then reload this page.\n\nFor a channel the bot must be an administrator, otherwise Telegram shows nothing here.',
         { headers: { 'content-type': 'text/plain; charset=utf-8' } });
     }
 
