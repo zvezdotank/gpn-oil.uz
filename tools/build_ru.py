@@ -54,7 +54,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=20">
+<link rel="stylesheet" href="/site.css?v=21">
 <script type="speculationrules">
 {{"prefetch":[{{"source":"document","where":{{"href_matches":"/*"}},"eagerness":"moderate"}}]}}
 </script>
@@ -276,7 +276,7 @@ def page(path, fname, title, desc, body, active=None, ogimage="/img/og.jpg",
             + body + MGR
             + (CTA.format(tg=TG) if cta else "")
             + TAIL.format(insta=INSTA, saleshub=SALESHUB, tg=TG)
-            + '\n<script src="/site.js?v=20" defer></script>\n</body>\n</html>\n')
+            + '\n<script src="/site.js?v=21" defer></script>\n</body>\n</html>\n')
     with io.open(os.path.join(OUT, fname), "w", encoding="utf-8") as f:
         f.write(html)
     return len(html)
@@ -885,7 +885,20 @@ home = """
           <div class="findus__row"><b>Почта</b><a href="mailto:t.yarulin@s-energy.uz">t.yarulin@s-energy.uz</a></div>
           <a class="btn btn--outline" href="https://yandex.uz/maps/?ll=69.312125%2C41.3230571&amp;z=17&amp;pt=69.312125,41.3230571" rel="noopener">Построить маршрут</a>
         </div>
-        <div class="map"><iframe src="https://yandex.uz/map-widget/v1/?ll=69.312125%2C41.3230571&amp;z=16&amp;pt=69.312125,41.3230571,pm2rdm" title="Офис и склад в Ташкенте на карте" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+        <div class="map">
+        <picture>
+          <source type="image/avif" srcset="/img/map-sm.avif 600w, /img/map.avif 1200w" sizes="(max-width:900px) 100vw, 50vw">
+          <source type="image/webp" srcset="/img/map-sm.webp 600w, /img/map.webp 1200w" sizes="(max-width:900px) 100vw, 50vw">
+          <img src="/img/map.webp" alt="Офис Smart Energy Eco Trade в Ташкенте на карте" width="1200" height="600" loading="lazy" decoding="async">
+        </picture>
+        <div class="map__go">
+          <span class="map__hint">Открыть маршрут:</span>
+          <a class="btn btn--outline btn--sm" href="https://yandex.uz/maps/?ll=69.312125%2C41.3230571&amp;z=17&amp;pt=69.312125,41.3230571,pm2rdm" rel="noopener" target="_blank">Яндекс Карты</a>
+          <a class="btn btn--outline btn--sm" href="https://www.google.com/maps/search/?api=1&amp;query=41.3230571%2C69.312125" rel="noopener" target="_blank">Google Карты</a>
+          <a class="btn btn--outline btn--sm" href="https://maps.apple.com/?ll=41.3230571,69.312125&amp;q=Smart%20Energy%20Eco%20Trade" rel="noopener" target="_blank">Apple Карты</a>
+        </div>
+        <p class="map__attr">&copy; <a href="https://www.openstreetmap.org/copyright" rel="noopener nofollow" target="_blank">OpenStreetMap</a></p>
+      </div>
       </div>
     </div>
   </section>
@@ -1223,7 +1236,18 @@ contacts = """
 
     <div class="contacts__col">
       <div class="map">
-        <iframe src="https://yandex.uz/map-widget/v1/?ll=69.312125%2C41.3230571&amp;z=17&amp;pt=69.312125,41.3230571,pm2rdm" title="Офис в Ташкенте на карте" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <picture>
+          <source type="image/avif" srcset="/img/map-sm.avif 600w, /img/map.avif 1200w" sizes="(max-width:900px) 100vw, 50vw">
+          <source type="image/webp" srcset="/img/map-sm.webp 600w, /img/map.webp 1200w" sizes="(max-width:900px) 100vw, 50vw">
+          <img src="/img/map.webp" alt="Офис Smart Energy Eco Trade в Ташкенте на карте" width="1200" height="600" loading="lazy" decoding="async">
+        </picture>
+        <div class="map__go">
+          <span class="map__hint">Открыть маршрут:</span>
+          <a class="btn btn--outline btn--sm" href="https://yandex.uz/maps/?ll=69.312125%2C41.3230571&amp;z=17&amp;pt=69.312125,41.3230571,pm2rdm" rel="noopener" target="_blank">Яндекс Карты</a>
+          <a class="btn btn--outline btn--sm" href="https://www.google.com/maps/search/?api=1&amp;query=41.3230571%2C69.312125" rel="noopener" target="_blank">Google Карты</a>
+          <a class="btn btn--outline btn--sm" href="https://maps.apple.com/?ll=41.3230571,69.312125&amp;q=Smart%20Energy%20Eco%20Trade" rel="noopener" target="_blank">Apple Карты</a>
+        </div>
+        <p class="map__attr">&copy; <a href="https://www.openstreetmap.org/copyright" rel="noopener nofollow" target="_blank">OpenStreetMap</a></p>
       </div>
 
       <div class="asidebox" style="padding:30px">
