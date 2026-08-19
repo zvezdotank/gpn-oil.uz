@@ -119,8 +119,20 @@ for src, name in LOGOS:
     flat = Image.alpha_composite(bg, im).convert("RGB")
     if sum(flat.resize((1, 1)).getpixel((0, 0))) < 240:      # фон тёмный
         flat = ImageOps.invert(flat)
+    # Обрезаем собственные поля исходника. У каждого логотипа они свои, и без
+    # обрезки «сделать крупнее» работает только для тех, кто свёрстан плотно:
+    # у остальных мы увеличиваем не знак, а пустоту вокруг него.
+    mask = flat.convert("L").point(lambda v: 0 if v > 244 else 255)
+    box = mask.getbbox()
+    if box:
+        flat = flat.crop(box)
     card = Image.new("RGB", (400, 400), (255, 255, 255))
-    flat.thumbnail((360, 300), Image.LANCZOS)
+    # Масштабируем в обе стороны: thumbnail() умеет только уменьшать, и
+    # мелкие исходники после обрезки полей так и оставались мелкими — ряд
+    # получался разнокалиберным, знак занимал от 41 до 90 процентов ширины.
+    lw, lh = flat.size
+    k = min(360 / lw, 300 / lh)
+    flat = flat.resize((max(1, round(lw * k)), max(1, round(lh * k))), Image.LANCZOS)
     card.paste(flat, ((400 - flat.size[0]) // 2, (400 - flat.size[1]) // 2))
     card.save(os.path.join(OUT, name + ".webp"), "WEBP", quality=88, method=6)
     print(name, (400, 400))
