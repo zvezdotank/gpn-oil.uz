@@ -68,7 +68,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=21">
+<link rel="stylesheet" href="/site.css?v=22">
 <script type="speculationrules">
 {{"prefetch":[{{"source":"document","where":{{"href_matches":"/*"}},"eagerness":"moderate"}}]}}
 </script>
@@ -272,7 +272,7 @@ def page(path, fname, title, desc, body, active=None, ogimage="/img/og.jpg",
             + body + MGR
             + (CTA.format(tg=TG) if cta else "")
             + TAIL.format(insta=INSTA, saleshub=SALESHUB, tg=TG)
-            + '\n<script src="/site.js?v=21" defer></script>\n</body>\n</html>\n')
+            + '\n<script src="/site.js?v=22" defer></script>\n</body>\n</html>\n')
     os.makedirs(os.path.dirname(os.path.join(UZDIR, fname)) or UZDIR, exist_ok=True)
     io.open(os.path.join(UZDIR, fname), "w", encoding="utf-8").write(html)
 
@@ -799,9 +799,22 @@ home = """
   </section>
 
   <section class="section section--tight section--grey">
-    <div class="wrap" style="max-width:920px">
+    <div class="wrap">
       <div class="section__head"><div><h2>Koʻp beriladigan savollar</h2></div></div>
+      <div class="faqgrid">
 {faqhtml}
+      <aside class="faqside">
+        <picture>
+          <source type="image/avif" srcset="/img/barrel-sm.avif 400w, /img/barrel.avif 800w" sizes="(max-width:900px) 100vw, 340px">
+          <source type="image/webp" srcset="/img/barrel-sm.webp 400w, /img/barrel.webp 800w" sizes="(max-width:900px) 100vw, 340px">
+          <img src="/img/barrel.webp" alt="Omborda 205 litrli Gazpromneft moy bochkasi" width="800" height="1067" loading="lazy" decoding="async">
+        </picture>
+        <div class="faqside__cap">
+          <b>Bochka va kubda yetkazamiz</b>
+          <span>Qadoqlash 20 litrdan kub idishlargacha. Doimiy ehtiyoj uchun narxni bir yilga belgilaymiz — har yetkazishni qaytadan kelishish shart emas.</span>
+        </div>
+      </aside>
+      </div>
     </div>
   </section>
 

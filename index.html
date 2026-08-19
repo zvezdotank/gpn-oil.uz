@@ -24,7 +24,7 @@
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" type="image/avif" href="/img/hero.avif" imagesrcset="/img/hero-sm.avif 700w, /img/hero-md.avif 960w, /img/hero.avif 1400w" imagesizes="(max-width:900px) 100vw, 45vw" fetchpriority="high">
-<link rel="stylesheet" href="/site.css?v=21">
+<link rel="stylesheet" href="/site.css?v=22">
 <script type="speculationrules">
 {"prefetch":[{"source":"document","where":{"href_matches":"/*"},"eagerness":"moderate"}]}
 </script>
@@ -227,8 +227,9 @@
   </section>
 
   <section class="section section--tight section--grey">
-    <div class="wrap" style="max-width:920px">
+    <div class="wrap">
       <div class="section__head"><div><h2>Частые вопросы</h2></div></div>
+      <div class="faqgrid">
         <div class="faq">
           <details name="faq">
             <summary>Можно ли заменить импортное масло на Газпромнефть?</summary>
@@ -255,6 +256,18 @@
             <p>Да, поставляем в Ташкент, Самарканд, Бухару, Навои и Ферганскую долину. Условия доставки обсуждаем при заявке.</p>
           </details>
         </div>
+      <aside class="faqside">
+        <picture>
+          <source type="image/avif" srcset="/img/barrel-sm.avif 400w, /img/barrel.avif 800w" sizes="(max-width:900px) 100vw, 340px">
+          <source type="image/webp" srcset="/img/barrel-sm.webp 400w, /img/barrel.webp 800w" sizes="(max-width:900px) 100vw, 340px">
+          <img src="/img/barrel.webp" alt="Бочка масла Газпромнефть 205 литров на складе" width="800" height="1067" loading="lazy" decoding="async">
+        </picture>
+        <div class="faqside__cap">
+          <b>Возим бочками и кубами</b>
+          <span>Фасовка от 20 литров до кубовых ёмкостей. Для постоянной потребности фиксируем цену на год — тогда не нужно согласовывать каждую поставку заново.</span>
+        </div>
+      </aside>
+      </div>
     </div>
   </section>
 
@@ -419,6 +432,6 @@
   </div>
 </footer>
 
-<script src="/site.js?v=21" defer></script>
+<script src="/site.js?v=22" defer></script>
 </body>
 </html>

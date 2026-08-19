@@ -362,6 +362,17 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
 .checklist span::before{content:"✓";color:var(--blue);font-weight:700}
 
 /* Вопрос-ответ. На <details>, чтобы работало без скрипта и попадало в выдачу */
+/* Блок вопросов в две колонки: слева гармошка, справа бочка. Снимок здесь
+   не украшение — он говорит про объёмы, а рядом стоит подпись про фасовку
+   и годовую цену. На узком экране картинка уходит вниз и режется по высоте,
+   иначе она вытесняет сами вопросы. */
+.faqgrid{display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:start}
+.faqside{display:flex;flex-direction:column;border:1px solid var(--rule);
+  border-radius:var(--r);overflow:hidden;background:#fff}
+.faqside img{display:block;width:100%;height:auto}
+.faqside__cap{display:flex;flex-direction:column;gap:6px;padding:18px 20px 20px}
+.faqside__cap b{font-size:17px;line-height:1.25}
+.faqside__cap span{font-size:14px;line-height:1.55;color:var(--muted)}
 .faq{display:flex;flex-direction:column;border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;background:#fff}
 .faq details{border-bottom:1px solid var(--rule);background:#fff;padding:0 22px}
 .faq summary{display:flex;align-items:center;justify-content:space-between;gap:20px;
@@ -607,6 +618,8 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
   /* на телефоне картинка идёт под текстом — размывать нечего, убираем шторку */
   .hero__shot::after{background:linear-gradient(0deg, rgba(10,28,40,.28) 0%, transparent 40%)}
   .split,.intro,.contacts{grid-template-columns:1fr;gap:0}
+  .faqgrid{grid-template-columns:1fr;gap:20px}
+  .faqside img{max-height:340px;object-fit:cover;object-position:center 40%}
   .split__body{padding:40px var(--pad);max-width:none}
   .split__media,.intro__media{min-height:280px;height:280px}
   .intro{gap:26px;padding-top:34px;padding-bottom:34px}
