@@ -409,7 +409,7 @@ def leadform(source, title, sub, button, cls="", preset=None, anchor=None):
     opts = "\n".join(
         '            <option%s>%s</option>' % (' selected' if n == preset else '', n)
         for n in NEEDS)
-    return """      <form class="leadform%s"%s method="post" action="https://relay.gpn-oil.uz/">
+    return """      <form class="leadform%s"%s method="post" action="https://silent-math-2fd3.zvezdotank.workers.dev/">
         <b>%s</b>
         <p>%s</p>
         <input class="trap" type="text" name="company_site" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -1272,7 +1272,7 @@ contacts = """
         </div>
       </div>
 
-      <form class="form" id="zayavka" method="post" action="https://relay.gpn-oil.uz/">
+      <form class="form" id="zayavka" method="post" action="https://silent-math-2fd3.zvezdotank.workers.dev/">
         <b>Оставить заявку</b>
         <input class="trap" type="text" name="company_site" tabindex="-1" autocomplete="off" aria-hidden="true">
         <input type="hidden" name="_form" value="Заявка с сайта">
