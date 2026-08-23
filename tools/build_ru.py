@@ -1212,11 +1212,12 @@ POSTS = [
 ]
 BLOG_IMG = ["cat-industrial", "cat-transmission", "cat-gpn", "reductor", "cat-grease", "products"]
 cards = "\n".join("""    <article class="post">
-      <img class="post__media" src="/img/{img}-sm.webp" alt="" width="380" height="200" loading="lazy" decoding="async">
+      <img class="post__media" src="/img/{img}-sm.webp" alt="" width="{iw}" height="{ih}" loading="lazy" decoding="async">
       <div class="post__tag">{tag}</div>
       <h2 class="post__title">{title}</h2>
       <p class="post__lead">{lead}</p>
-    </article>""".format(img=BLOG_IMG[i], tag=t, title=ti, lead=le)
+    </article>""".format(img=BLOG_IMG[i], tag=t, title=ti, lead=le,
+                         iw=dim(BLOG_IMG[i] + "-sm")[0], ih=dim(BLOG_IMG[i] + "-sm")[1])
     for i, (t, ti, le) in enumerate(POSTS))
 
 blog = """

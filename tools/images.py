@@ -39,7 +39,7 @@ def crop_to(im, ratio):
 
 
 # Страницы, где вёрстка просит промежуточный размер между полным и половинным.
-MD = {"hero", "company", "company-office", "gpn", "grease", "price", "products"}
+MD = {"hero", "company", "gpn", "grease", "products"}
 
 
 def save(im, name, width, q=78, qa=55):
@@ -84,7 +84,9 @@ JOBS = [
     ("reductor.jpg",     "cat-transmission",1.9,   900),
     ("coolant.jpg",      "cat-fluids",      1.9,   900),
 
-    # шапки страниц
+    # Шапки страниц. Готовим только те, что вёрстка действительно
+    # подключает: раньше здесь были ещё price и company-office —
+    # конвейер их делал, а ни одна страница не запрашивала.
     ("industrial.jpg",   "industrial",      2.6,   800),
     ("hydraulic.jpeg",   "hydralic",        2.6,  1200),
     ("reductor.jpg",     "reductor",        2.6,  1200),
@@ -93,8 +95,6 @@ JOBS = [
     ("canister.jpg",     "gpn",             2.6,  1400),
     ("g-energy-1.jpg",   "g-energy",        2.6,  1024),
     ("coolant.jpg",      "fluids",          2.6,  1200),
-    ("hero-warehouse.jpg","price",          2.6,  1400),
-    ("oils-row.jpeg",    "company-office",  2.6,  1400),
 ]
 
 for src, name, ratio, width in JOBS:
@@ -138,7 +138,5 @@ for src, name in LOGOS:
     card.save(os.path.join(OUT, name + ".webp"), "WEBP", quality=88, method=6)
     print(name, (400, 400))
 
-for junk in ("cat-industrial-sm", "hero-sm"):
-    pass
 total = sum(os.path.getsize(os.path.join(OUT, f)) for f in os.listdir(OUT) if f.endswith(".webp"))
 print("вес картинок: %.0f КБ" % (total / 1024))
