@@ -4,7 +4,8 @@
 на выходе обычная статика."""
 import os as _os
 ROOT = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
-import io, os
+import io
+import re, os
 
 OUT = ROOT
 SITE = "https://gpn-oil.uz"
@@ -54,7 +55,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=23">
+<link rel="stylesheet" href="/site.css?v=24">
 <script type="speculationrules">
 {{"prefetch":[{{"source":"document","where":{{"href_matches":"/*"}},"eagerness":"moderate"}}]}}
 </script>
@@ -276,7 +277,7 @@ def page(path, fname, title, desc, body, active=None, ogimage="/img/og.jpg",
             + body + MGR
             + (CTA.format(tg=TG) if cta else "")
             + TAIL.format(insta=INSTA, saleshub=SALESHUB, tg=TG)
-            + '\n<script src="/site.js?v=23" defer></script>\n</body>\n</html>\n')
+            + '\n<script src="/site.js?v=24" defer></script>\n</body>\n</html>\n')
     with io.open(os.path.join(OUT, fname), "w", encoding="utf-8") as f:
         f.write(html)
     return len(html)
@@ -362,17 +363,42 @@ def aside_other(current):
         </div>""" % links
 
 
+
+# Транслитерация для якорей: у позиций встречается кириллица (КС-19п),
+# а адрес должен оставаться читаемым и без процентных кодов.
+_TR = {"а":"a","б":"b","в":"v","г":"g","д":"d","е":"e","ё":"e","ж":"zh","з":"z",
+       "и":"i","й":"y","к":"k","л":"l","м":"m","н":"n","о":"o","п":"p","р":"r",
+       "с":"s","т":"t","у":"u","ф":"f","х":"h","ц":"c","ч":"ch","ш":"sh",
+       "щ":"sch","ъ":"","ы":"y","ь":"","э":"e","ю":"yu","я":"ya"}
+
+
+def slug(name):
+    """Адрес якоря позиции. Марку не повторяем: она одна на всю таблицу."""
+    s = name.lower().replace("gazpromneft", "").strip()
+    s = "".join(_TR.get(ch, ch) for ch in s)
+    s = re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+    return s or "poziciya"
+
 def table(rows):
-    """Таблица позиций. Данные — из перечня клиента, ничего не досочиняем."""
+    """Таблица позиций. Данные — из перечня клиента, ничего не досочиняем.
+
+    Название каждой позиции — заголовок третьего уровня со своим якорем.
+    Так поисковик видит точное «Gazpromneft Hydraulic HLP 32» в заголовке,
+    а не в ячейке таблицы, и на позицию можно дать прямую ссылку. Это
+    закрывает запросы с названием марки без отдельной страницы на каждую
+    из двадцати одной позиции — такие страницы получились бы пустыми,
+    пока у нас нет паспортов качества.
+    """
     body = []
     for name, grade, pack in rows:
-        body.append("""          <div class="table__row">
-            <b>%s</b>
+        body.append("""          <div class="table__row" id="%s">
+            <h3>%s</h3>
             <span><span class="table__label">Класс вязкости: </span>%s</span>
             <span><span class="table__label">Фасовка: </span>%s</span>
             <div class="table__files"><a href="/docs">TDS · MSDS</a></div>
-          </div>""" % (name, grade, pack))
-    return """        <div class="table">
+          </div>""" % (slug(name), name, grade, pack))
+    return """        <h2 class="table__title">Позиции на складе в Ташкенте</h2>
+        <div class="table">
           <div class="table__head">
             <div>Наименование</div><div>Класс вязкости</div><div>Фасовка</div><div>Документы</div>
           </div>

@@ -304,6 +304,11 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
   font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;
 }
 .table__row{border-top:1px solid var(--rule);font-size:15px}
+/* Название позиции — заголовок третьего уровня: так поисковик видит точную
+   марку в заголовке, а не в ячейке. Вид при этом прежний, иначе таблица
+   развалилась бы на разнокалиберные строки. */
+.table__row h3{margin:0;font-size:15px;font-weight:600;line-height:1.35}
+.table__title{margin:0 0 14px;font-size:20px;line-height:1.3}
 .table__row b{font-weight:600}
 .table__row span{color:var(--muted)}
 .table__files{display:flex;gap:12px;font-size:13px;font-weight:600;color:var(--blue)}

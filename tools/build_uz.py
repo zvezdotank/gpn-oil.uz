@@ -6,7 +6,8 @@
 """
 import os as _os
 ROOT = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
-import io, os
+import io
+import re, os
 from PIL import Image as _Image
 
 OUT = ROOT
@@ -68,7 +69,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=23">
+<link rel="stylesheet" href="/site.css?v=24">
 <script type="speculationrules">
 {{"prefetch":[{{"source":"document","where":{{"href_matches":"/*"}},"eagerness":"moderate"}}]}}
 </script>
@@ -272,7 +273,7 @@ def page(path, fname, title, desc, body, active=None, ogimage="/img/og.jpg",
             + body + MGR
             + (CTA.format(tg=TG) if cta else "")
             + TAIL.format(insta=INSTA, saleshub=SALESHUB, tg=TG)
-            + '\n<script src="/site.js?v=23" defer></script>\n</body>\n</html>\n')
+            + '\n<script src="/site.js?v=24" defer></script>\n</body>\n</html>\n')
     os.makedirs(os.path.dirname(os.path.join(UZDIR, fname)) or UZDIR, exist_ok=True)
     io.open(os.path.join(UZDIR, fname), "w", encoding="utf-8").write(html)
 
@@ -374,14 +375,33 @@ def aside_other(current):
         </div>""" % links
 
 
+# Yakorlar uchun transliteratsiya: pozitsiyalarda kirillcha nomlar ham bor
+# (КС-19п), manzil esa oʻqiladigan va foizli kodlarsiz qolishi kerak.
+_TR = {"а":"a","б":"b","в":"v","г":"g","д":"d","е":"e","ё":"e","ж":"zh","з":"z",
+       "и":"i","й":"y","к":"k","л":"l","м":"m","н":"n","о":"o","п":"p","р":"r",
+       "с":"s","т":"t","у":"u","ф":"f","х":"h","ц":"c","ч":"ch","ш":"sh",
+       "щ":"sch","ъ":"","ы":"y","ь":"","э":"e","ю":"yu","я":"ya"}
+
+
+def slug(name):
+    s = name.lower().replace("gazpromneft", "").strip()
+    s = "".join(_TR.get(ch, ch) for ch in s)
+    s = re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+    return s or "poziciya"
+
+
 def table(rows):
-    body = ["""          <div class="table__row">
-            <b>%s</b>
+    """Har bir pozitsiya nomi — oʻz yakoriga ega uchinchi daraja sarlavhasi.
+    Shunda qidiruv tizimi aniq markani jadval katagida emas, sarlavhada
+    koʻradi va pozitsiyaga toʻgʻridan-toʻgʻri havola berish mumkin."""
+    body = ["""          <div class="table__row" id="%s">
+            <h3>%s</h3>
             <span><span class="table__label">Qovushqoqlik sinfi: </span>%s</span>
             <span><span class="table__label">Qadoq: </span>%s</span>
             <div class="table__files"><a href="/uz/docs">TDS · MSDS</a></div>
-          </div>""" % r for r in rows]
-    return """        <div class="table">
+          </div>""" % (slug(r[0]), r[0], r[1], r[2]) for r in rows]
+    return """        <h2 class="table__title">Toshkentdagi omborda mavjud pozitsiyalar</h2>
+        <div class="table">
           <div class="table__head">
             <div>Nomi</div><div>Qovushqoqlik sinfi</div><div>Qadoq</div><div>Hujjatlar</div>
           </div>
