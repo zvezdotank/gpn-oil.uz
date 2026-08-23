@@ -529,21 +529,52 @@ def category(path, fname, crumb, h1, title, desc, lead, img, img_size, alt,
                        + products_ld(rows, path, img))
 
 
-INDUSTRIAL_ROWS = [
+# Перечни ведём отдельными списками по категориям, а страницу
+# «Индустриальные масла» собираем как их сумму. Раньше был один список
+# с нарезкой по номерам позиций — стоило добавить марку, и нарезка
+# разъезжалась, показывая на странице чужие позиции.
+HYDRAULIC_ROWS = [
     ("Gazpromneft Hydraulic HLP 32", "ISO VG 32", "20 / 50 / 205 л"),
     ("Gazpromneft Hydraulic HLP 46", "ISO VG 46", "20 / 50 / 205 л"),
     ("Gazpromneft Hydraulic HLP 68", "ISO VG 68", "20 / 205 л"),
+]
+
+# Класс вязкости у CLP и у компрессорных читается прямо из обозначения
+# марки, это не домысел. Фасовку по новым позициям клиент пока не дал —
+# ставим прочерк, а не выдумываем.
+REDUCTOR_ROWS = [
+    ("Gazpromneft Reductor CLP 68", "ISO VG 68", "—"),
     ("Gazpromneft Reductor CLP 150", "ISO VG 150", "20 / 205 л"),
     ("Gazpromneft Reductor CLP 220", "ISO VG 220", "20 / 205 л"),
-    ("Gazpromneft Compressor Oil 46", "ISO VG 46", "20 / 205 л"),
-    ("Gazpromneft Turbine Oil 32", "ISO VG 32", "205 л"),
-    ("Gazpromneft Termoil 26", "ISO VG 32", "205 л"),
+    ("Gazpromneft Reductor CLP 320", "ISO VG 320", "—"),
+    ("Gazpromneft Reductor CLP 460", "ISO VG 460", "—"),
+    ("Gazpromneft Reductor CLP 680", "ISO VG 680", "—"),
 ]
+
+COMPRESSOR_ROWS = [
+    ("Gazpromneft Compressor S Synth-46", "ISO VG 46", "—"),
+    ("Gazpromneft Compressor F Synth-46", "ISO VG 46", "—"),
+    ("Gazpromneft Compressor S Synth-100", "ISO VG 100", "—"),
+    ("Gazpromneft Compressor S Synth-150", "ISO VG 150", "—"),
+    ("Gazpromneft Compressor Oil 46", "ISO VG 46", "20 / 205 л"),
+    ("Gazpromneft Compressor Oil 68", "ISO VG 68", "—"),
+    ("Gazpromneft Compressor Oil 100", "ISO VG 100", "—"),
+    ("Gazpromneft Compressor Oil 150", "ISO VG 150", "—"),
+    ("Gazpromneft Compressor Oil 220", "ISO VG 220", "—"),
+    ("Gazpromneft КС-19п", "—", "—"),
+]
+
+TURBINE_ROWS = [
+    ("Gazpromneft Turbine Oil 32", "ISO VG 32", "205 л"),
+    ("Gazpromneft HTO 32", "ISO VG 32", "205 л"),
+]
+
+INDUSTRIAL_ROWS = HYDRAULIC_ROWS + REDUCTOR_ROWS + COMPRESSOR_ROWS + TURBINE_ROWS
 
 category("/industrial", "industrial.html", "Индустриальные масла",
          "Индустриальные масла Газпромнефть в Ташкенте",
          "Индустриальные масла Газпромнефть в Ташкенте и Узбекистане",
-         "Индустриальные масла Gazpromneft со склада в Ташкенте: гидравлические HLP 32/46/68, редукторные CLP, компрессорные и турбинные. Паспорт качества на партию.",
+         "Индустриальные масла Gazpromneft со склада в Ташкенте: гидравлические HLP 32/46/68, редукторные CLP 68–680, компрессорные и турбинные. Паспорт качества на партию.",
          "Гидравлические, редукторные, компрессорные, турбинные и трансформаторные масла, теплоносители. Наличие на складе в Ташкенте, фасовка от 20 л до кубовых ёмкостей, паспорт качества на каждую партию.",
          "industrial", (800, 449),
          "Индустриальные масла Газпромнефть в бочках на складе",
@@ -560,19 +591,19 @@ category("/hydralic", "hydralic.html", "Гидравлические масла"
          "Серия Gazpromneft Hydraulic для гидросистем карьерной, строительной и промышленной техники. Классы ISO VG 32, 46 и 68, фасовка от 20 л до кубовых ёмкостей.",
          "hydralic", (1200, 674),
          "Гидравлика карьерной техники — гидравлические масла Газпромнефть",
-         rows=INDUSTRIAL_ROWS[:3],
+         rows=HYDRAULIC_ROWS,
          parent=("Индустриальные масла", "/industrial"),
          longread=("Чем заменить импортное гидравлическое масло",
                    "Shell Tellus S2 M, Mobil DTE 20 и Total Azolla ZS подбираются по классу ISO VG и уровню очистки. Даём протокол сравнения характеристик и рекомендации по промывке системы перед переходом."))
 
 category("/reductor", "reductor.html", "Редукторные масла",
          "Редукторные масла Газпромнефть в Ташкенте",
-         "Редукторные масла Газпромнефть — CLP 150 и CLP 220",
-         "Редукторные масла Gazpromneft Reductor CLP 150 и CLP 220 со склада в Ташкенте. Фасовка 20 и 205 л, паспорт качества на партию, подбор по нагрузке и температуре.",
-         "Серия Gazpromneft Reductor для промышленных редукторов и приводов. Классы ISO VG 150 и 220, фасовка 20 и 205 л, наличие на складе в Ташкенте.",
+         "Редукторные масла Газпромнефть — CLP 68, 150, 220, 320, 460, 680",
+         "Редукторные масла Gazpromneft Reductor CLP от 68 до 680 со склада в Ташкенте. Паспорт качества на партию, подбор по нагрузке и рабочей температуре узла.",
+         "Серия Gazpromneft Reductor для промышленных редукторов и приводов. Классы вязкости ISO VG от 68 до 680, наличие на складе в Ташкенте.",
          "reductor", (1200, 674),
          "Промышленный редуктор — редукторные масла Газпромнефть",
-         rows=INDUSTRIAL_ROWS[3:5],
+         rows=REDUCTOR_ROWS,
          parent=("Индустриальные масла", "/industrial"),
          longread=("Как подобрать редукторное масло",
                    "Класс вязкости выбирается по окружной скорости, нагрузке на зуб и рабочей температуре узла. При высокой ударной нагрузке или температуре выше 90 °C нужен продукт с усиленным пакетом противозадирных присадок — подскажем на подборе."))
@@ -580,11 +611,11 @@ category("/reductor", "reductor.html", "Редукторные масла",
 category("/compressor", "compressor.html", "Компрессорные масла",
          "Компрессорные масла Газпромнефть в Ташкенте",
          "Компрессорные масла Газпромнефть в Узбекистане",
-         "Компрессорные масла Gazpromneft Compressor Oil со склада в Ташкенте. Фасовка 20 и 205 л, паспорт качества на партию, подбор под винтовые и поршневые компрессоры.",
-         "Масла для винтовых и поршневых компрессоров. Класс ISO VG 46, фасовка 20 и 205 л, наличие на складе в Ташкенте.",
+         "Компрессорные масла Gazpromneft Compressor со склада в Ташкенте: минеральные Compressor Oil и синтетические S Synth и F Synth. Подбор под винтовые и поршневые компрессоры.",
+         "Масла для винтовых и поршневых компрессоров: минеральные Compressor Oil классов ISO VG от 46 до 220, синтетические S Synth и F Synth, а также КС-19п. Наличие на складе в Ташкенте.",
          "compressor", (1024, 575),
          "Винтовые компрессоры — компрессорные масла Газпромнефть",
-         rows=INDUSTRIAL_ROWS[5:6],
+         rows=COMPRESSOR_ROWS,
          parent=("Индустриальные масла", "/industrial"),
          longread=("Интервал замены в компрессоре",
                    "Ресурс масла в винтовом компрессоре зависит от температуры нагнетания и запылённости воздуха на площадке. В условиях Узбекистана летом интервал обычно короче паспортного — ориентируйтесь на анализ пробы, а не только на наработку."))
@@ -955,9 +986,9 @@ products = """
     </div>
     <div class="tiles">
       <a class="tile" href="/hydralic"><b>Гидравлические</b><span>Gazpromneft Hydraulic HLP 32, 46, 68</span></a>
-      <a class="tile" href="/reductor"><b>Редукторные</b><span>Gazpromneft Reductor CLP 150, 220</span></a>
+      <a class="tile" href="/reductor"><b>Редукторные</b><span>Gazpromneft Reductor CLP 68–680</span></a>
       <a class="tile" href="/compressor"><b>Компрессорные</b><span>Gazpromneft Compressor Oil 46</span></a>
-      <a class="tile" href="/industrial"><b>Турбинные и теплоносители</b><span>Turbine Oil 32, Termoil 26</span></a>
+      <a class="tile" href="/industrial"><b>Турбинные и теплоносители</b><span>Turbine Oil 32, HTO 32</span></a>
     </div>
 
     <div class="layout" style="margin-top:44px">
@@ -1016,7 +1047,7 @@ price = """
           <b>Популярные позиции</b>
           <div>
             <a href="/hydralic">Гидравлические HLP 32, 46, 68</a>
-            <a href="/reductor">Редукторные CLP 150, 220</a>
+            <a href="/reductor">Редукторные CLP 68–680</a>
             <a href="/gpn">Моторные для грузовой техники</a>
             <a href="/grease">Пластичные смазки</a>
             <a href="/fluids">Антифризы и СОЖ</a>

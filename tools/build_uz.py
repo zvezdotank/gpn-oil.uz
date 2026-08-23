@@ -486,16 +486,47 @@ def category(path, fname, crumb, h1, title, desc, lead, img, alt,
                        + products_ld(rows, path, img))
 
 
-INDUSTRIAL_ROWS = [
+# Roʻyxatlarni toifalar boʻyicha alohida yuritamiz, «Industrial moylar»
+# sahifasi esa ularning yigʻindisi. Ilgari bitta roʻyxat pozitsiya raqami
+# boʻyicha kesilardi — yangi marka qoʻshilishi bilan kesim siljib, sahifada
+# begona pozitsiyalar chiqardi.
+HYDRAULIC_ROWS = [
     ("Gazpromneft Hydraulic HLP 32", "ISO VG 32", "20 / 50 / 205 l"),
     ("Gazpromneft Hydraulic HLP 46", "ISO VG 46", "20 / 50 / 205 l"),
     ("Gazpromneft Hydraulic HLP 68", "ISO VG 68", "20 / 205 l"),
+]
+
+# CLP va kompressor moylarida qovushqoqlik sinfi marka belgisidan oʻqiladi.
+# Yangi pozitsiyalar boʻyicha qadoqni mijoz hali bermadi — chiziqcha
+# qoʻyamiz, oʻylab topmaymiz.
+REDUCTOR_ROWS = [
+    ("Gazpromneft Reductor CLP 68", "ISO VG 68", "—"),
     ("Gazpromneft Reductor CLP 150", "ISO VG 150", "20 / 205 l"),
     ("Gazpromneft Reductor CLP 220", "ISO VG 220", "20 / 205 l"),
-    ("Gazpromneft Compressor Oil 46", "ISO VG 46", "20 / 205 l"),
-    ("Gazpromneft Turbine Oil 32", "ISO VG 32", "205 l"),
-    ("Gazpromneft Termoil 26", "ISO VG 32", "205 l"),
+    ("Gazpromneft Reductor CLP 320", "ISO VG 320", "—"),
+    ("Gazpromneft Reductor CLP 460", "ISO VG 460", "—"),
+    ("Gazpromneft Reductor CLP 680", "ISO VG 680", "—"),
 ]
+
+COMPRESSOR_ROWS = [
+    ("Gazpromneft Compressor S Synth-46", "ISO VG 46", "—"),
+    ("Gazpromneft Compressor F Synth-46", "ISO VG 46", "—"),
+    ("Gazpromneft Compressor S Synth-100", "ISO VG 100", "—"),
+    ("Gazpromneft Compressor S Synth-150", "ISO VG 150", "—"),
+    ("Gazpromneft Compressor Oil 46", "ISO VG 46", "20 / 205 l"),
+    ("Gazpromneft Compressor Oil 68", "ISO VG 68", "—"),
+    ("Gazpromneft Compressor Oil 100", "ISO VG 100", "—"),
+    ("Gazpromneft Compressor Oil 150", "ISO VG 150", "—"),
+    ("Gazpromneft Compressor Oil 220", "ISO VG 220", "—"),
+    ("Gazpromneft КС-19п", "—", "—"),
+]
+
+TURBINE_ROWS = [
+    ("Gazpromneft Turbine Oil 32", "ISO VG 32", "205 l"),
+    ("Gazpromneft HTO 32", "ISO VG 32", "205 l"),
+]
+
+INDUSTRIAL_ROWS = HYDRAULIC_ROWS + REDUCTOR_ROWS + COMPRESSOR_ROWS + TURBINE_ROWS
 
 category("/uz/industrial", "industrial.html", "Industrial moylar",
          "Toshkentda Gazpromneft industrial moylari",
@@ -515,17 +546,17 @@ category("/uz/hydralic", "hydralic.html", "Gidravlik moylar",
          "Toshkentdagi ombordan Gazpromneft Hydraulic HLP 32, 46 va 68. Qadoq 20, 50 va 205 litr, sifat pasporti, import analoglarni tanlash.",
          "Karyer, qurilish va sanoat texnikasining gidravlik tizimlari uchun Gazpromneft Hydraulic seriyasi. ISO VG 32, 46 va 68 sinflari, qadoq 20 litrdan kub sigʻimgacha.",
          "hydralic", "Karyer texnikasi gidravlikasi — Gazpromneft gidravlik moylari",
-         rows=INDUSTRIAL_ROWS[:3], parent=("Industrial moylar", "/uz/industrial"),
+         rows=HYDRAULIC_ROWS, parent=("Industrial moylar", "/uz/industrial"),
          longread=("Import gidravlik moyni nima bilan almashtirish mumkin",
                    "Shell Tellus S2 M, Mobil DTE 20 va Total Azolla ZS ISO VG sinfi va tozalik darajasi boʻyicha tanlanadi. Oʻtishdan oldin tavsiflar solishtirmasini va tizimni yuvish boʻyicha tavsiyani beramiz."))
 
 category("/uz/reductor", "reductor.html", "Reduktor moylari",
          "Toshkentda Gazpromneft reduktor moylari",
-         "Oʻzbekistonda Gazpromneft reduktor moylari — CLP 150, CLP 220",
-         "Toshkentdagi ombordan Gazpromneft Reductor CLP 150 va CLP 220 reduktor moylari. Qadoq 20 va 205 litr, sifat pasporti, yuklama va haroratga qarab tanlash.",
+         "Gazpromneft reduktor moylari — CLP 68, 150, 220, 320, 460, 680",
+         "Toshkentdagi ombordan Gazpromneft Reductor CLP 68 dan 680 gacha reduktor moylari. Sifat pasporti, yuklama va haroratga qarab tanlash.",
          "Sanoat reduktorlari va uzatmalari uchun Gazpromneft Reductor seriyasi. ISO VG 150 va 220 sinflari, qadoq 20 va 205 litr, Toshkentdagi omborda mavjud.",
          "reductor", "Sanoat reduktori — Gazpromneft reduktor moylari",
-         rows=INDUSTRIAL_ROWS[3:5], parent=("Industrial moylar", "/uz/industrial"),
+         rows=REDUCTOR_ROWS, parent=("Industrial moylar", "/uz/industrial"),
          longread=("Reduktor moyini qanday tanlash kerak",
                    "Qovushqoqlik sinfi aylanma tezlik, tishga tushadigan yuklama va uzelning ish haroratiga qarab tanlanadi. Zarbali yuklama katta yoki harorat 90 °C dan yuqori boʻlsa, kuchaytirilgan qoʻshimchalar paketi kerak — tanlashda aytamiz."))
 
@@ -533,9 +564,9 @@ category("/uz/compressor", "compressor.html", "Kompressor moylari",
          "Toshkentda Gazpromneft kompressor moylari",
          "Oʻzbekistonda Gazpromneft kompressor moylari — Compressor Oil 46",
          "Toshkentdagi ombordan Gazpromneft Compressor Oil kompressor moylari. Qadoq 20 va 205 litr, sifat pasporti, vint va porshenli kompressorlarga tanlash.",
-         "Vint va porshenli kompressorlar uchun moylar. ISO VG 46 sinfi, qadoq 20 va 205 litr, Toshkentdagi omborda mavjud.",
+         "Vint va porshenli kompressorlar uchun moylar: ISO VG 46 dan 220 gacha mineral Compressor Oil, sintetik S Synth va F Synth, hamda КС-19п. Toshkentdagi omborda mavjud.",
          "compressor", "Vint kompressorlari — Gazpromneft kompressor moylari",
-         rows=INDUSTRIAL_ROWS[5:6], parent=("Industrial moylar", "/uz/industrial"),
+         rows=COMPRESSOR_ROWS, parent=("Industrial moylar", "/uz/industrial"),
          longread=("Kompressorda almashtirish oraligʻi",
                    "Vint kompressorida moy resursi haydash harorati va maydondagi changga bogʻliq. Oʻzbekiston yozida oraliq odatda pasportdagidan qisqaroq — faqat ishlash soatiga emas, namuna tahliliga qarang."))
 
@@ -917,9 +948,9 @@ products = """
     </div>
     <div class="tiles">
       <a class="tile" href="/uz/hydralic"><b>Gidravlik</b><span>Gazpromneft Hydraulic HLP 32, 46, 68</span></a>
-      <a class="tile" href="/uz/reductor"><b>Reduktor</b><span>Gazpromneft Reductor CLP 150, 220</span></a>
+      <a class="tile" href="/uz/reductor"><b>Reduktor</b><span>Gazpromneft Reductor CLP 68–680</span></a>
       <a class="tile" href="/uz/compressor"><b>Kompressor</b><span>Gazpromneft Compressor Oil 46</span></a>
-      <a class="tile" href="/uz/industrial"><b>Turbina va issiqlik tashuvchilar</b><span>Turbine Oil 32, Termoil 26</span></a>
+      <a class="tile" href="/uz/industrial"><b>Turbina va issiqlik tashuvchilar</b><span>Turbine Oil 32, HTO 32</span></a>
     </div>
 
     <div class="layout" style="margin-top:40px">
@@ -1207,7 +1238,7 @@ price_body = """
           <b>Ommabop pozitsiyalar</b>
           <div>
             <a href="/uz/hydralic">Gidravlik HLP 32, 46, 68</a>
-            <a href="/uz/reductor">Reduktor CLP 150, 220</a>
+            <a href="/uz/reductor">Reduktor CLP 68–680</a>
             <a href="/uz/gpn">Yuk texnikasi uchun motor moylari</a>
             <a href="/uz/grease">Plastik moylar</a>
             <a href="/uz/fluids">Antifrizlar va SOJ</a>
