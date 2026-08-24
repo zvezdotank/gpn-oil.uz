@@ -35,12 +35,13 @@ def srcset(name, w):
 
 
 NAV = [
+    ("/uz/", "Bosh sahifa", "home"),
+    ("/uz/company", "Kompaniya", "company"),
+    ("/uz/otrasli", "Tarmoqlar", "otrasli"),
     ("/uz/products", "Mahsulotlar", "products"),
     ("/uz/podbor", "Moy tanlash", "podbor"),
-    ("/uz/otrasli", "Tarmoqlar", "otrasli"),
-    ("/uz/price", "Narxlar", "price"),
     ("/uz/docs", "Hujjatlar", "docs"),
-    ("/uz/company", "Kompaniya", "company"),
+    ("/uz/price", "Narxlar", "price"),
     ("/uz/contacts", "Aloqa", "contacts"),
 ]
 
@@ -69,7 +70,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=25">
+<link rel="stylesheet" href="/site.css?v=26">
 <script type="speculationrules">
 {{"prefetch":[{{"source":"document","where":{{"href_matches":"/*"}},"eagerness":"moderate"}}]}}
 </script>
@@ -273,7 +274,7 @@ def page(path, fname, title, desc, body, active=None, ogimage="/img/og.jpg",
             + body + MGR
             + (CTA.format(tg=TG) if cta else "")
             + TAIL.format(insta=INSTA, saleshub=SALESHUB, tg=TG)
-            + '\n<script src="/site.js?v=25" defer></script>\n</body>\n</html>\n')
+            + '\n<script src="/site.js?v=26" defer></script>\n</body>\n</html>\n')
     os.makedirs(os.path.dirname(os.path.join(UZDIR, fname)) or UZDIR, exist_ok=True)
     io.open(os.path.join(UZDIR, fname), "w", encoding="utf-8").write(html)
 
@@ -937,7 +938,7 @@ home = """
 page("/uz/", "index.html", "Gazpromneft Oʻzbekiston — moylarning rasmiy distribyutori",
      "Gazpromneft Oʻzbekiston: industrial, motor va transmissiya moylari, plastik moylar, texnik suyuqliklar. Toshkentda ombor, 24 soatda joʻnatish.",
      home, preload="/img/hero.webp", preload_sizes="(max-width:900px) 100vw, 45vw",
-     jsonld=ORG_LD + faq_ld(HOME_FAQ), cta=False,
+     active="home", jsonld=ORG_LD + faq_ld(HOME_FAQ), cta=False,
      ogtitle="Gazpromneft Oʻzbekiston — rasmiy distribyutor")
 
 # ------------------------------------------------------------- mahsulotlar

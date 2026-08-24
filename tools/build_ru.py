@@ -24,12 +24,13 @@ def dim(name):
 
 
 NAV = [
+    ("/", "Главная", "home"),
+    ("/company", "О компании", "company"),
+    ("/otrasli", "Отрасли", "otrasli"),
     ("/products", "Продукция", "products"),
     ("/podbor", "Подбор масла", "podbor"),
-    ("/otrasli", "Отрасли", "otrasli"),
-    ("/price", "Цены", "price"),
     ("/docs", "Документация", "docs"),
-    ("/company", "О компании", "company"),
+    ("/price", "Цены", "price"),
     ("/contacts", "Контакты", "contacts"),
 ]
 
@@ -55,7 +56,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=25">
+<link rel="stylesheet" href="/site.css?v=26">
 <script type="speculationrules">
 {{"prefetch":[{{"source":"document","where":{{"href_matches":"/*"}},"eagerness":"moderate"}}]}}
 </script>
@@ -277,7 +278,7 @@ def page(path, fname, title, desc, body, active=None, ogimage="/img/og.jpg",
             + body + MGR
             + (CTA.format(tg=TG) if cta else "")
             + TAIL.format(insta=INSTA, saleshub=SALESHUB, tg=TG)
-            + '\n<script src="/site.js?v=25" defer></script>\n</body>\n</html>\n')
+            + '\n<script src="/site.js?v=26" defer></script>\n</body>\n</html>\n')
     with io.open(os.path.join(OUT, fname), "w", encoding="utf-8") as f:
         f.write(html)
     return len(html)
@@ -980,7 +981,7 @@ page("/", "index.html",
      "Газпромнефть Узбекистан — официальный дистрибьютор масел",
      "Газпромнефть Узбекистан: индустриальные, моторные и трансмиссионные масла, смазки и техжидкости. Склад в Ташкенте, отгрузка за 24 часа, документы для тендера.",
      home, preload="/img/hero.webp", preload_sizes="(max-width:900px) 100vw, 45vw",
-     jsonld=ORG_LD + faq_ld(HOME_FAQ), cta=False,
+     active="home", jsonld=ORG_LD + faq_ld(HOME_FAQ), cta=False,
      ogtitle="Газпромнефть Узбекистан — официальный дистрибьютор",
      ogdesc="Официальный дистрибьютор «Газпромнефть — смазочные материалы». Склад в Ташкенте, подбор под оборудование, полный пакет документов.")
 
