@@ -1012,9 +1012,9 @@ home = """
         </div>
         <div class="map">
         <picture>
-          <source type="image/avif" srcset="/img/map-sm.avif 600w, /img/map.avif 1200w" sizes="(max-width:900px) 100vw, 50vw">
-          <source type="image/webp" srcset="/img/map-sm.webp 600w, /img/map.webp 1200w" sizes="(max-width:900px) 100vw, 50vw">
-          <img src="/img/map.webp" alt="Офис Smart Energy Eco Trade в Ташкенте на карте" width="1200" height="600" loading="lazy" decoding="async">
+          <source type="image/avif" srcset="/img/map-sm.avif?v=2 600w, /img/map.avif?v=2 1200w" sizes="(max-width:900px) 100vw, 50vw">
+          <source type="image/webp" srcset="/img/map-sm.webp?v=2 600w, /img/map.webp?v=2 1200w" sizes="(max-width:900px) 100vw, 50vw">
+          <img src="/img/map.webp?v=2" alt="Офис Smart Energy Eco Trade в Ташкенте на карте" width="1200" height="600" loading="lazy" decoding="async">
         </picture>
         <div class="map__go">
           <span class="map__hint">Открыть маршрут:</span>
@@ -1363,9 +1363,9 @@ contacts = """
     <div class="contacts__col">
       <div class="map">
         <picture>
-          <source type="image/avif" srcset="/img/map-sm.avif 600w, /img/map.avif 1200w" sizes="(max-width:900px) 100vw, 50vw">
-          <source type="image/webp" srcset="/img/map-sm.webp 600w, /img/map.webp 1200w" sizes="(max-width:900px) 100vw, 50vw">
-          <img src="/img/map.webp" alt="Офис Smart Energy Eco Trade в Ташкенте на карте" width="1200" height="600" loading="lazy" decoding="async">
+          <source type="image/avif" srcset="/img/map-sm.avif?v=2 600w, /img/map.avif?v=2 1200w" sizes="(max-width:900px) 100vw, 50vw">
+          <source type="image/webp" srcset="/img/map-sm.webp?v=2 600w, /img/map.webp?v=2 1200w" sizes="(max-width:900px) 100vw, 50vw">
+          <img src="/img/map.webp?v=2" alt="Офис Smart Energy Eco Trade в Ташкенте на карте" width="1200" height="600" loading="lazy" decoding="async">
         </picture>
         <div class="map__go">
           <span class="map__hint">Открыть маршрут:</span>
