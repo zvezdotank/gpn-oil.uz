@@ -20,16 +20,15 @@
 
 # ── Моторные, легковой транспорт ─────────────────────────────────────────
 
-# Звёздочка в перечне у части G-Energy означает поставку под заказ.
-# У Long Life она стоит только на канистрах 1 и 4 л, а на бочке 205 л её нет,
-# поэтому у позиции оставлена одна фасовка — та, что точно на складе.
+# Звёздочка в перечне у части G-Energy — пометка клиента для себя, к наличию
+# отношения не имеет. Проверено у клиента 24.08.2026: все эти позиции на складе.
 G_ENERGY = [
     ("G-Energy Synthetic Far East 0W-20", "SAE 0W-20 · синтетика", "4", True),
-    ("G-Energy Synthetic Long Life 10W-40", "SAE 10W-40 · синтетика", "205", True),
-    ("G-Energy Synthetic Super Start 5W-30", "SAE 5W-30 · синтетика", "1 / 4 / 5 / 48 / 205", False),
-    ("G-Energy Synthetic Super Start 5W-40", "SAE 5W-40 · синтетика", "4 / 205", False),
-    ("G-Energy Synthetic Active 5W-40", "SAE 5W-40 · синтетика", "4", False),
-    ("G-Energy Expert L 10W-40", "SAE 10W-40 · API SL · полусинтетика", "1 / 4 / 5 / 20 / 48 / 205", False),
+    ("G-Energy Synthetic Super Start 5W-30", "SAE 5W-30 · синтетика", "1 / 4 / 5 / 48 / 205", True),
+    ("G-Energy Synthetic Super Start 5W-40", "SAE 5W-40 · синтетика", "4 / 205", True),
+    ("G-Energy Synthetic Active 5W-40", "SAE 5W-40 · синтетика", "4", True),
+    ("G-Energy Synthetic Long Life 10W-40", "SAE 10W-40 · синтетика", "1 / 4 / 205", True),
+    ("G-Energy Expert L 10W-40", "SAE 10W-40 · API SL · полусинтетика", "1 / 4 / 5 / 20 / 48 / 205", True),
 ]
 
 GPN_LIGHT = [
