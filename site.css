@@ -34,7 +34,10 @@
   --accent:#E0700C;
   --accent-dark:#C25F06;
   --muted:#54636E;
-  --muted-2:#8494A0;
+  /* Приглушённый серый набирается кеглем 12–14: на #8494A0 контраст с белым
+     был 3.12 при норме 4.5, и мелкие подписи читались плохо. Потемнее —
+     проходит и на белом, и на --paper, и на --surface. */
+  --muted-2:#5F6E7C;
   --rule:#DFE4E8;
   --rule-2:#CBD3DA;
   --paper:#F3F5F7;
@@ -73,7 +76,13 @@ p{margin:0}
 [hidden]{display:none !important}
 
 .wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
-.only-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* Ссылка в самом начале страницы: с клавиатуры она первая по табу и
+   позволяет перескочить шапку и меню сразу к тексту. Уводим её за левый
+   край, а не прячем размером в точку: под фокусом она должна вернуться
+   целиком, а сброс clip и width пришлось бы дублировать. */
+.skip{position:absolute;left:-9999px;top:0;z-index:100;white-space:nowrap}
+.skip:focus{left:12px;top:12px;padding:12px 18px;background:#fff;color:var(--ink);
+  font-weight:600;border-radius:var(--r);box-shadow:0 6px 20px rgba(10,28,40,.22)}
 
 /* Фотографии встают в те же слоты, что и заглушки: класс задаёт размер,
    картинка кроется по нему. Размеры проставлены атрибутами в разметке,
@@ -426,10 +435,6 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
 
 /* Категория без выложенного перечня. Честное «перечень готовим» с кнопкой
    запроса лучше пустой таблицы: заявка всё равно уходит менеджеру. */
-.empty{display:flex;flex-direction:column;gap:14px;align-items:flex-start;padding:30px;background:#fff;border:1px solid var(--rule);border-radius:var(--r)}
-.empty b{font-size:20px;font-weight:700}
-.empty p{font-size:16px;line-height:1.6;color:var(--muted);max-width:560px}
-.empty__actions{display:flex;flex-wrap:wrap;gap:12px}
 
 .longread{display:flex;flex-direction:column;gap:12px;padding-top:20px}
 .longread h2{font-size:26px}
@@ -452,6 +457,9 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
 .search{display:flex;align-items:center;gap:12px;max-width:560px;margin-bottom:28px;padding:15px 18px;border:1px solid var(--rule-2);border-radius:var(--r);background:#fff}
 .search input{flex:1;min-width:0;border:0;background:none;font:inherit;font-size:15px;color:var(--ink)}
 .search input::placeholder{font-family:var(--mono);font-size:13px;color:var(--muted-2)}
+/* Собственную обводку у поля снимаем, но рамку показываем на всей коробке:
+   без этого человек, идущий по странице с клавиатуры, теряет курсор. */
+.search:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,92,185,.13)}
 .search input:focus{outline:none}
 
 /* Контакты */

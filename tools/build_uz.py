@@ -73,13 +73,14 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=27">
+<link rel="stylesheet" href="/site.css?v=29">
 <script type="speculationrules">
 {{"prefetch":[{{"source":"document","where":{{"href_matches":"/*"}},"eagerness":"moderate"}}]}}
 </script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag('js',new Date());gtag('config','G-4VH1EV5FQB');</script>
 {jsonld}</head>
 <body>
+<a class="skip" href="#main">Asosiy qismga oʻtish</a>
 
 <div class="topbar">
   <div class="wrap topbar__in">
@@ -506,7 +507,7 @@ def category(path, fname, crumb, h1, title, desc, lead, img, alt,
 %s""" % faq_html(faq)
 
     body = """
-<main>
+<main id="main">
   <nav class="wrap crumbs" aria-label="Yoʻl">
     %s
   </nav>
@@ -651,7 +652,7 @@ category("/uz/gpn", "gpn.html", "Gazpromneft motor moylari",
 category("/uz/g-energy", "g-energy.html", "G-Energy motor moylari",
          "Toshkentda G-Energy motor moylari",
          "Oʻzbekistonda G-Energy motor moylari",
-         "Yengil transport uchun G-Energy motor moylari: Synthetic Super Start, Far East, Active, Long Life va Expert L. Toshkentdagi ombordan, qadoq 1 litrdan bochkagacha, partiyaga hujjatlar.",
+         "Yengil transport uchun G-Energy motor moylari: Synthetic Super Start, Far East, Active, Long Life va Expert L. Toshkentdagi ombordan, qadoq 1 litrdan bochkagacha.",
          "Yengil transport uchun sintetika va yarim sintetika. Toshkentdagi ombordan rasmiy mahsulot, qadoq bir litrlik kanistrdan bochkagacha, har partiyaga sifat pasporti.",
          "g-energy", "G-Energy — yengil transport uchun motor moylari",
          rows=G_ENERGY_ROWS,
@@ -765,7 +766,7 @@ HOME_FAQ = [
 ]
 
 home = """
-<main>
+<main id="main">
 
   <section class="hero">
     <div class="wrap hero__grid">
@@ -986,7 +987,7 @@ page("/uz/", "index.html", "Gazpromneft Oʻzbekiston — moylarning rasmiy distr
 
 # ------------------------------------------------------------- mahsulotlar
 products = """
-<main>
+<main id="main">
   <nav class="wrap crumbs" aria-label="Yoʻl">
     <a href="/uz/">Bosh sahifa</a><span>/</span><b>Mahsulotlar</b>
   </nav>
@@ -1054,7 +1055,7 @@ def simple(path, fname, crumb, h1, title, desc, active, blocks, faq=None, img=No
     if faq:
         faq_block = '\n    <div class="longread"><h2>Koʻp beriladigan savollar</h2></div>\n%s' % faq_html(faq)
     body = '''
-<main>
+<main id="main">
   <nav class="wrap crumbs" aria-label="Yoʻl">
     <a href="/uz/">Bosh sahifa</a><span>/</span><b>%s</b>
   </nav>
@@ -1274,7 +1275,7 @@ PRICE_FAQ = [
 ]
 
 price_body = """
-<main>
+<main id="main">
   <nav class="wrap crumbs" aria-label="Yoʻl">
     <a href="/uz/">Bosh sahifa</a><span>/</span><b>Narxlar</b>
   </nav>
@@ -1324,7 +1325,7 @@ page("/uz/price", "price.html", "Oʻzbekistonda Gazpromneft moylash materiallari
 
 # ------------------------------------------------------------- kompaniya
 company_body = """
-<main>
+<main id="main">
   <nav class="wrap crumbs" aria-label="Yoʻl">
     <a href="/uz/">Bosh sahifa</a><span>/</span><b>Kompaniya haqida</b>
   </nav>
@@ -1400,24 +1401,35 @@ page("/uz/company", "company.html", "Kompaniya haqida — Smart Energy Eco Trade
      jsonld=crumbs_ld([("Bosh sahifa", "/uz/"), ("Kompaniya haqida", "/uz/company")]))
 
 # ------------------------------------------------------------- hujjatlar
-DOCS = [
-    ("Gazpromneft Hydraulic HLP 46", "Industrial", "02.2026"),
-    ("Gazpromneft Reductor CLP 220", "Industrial", "02.2026"),
-    ("G-Profi MSI Plus 15W-40", "Motor", "01.2026"),
-    ("G-Profi GT 10W-40", "Motor", "01.2026"),
-    ("G-Energy Synthetic Active 5W-40", "Motor", "12.2025"),
-    ("Gazpromneft Grease L EP 2", "Plastik moylar", "11.2025"),
-    ("Gazpromneft Antifreeze SF 40", "Suyuqliklar", "11.2025"),
+# Hujjatlar roʻyxati katalog bilan bitta manbadan yigʻiladi: ilgari bu yerda
+# qoʻlda terilgan yettita pozitsiya turardi, va toʻqson oltita markadan
+# birortasida «TDS · MSDS» bosgan odam oʻz markasi yoʻq sahifaga tushardi.
+DOCS_GROUPS = [
+    ("Motor", nomen.G_ENERGY + nomen.GPN_LIGHT + nomen.G_PROFI
+              + nomen.GPN_DIESEL + nomen.GPN_MARINE),
+    ("Transmissiya", nomen.ATF + nomen.MKPP + nomen.UTTO),
+    ("Industrial", nomen.HYDRAULIC + nomen.REDUCTOR + nomen.COMPRESSOR
+                   + nomen.TURBINE + nomen.TRANSFORMER + nomen.INDUSTRIAL_GP
+                   + nomen.FORM_OIL + nomen.HTO + nomen.WHITE_OIL),
+    ("Plastik moylar", nomen.GREASE),
+    ("Suyuqliklar", nomen.BRAKE),
 ]
-docs_rows = "\n".join("""      <div class="table__row" data-name="{n} {c}">
+DOCS = [(r[0], cat) for cat, items in DOCS_GROUPS for r in items]
+
+docs_rows = "\n".join("""      <div class="table__row" id="doc-{slug}" data-name="{n} {c}">
         <b>{n}</b>
         <span><span class="table__label">Toifa: </span>{c}</span>
-        <span><span class="table__label">Yangilangan: </span>{d}</span>
+        <span><span class="table__label">Marka: </span>{b}</span>
         <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
-      </div>""".format(n=n, c=c, d=d) for n, c, d in DOCS)
+      </div>""".format(n=n, c=c, slug=slug(n),
+                       b=("G-Energy" if n.startswith("G-Energy") else
+                          "G-Profi" if n.startswith("G-Profi") else
+                          "G-Box" if n.startswith("G-Box") else
+                          "G-Special" if n.startswith("G-Special") else "Gazpromneft"))
+                      for n, c in DOCS)
 
 docs_body = """
-<main class="wrap page" style="padding-top:32px">
+<main id="main" class="wrap page" style="padding-top:32px">
   <nav class="crumbs" style="padding-top:0" aria-label="Yoʻl">
     <a href="/uz/">Bosh sahifa</a><span>/</span><b>Hujjatlar</b>
   </nav>
@@ -1431,7 +1443,7 @@ docs_body = """
   </div>
 
   <div class="table table--docs" id="docstable">
-    <div class="table__head"><div>Mahsulot</div><div>Toifa</div><div>Yangilangan</div><div>Hujjatlar</div></div>
+    <div class="table__head"><div>Mahsulot</div><div>Toifa</div><div>Marka</div><div>Hujjatlar</div></div>
 %s
   </div>
   <p class="table__note" id="docsempty" hidden>Hech narsa topilmadi — hujjatni quyida soʻrang, ish kuni davomida yuboramiz.</p>
@@ -1461,7 +1473,7 @@ LOCAL_LD = """<script type="application/ld+json">
 """
 
 contacts_body = """
-<main>
+<main id="main">
   <nav class="wrap crumbs" aria-label="Yoʻl">
     <a href="/uz/">Bosh sahifa</a><span>/</span><b>Aloqa</b>
   </nav>
@@ -1534,7 +1546,7 @@ page("/uz/contacts", "contacts.html", "Aloqa — Gazpromneft Oʻzbekiston, Smart
 # ------------------------------------------------------------- xizmat sahifalari
 page("/uz/spasibo", "spasibo.html", "Ariza yuborildi — Gazpromneft Oʻzbekiston",
      "Ariza qabul qilindi, menejer ish vaqtida bogʻlanadi.", """
-<main class="wrap note">
+<main id="main" class="wrap note">
   <h1>Rahmat, arizani qabul qildik</h1>
   <p>Menejer roʻyxatni koʻrib chiqadi va ish vaqtida javob beradi — Du–Ju 09:00 dan 18:00 gacha. Savol shoshilinch boʻlsa, qoʻngʻiroq qiling — darhol javob beramiz.</p>
   <div class="empty__actions">
@@ -1546,7 +1558,7 @@ page("/uz/spasibo", "spasibo.html", "Ariza yuborildi — Gazpromneft Oʻzbekisto
 
 page("/uz/oshibka", "oshibka.html", "Ariza yuborilmadi — Gazpromneft Oʻzbekiston",
      "Forma arizani yubora olmadi. Biz bilan bevosita bogʻlaning.", """
-<main class="wrap note">
+<main id="main" class="wrap note">
   <h1>Ariza yuborilmadi</h1>
   <p>Bizning tomonda nimadir ishlamay qoldi va forma arizani uzata olmadi. Vaqt yoʻqotmaslik uchun qoʻngʻiroq qiling — darhol javob beramiz.</p>
   <div class="empty__actions">

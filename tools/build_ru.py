@@ -59,13 +59,14 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=27">
+<link rel="stylesheet" href="/site.css?v=29">
 <script type="speculationrules">
 {{"prefetch":[{{"source":"document","where":{{"href_matches":"/*"}},"eagerness":"moderate"}}]}}
 </script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag('js',new Date());gtag('config','G-4VH1EV5FQB');</script>
 {jsonld}</head>
 <body>
+<a class="skip" href="#main">Перейти к содержимому</a>
 
 <div class="topbar">
   <div class="wrap topbar__in">
@@ -205,7 +206,6 @@ def crumbs_ld(items):
             '</script>\n' % ",".join(parts))
 
 
-
 def products_ld(rows, path, img, brand="Gazpromneft"):
     """Позиции категории списком товаров.
 
@@ -322,7 +322,6 @@ CARD_IMG = {
 }
 
 
-
 def srcset(name, w):
     """Три ступени вместо двух: без промежуточной телефон с плотным экраном
     тянет самую большую картинку, потому что выбрать больше нечего."""
@@ -331,7 +330,6 @@ def srcset(name, w):
         parts.append("/img/%s-md.webp 960w" % name)
     parts.append("/img/%s.webp %dw" % (name, w))
     return ", ".join(parts)
-
 
 
 def picture(name, w, inner_img):
@@ -378,7 +376,6 @@ def aside_other(current):
 %s
           </div>
         </div>""" % links
-
 
 
 # Транслитерация для якорей: у позиций встречается кириллица (КС-19п),
@@ -442,17 +439,6 @@ def table(rows, col="Класс вязкости", title="Позиции на с
 %s
         </div>
         <p class="table__note">Перечень со склада в Ташкенте на 1 июля 2026 года. Позиции, которых нет в списке, привозим под заказ — спросите менеджера.</p>""" % (title, col, "\n".join(body))
-
-
-EMPTY = """        <div class="empty">
-          <b>Перечень позиций готовим к публикации</b>
-          <p>Пришлите модель техники, действующую марку масла или нужный объём — подберём позиции, вышлем прайс с наличием и техническое описание в течение 15 минут в рабочее время.</p>
-          <div class="empty__actions">
-            <a class="btn btn--blue" href="%s" rel="noopener">Запросить прайс в Telegram</a>
-            <a class="btn btn--outline" href="tel:+998935048490">+998 93 504 84 90</a>
-          </div>
-        </div>""" % TG
-
 
 
 NEEDS = [
@@ -566,7 +552,7 @@ def category(path, fname, crumb, h1, title, desc, lead, img, img_size, alt,
 %s""" % faq_html(faq)
 
     body = """
-<main>
+<main id="main">
   <nav class="wrap crumbs" aria-label="Хлебные крошки">
     %s
   </nav>
@@ -644,7 +630,7 @@ FLUIDS_ROWS = nomen.rows(nomen.BRAKE)
 category("/industrial", "industrial.html", "Индустриальные масла",
          "Индустриальные масла Газпромнефть в Ташкенте",
          "Индустриальные масла Газпромнефть в Ташкенте и Узбекистане",
-         "Индустриальные масла Gazpromneft со склада в Ташкенте: гидравлические HLP и HVLP, редукторные CLP и F Synth, компрессорные, турбинные ТП-22 и ТП-30, И-20А, ГК. Паспорт качества на партию.",
+         "Индустриальные масла Gazpromneft со склада в Ташкенте: гидравлические HLP и HVLP, редукторные CLP и F Synth, компрессорные, турбинные ТП-22 и ТП-30, И-20А, ГК м.1.",
          "Гидравлические, редукторные, компрессорные, турбинные и трансформаторные масла, индустриальные общего назначения, формовочные, теплоносители и белые масла. Наличие на складе в Ташкенте, фасовка от 20 л до кубовых ёмкостей, паспорт качества на каждую партию.",
          "industrial", (800, 449),
          "Индустриальные масла Газпромнефть в бочках на складе",
@@ -661,7 +647,7 @@ category("/industrial", "industrial.html", "Индустриальные мас�
 category("/hydralic", "hydralic.html", "Гидравлические масла",
          "Гидравлические масла Газпромнефть в Ташкенте",
          "Гидравлические масла Газпромнефть — HLP, HVLP, Гидравлик",
-         "Гидравлические масла Gazpromneft: HLP 32/46/68, всесезонные HVLP 15–68 и базовая линейка Гидравлик. Склад в Ташкенте, фасовка 20, 50 и 205 л, подбор аналогов Shell Tellus и Mobil DTE.",
+         "Гидравлические масла Gazpromneft: HLP 32/46/68, всесезонные HVLP 15–68 и базовая линейка Гидравлик. Склад в Ташкенте, фасовка от 20 до 205 л, подбор аналогов Shell Tellus.",
          "Три линейки для гидросистем карьерной, строительной и промышленной техники: HLP с противоизносными присадками, всесезонная загущённая HVLP и базовая Гидравлик. Классы ISO VG от 15 до 68, фасовка от 20 л до кубовых ёмкостей.",
          "hydralic", (1200, 674),
          "Гидравлика карьерной техники — гидравлические масла Газпромнефть",
@@ -697,7 +683,7 @@ category("/compressor", "compressor.html", "Компрессорные масл�
 category("/gpn", "gpn.html", "Моторные масла Газпромнефть",
          "Моторные масла Газпромнефть в Ташкенте",
          "Моторные масла Газпромнефть в Узбекистане со склада в Ташкенте",
-         "Моторные масла Gazpromneft и G-Profi со склада в Ташкенте: G-Profi для грузовой техники, Diesel Premium и Extra, Premium L, Standard, Super. Подбор по допускам, документы на партию.",
+         "Моторные масла Gazpromneft и G-Profi со склада в Ташкенте: G-Profi, Diesel Premium и Extra, Premium L, Standard, Super. Подбор по допускам, документы на партию.",
          "Для коммерческого транспорта, спецтехники и автопарков. Подбираем по допускам производителя двигателя и условиям эксплуатации, поставляем со склада в Ташкенте с паспортом качества на каждую партию.",
          "gpn", (1200, 673),
          "Производство моторных масел Газпромнефть",
@@ -823,7 +809,7 @@ HOME_FAQ = [('Можно ли заменить импортное масло н�
 
 # --------------------------------------------------------------- главная
 home = """
-<main>
+<main id="main">
 
   <section class="hero">
     <div class="wrap hero__grid">
@@ -1041,7 +1027,7 @@ page("/", "index.html",
 
 # --------------------------------------------------------------- продукция
 products = """
-<main>
+<main id="main">
   <nav class="wrap crumbs" aria-label="Хлебные крошки">
     <a href="/">Главная</a><span>/</span><b>Продукция</b>
   </nav>
@@ -1100,7 +1086,7 @@ PRICE_FAQ = [('Почему цен нет прямо на сайте?', 'Цен�
 
 # --------------------------------------------------------------- цены
 price = """
-<main>
+<main id="main">
   <nav class="wrap crumbs" aria-label="Хлебные крошки">
     <a href="/">Главная</a><span>/</span><b>Цены</b>
   </nav>
@@ -1146,7 +1132,7 @@ page("/price", "price.html", "Цены на масла Газпромнефть 
 
 # --------------------------------------------------------------- о компании
 company = """
-<main>
+<main id="main">
   <nav class="wrap crumbs" aria-label="Хлебные крошки">
     <a href="/">Главная</a><span>/</span><b>О компании</b>
   </nav>
@@ -1223,24 +1209,37 @@ page("/company", "company.html", "О компании — Smart Energy Eco Trade
      jsonld=crumbs_ld([("Главная", "/"), ("О компании", "/company")]))
 
 # --------------------------------------------------------------- документация
-DOCS = [
-    ("Gazpromneft Hydraulic HLP 46", "Индустриальные", "02.2026", "gazpromneft-hydraulic-hlp-46"),
-    ("Gazpromneft Reductor CLP 220", "Индустриальные", "02.2026", "gazpromneft-reductor-clp-220"),
-    ("G-Profi MSI Plus 15W-40", "Моторные", "01.2026", "g-profi-msi-plus-15w-40"),
-    ("G-Profi GT 10W-40", "Моторные", "01.2026", "g-profi-gt-10w-40"),
-    ("G-Energy Synthetic Active 5W-40", "Моторные", "12.2025", "g-energy-synthetic-active-5w-40"),
-    ("Gazpromneft Grease L EP 2", "Смазки", "11.2025", "gazpromneft-grease-l-ep-2"),
-    ("Gazpromneft Antifreeze SF 40", "Жидкости", "11.2025", "gazpromneft-antifreeze-sf-40"),
+# Список документов собираем из того же перечня склада, что и каталог.
+# Раньше здесь лежало семь позиций, набранных руками, — и человек, нажавший
+# «TDS · MSDS» у любой из девяноста шести марок, попадал на страницу, где
+# его марки нет. Заодно оттуда ушли две выдуманные позиции и даты
+# «обновлён», которых мы не знаем: документы приходят по запросу.
+DOCS_GROUPS = [
+    ("Моторные", nomen.G_ENERGY + nomen.GPN_LIGHT + nomen.G_PROFI
+                 + nomen.GPN_DIESEL + nomen.GPN_MARINE),
+    ("Трансмиссионные", nomen.ATF + nomen.MKPP + nomen.UTTO),
+    ("Индустриальные", nomen.HYDRAULIC + nomen.REDUCTOR + nomen.COMPRESSOR
+                       + nomen.TURBINE + nomen.TRANSFORMER + nomen.INDUSTRIAL_GP
+                       + nomen.FORM_OIL + nomen.HTO + nomen.WHITE_OIL),
+    ("Смазки", nomen.GREASE),
+    ("Жидкости", nomen.BRAKE),
 ]
-rows = "\n".join("""      <div class="table__row" data-name="{name} {cat}">
+DOCS = [(r[0], cat) for cat, items in DOCS_GROUPS for r in items]
+
+rows = "\n".join("""      <div class="table__row" id="doc-{slug}" data-name="{name} {cat}">
         <b>{name}</b>
         <span><span class="table__label">Категория: </span>{cat}</span>
-        <span><span class="table__label">Обновлён: </span>{date}</span>
+        <span><span class="table__label">Марка: </span>{brand}</span>
         <div class="table__files table__files--btn"><a href="#zapros">Запросить TDS</a><a href="#zapros">Запросить MSDS</a></div>
-      </div>""".format(name=n, cat=c, date=d, slug=s) for n, c, d, s in DOCS)
+      </div>""".format(name=n, cat=c, slug=slug(n),
+                       brand=("G-Energy" if n.startswith("G-Energy") else
+                              "G-Profi" if n.startswith("G-Profi") else
+                              "G-Box" if n.startswith("G-Box") else
+                              "G-Special" if n.startswith("G-Special") else "Gazpromneft"))
+                 for n, c in DOCS)
 
 docs = """
-<main class="wrap page" style="padding-top:40px">
+<main id="main" class="wrap page" style="padding-top:40px">
   <nav class="crumbs" style="padding-top:0" aria-label="Хлебные крошки">
     <a href="/">Главная</a><span>/</span><b>Документация</b>
   </nav>
@@ -1254,7 +1253,7 @@ docs = """
   </div>
 
   <div class="table table--docs" id="docstable">
-    <div class="table__head"><div>Продукт</div><div>Категория</div><div>Обновлён</div><div>Документы</div></div>
+    <div class="table__head"><div>Продукт</div><div>Категория</div><div>Марка</div><div>Документы</div></div>
 %s
   </div>
   <p class="table__note" id="docsempty" hidden>Ничего не нашлось — запросите документ ниже, пришлём в течение рабочего дня.</p>
@@ -1302,7 +1301,7 @@ cards = "\n".join("""    <article class="post">
     for i, (t, ti, le) in enumerate(POSTS))
 
 blog = """
-<main class="wrap page" style="padding-top:40px">
+<main id="main" class="wrap page" style="padding-top:40px">
   <nav class="crumbs" style="padding-top:0" aria-label="Хлебные крошки">
     <a href="/">Главная</a><span>/</span><b>Блог</b>
   </nav>
@@ -1338,7 +1337,7 @@ LOCAL_LD = """<script type="application/ld+json">
 """
 
 contacts = """
-<main>
+<main id="main">
   <nav class="wrap crumbs" aria-label="Хлебные крошки">
     <a href="/">Главная</a><span>/</span><b>Контакты</b>
   </nav>
@@ -1409,7 +1408,7 @@ page("/contacts", "contacts.html", "Контакты — Газпромнефт�
 # --------------------------------------------------------------- служебные
 page("/spasibo", "spasibo.html", "Заявка отправлена — Газпромнефть Узбекистан",
      "Заявка принята, менеджер свяжется в рабочее время.", """
-<main class="wrap note">
+<main id="main" class="wrap note">
   <h1>Спасибо, заявку приняли</h1>
   <p>Менеджер посмотрит перечень и ответит в рабочее время — Пн–Пт с 09:00 до 18:00. Если вопрос срочный, позвоните — ответим сразу.</p>
   <div class="empty__actions">
@@ -1421,7 +1420,7 @@ page("/spasibo", "spasibo.html", "Заявка отправлена — Газп
 
 page("/oshibka", "oshibka.html", "Заявка не отправилась — Газпромнефть Узбекистан",
      "Форма не смогла отправить заявку. Свяжитесь с нами напрямую.", """
-<main class="wrap note">
+<main id="main" class="wrap note">
   <h1>Заявка не ушла</h1>
   <p>Что-то сломалось на нашей стороне, и форма не смогла передать заявку. Чтобы не терять время, позвоните — ответим сразу.</p>
   <div class="empty__actions">
@@ -1433,7 +1432,7 @@ page("/oshibka", "oshibka.html", "Заявка не отправилась — �
 
 page("/404", "404.html", "Страница не найдена — Газпромнефть Узбекистан",
      "Такой страницы нет. Перейдите в каталог продукции или напишите менеджеру.", """
-<main class="wrap note">
+<main id="main" class="wrap note">
   <h1>Такой страницы нет</h1>
   <p>Возможно, адрес изменился при обновлении сайта. Загляните в каталог продукции или напишите менеджеру — подскажем, где искать.</p>
   <div class="empty__actions">
@@ -1461,7 +1460,7 @@ def simple(path, fname, crumb, h1, title, desc, active, blocks, faq=None, img=No
     <div class="longread"><h2>Частые вопросы</h2></div>
 %s''' % faq_html(faq)
     body = '''
-<main>
+<main id="main">
   <nav class="wrap crumbs" aria-label="Хлебные крошки">
     <a href="/">Главная</a><span>/</span><b>%s</b>
   </nav>
@@ -1718,4 +1717,5 @@ simple("/dostavka", "dostavka.html", "Доставка и оплата",
        "Отгрузка со склада в Ташкенте за 24 часа, доставка по Узбекистану, самовывоз, работа по договору. Счёт-фактура и паспорт качества на каждую партию.",
        "company", dostavka_blocks, faq=DOST_FAQ)
 
-print("новые страницы готовы")
+import sitemap
+print("новые страницы готовы, карта сайта: %d адресов" % sitemap.build())

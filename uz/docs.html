@@ -23,7 +23,7 @@
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/site.css?v=27">
+<link rel="stylesheet" href="/site.css?v=29">
 <script type="speculationrules">
 {"prefetch":[{"source":"document","where":{"href_matches":"/*"},"eagerness":"moderate"}]}
 </script>
@@ -33,6 +33,7 @@
 </script>
 </head>
 <body>
+<a class="skip" href="#main">Asosiy qismga oʻtish</a>
 
 <div class="topbar">
   <div class="wrap topbar__in">
@@ -67,7 +68,7 @@
   </div>
 </header>
 
-<main class="wrap page" style="padding-top:32px">
+<main id="main" class="wrap page" style="padding-top:32px">
   <nav class="crumbs" style="padding-top:0" aria-label="Yoʻl">
     <a href="/uz/">Bosh sahifa</a><span>/</span><b>Hujjatlar</b>
   </nav>
@@ -81,47 +82,581 @@
   </div>
 
   <div class="table table--docs" id="docstable">
-    <div class="table__head"><div>Mahsulot</div><div>Toifa</div><div>Yangilangan</div><div>Hujjatlar</div></div>
-      <div class="table__row" data-name="Gazpromneft Hydraulic HLP 46 Industrial">
-        <b>Gazpromneft Hydraulic HLP 46</b>
-        <span><span class="table__label">Toifa: </span>Industrial</span>
-        <span><span class="table__label">Yangilangan: </span>02.2026</span>
-        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
-      </div>
-      <div class="table__row" data-name="Gazpromneft Reductor CLP 220 Industrial">
-        <b>Gazpromneft Reductor CLP 220</b>
-        <span><span class="table__label">Toifa: </span>Industrial</span>
-        <span><span class="table__label">Yangilangan: </span>02.2026</span>
-        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
-      </div>
-      <div class="table__row" data-name="G-Profi MSI Plus 15W-40 Motor">
-        <b>G-Profi MSI Plus 15W-40</b>
+    <div class="table__head"><div>Mahsulot</div><div>Toifa</div><div>Marka</div><div>Hujjatlar</div></div>
+      <div class="table__row" id="doc-g-energy-synthetic-far-east-0w-20" data-name="G-Energy Synthetic Far East 0W-20 Motor">
+        <b>G-Energy Synthetic Far East 0W-20</b>
         <span><span class="table__label">Toifa: </span>Motor</span>
-        <span><span class="table__label">Yangilangan: </span>01.2026</span>
+        <span><span class="table__label">Marka: </span>G-Energy</span>
         <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
       </div>
-      <div class="table__row" data-name="G-Profi GT 10W-40 Motor">
-        <b>G-Profi GT 10W-40</b>
+      <div class="table__row" id="doc-g-energy-synthetic-super-start-5w-30" data-name="G-Energy Synthetic Super Start 5W-30 Motor">
+        <b>G-Energy Synthetic Super Start 5W-30</b>
         <span><span class="table__label">Toifa: </span>Motor</span>
-        <span><span class="table__label">Yangilangan: </span>01.2026</span>
+        <span><span class="table__label">Marka: </span>G-Energy</span>
         <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
       </div>
-      <div class="table__row" data-name="G-Energy Synthetic Active 5W-40 Motor">
+      <div class="table__row" id="doc-g-energy-synthetic-super-start-5w-40" data-name="G-Energy Synthetic Super Start 5W-40 Motor">
+        <b>G-Energy Synthetic Super Start 5W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>G-Energy</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-g-energy-synthetic-active-5w-40" data-name="G-Energy Synthetic Active 5W-40 Motor">
         <b>G-Energy Synthetic Active 5W-40</b>
         <span><span class="table__label">Toifa: </span>Motor</span>
-        <span><span class="table__label">Yangilangan: </span>12.2025</span>
+        <span><span class="table__label">Marka: </span>G-Energy</span>
         <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
       </div>
-      <div class="table__row" data-name="Gazpromneft Grease L EP 2 Plastik moylar">
+      <div class="table__row" id="doc-g-energy-synthetic-long-life-10w-40" data-name="G-Energy Synthetic Long Life 10W-40 Motor">
+        <b>G-Energy Synthetic Long Life 10W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>G-Energy</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-g-energy-expert-l-10w-40" data-name="G-Energy Expert L 10W-40 Motor">
+        <b>G-Energy Expert L 10W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>G-Energy</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-premium-l-10w-40" data-name="Gazpromneft Premium L 10W-40 Motor">
+        <b>Gazpromneft Premium L 10W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-super-10w-40" data-name="Gazpromneft Super 10W-40 Motor">
+        <b>Gazpromneft Super 10W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-standard-10w-40" data-name="Gazpromneft Standard 10W-40 Motor">
+        <b>Gazpromneft Standard 10W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-ecogas-10w-40" data-name="Gazpromneft Ecogas 10W-40 Motor">
+        <b>Gazpromneft Ecogas 10W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-super-15w-40" data-name="Gazpromneft Super 15W-40 Motor">
+        <b>Gazpromneft Super 15W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-standard-15w-40" data-name="Gazpromneft Standard 15W-40 Motor">
+        <b>Gazpromneft Standard 15W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-ecogas-15w-40" data-name="Gazpromneft Ecogas 15W-40 Motor">
+        <b>Gazpromneft Ecogas 15W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-standard-20w-50" data-name="Gazpromneft Standard 20W-50 Motor">
+        <b>Gazpromneft Standard 20W-50</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-g-profi-msk-5w-30" data-name="G-Profi MSK 5W-30 Motor">
+        <b>G-Profi MSK 5W-30</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>G-Profi</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-g-profi-msi-plus-15w-40" data-name="G-Profi MSI PLUS 15W-40 Motor">
+        <b>G-Profi MSI PLUS 15W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>G-Profi</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-g-profi-cng-la-10w-40" data-name="G-Profi CNG LA 10W-40 Motor">
+        <b>G-Profi CNG LA 10W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>G-Profi</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-g-profi-cng-15w-40" data-name="G-Profi CNG 15W-40 Motor">
+        <b>G-Profi CNG 15W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>G-Profi</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-g-profi-cng-la-15w-40" data-name="G-Profi CNG LA 15W-40 Motor">
+        <b>G-Profi CNG LA 15W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>G-Profi</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-diesel-premium-5w-40" data-name="Gazpromneft Diesel Premium 5W-40 Motor">
+        <b>Gazpromneft Diesel Premium 5W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-diesel-premium-10w-40" data-name="Gazpromneft Diesel Premium 10W-40 Motor">
+        <b>Gazpromneft Diesel Premium 10W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-diesel-extra-10w-40" data-name="Gazpromneft Diesel Extra 10W-40 Motor">
+        <b>Gazpromneft Diesel Extra 10W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-diesel-premium-15w-40" data-name="Gazpromneft Diesel Premium 15W-40 Motor">
+        <b>Gazpromneft Diesel Premium 15W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-diesel-extra-15w-40" data-name="Gazpromneft Diesel Extra 15W-40 Motor">
+        <b>Gazpromneft Diesel Extra 15W-40</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-diesel-extra-20w-50" data-name="Gazpromneft Diesel Extra 20W-50 Motor">
+        <b>Gazpromneft Diesel Extra 20W-50</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-hd-50" data-name="Gazpromneft HD 50 Motor">
+        <b>Gazpromneft HD 50</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-m-10v2" data-name="Gazpromneft М-10В2 Motor">
+        <b>Gazpromneft М-10В2</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-m-14v2" data-name="Gazpromneft М-14В2 Motor">
+        <b>Gazpromneft М-14В2</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-m-16g2cs" data-name="Gazpromneft М-16Г2ЦС Motor">
+        <b>Gazpromneft М-16Г2ЦС</b>
+        <span><span class="table__label">Toifa: </span>Motor</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-atf-dx-iii" data-name="Gazpromneft ATF DX III Transmissiya">
+        <b>Gazpromneft ATF DX III</b>
+        <span><span class="table__label">Toifa: </span>Transmissiya</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-g-box-atf-dx-iii" data-name="G-Box ATF DX III Transmissiya">
+        <b>G-Box ATF DX III</b>
+        <span><span class="table__label">Toifa: </span>Transmissiya</span>
+        <span><span class="table__label">Marka: </span>G-Box</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-g-box-atf-dx-vi" data-name="G-Box ATF DX VI Transmissiya">
+        <b>G-Box ATF DX VI</b>
+        <span><span class="table__label">Toifa: </span>Transmissiya</span>
+        <span><span class="table__label">Marka: </span>G-Box</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-gl-4-75w-80" data-name="Gazpromneft GL-4 75W-80 Transmissiya">
+        <b>Gazpromneft GL-4 75W-80</b>
+        <span><span class="table__label">Toifa: </span>Transmissiya</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-gl-4-75w-90" data-name="Gazpromneft GL-4 75W-90 Transmissiya">
+        <b>Gazpromneft GL-4 75W-90</b>
+        <span><span class="table__label">Toifa: </span>Transmissiya</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-gl-4-80w-90" data-name="Gazpromneft GL-4 80W-90 Transmissiya">
+        <b>Gazpromneft GL-4 80W-90</b>
+        <span><span class="table__label">Toifa: </span>Transmissiya</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-gl-5-75w-90" data-name="Gazpromneft GL-5 75W-90 Transmissiya">
+        <b>Gazpromneft GL-5 75W-90</b>
+        <span><span class="table__label">Toifa: </span>Transmissiya</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-gl-5-80w-90" data-name="Gazpromneft GL-5 80W-90 Transmissiya">
+        <b>Gazpromneft GL-5 80W-90</b>
+        <span><span class="table__label">Toifa: </span>Transmissiya</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-gl-5-85w-140" data-name="Gazpromneft GL-5 85W-140 Transmissiya">
+        <b>Gazpromneft GL-5 85W-140</b>
+        <span><span class="table__label">Toifa: </span>Transmissiya</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-g-special-utto-10w-30" data-name="G-Special UTTO 10W-30 Transmissiya">
+        <b>G-Special UTTO 10W-30</b>
+        <span><span class="table__label">Toifa: </span>Transmissiya</span>
+        <span><span class="table__label">Marka: </span>G-Special</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-hydraulic-hlp-32" data-name="Gazpromneft Hydraulic HLP 32 Industrial">
+        <b>Gazpromneft Hydraulic HLP 32</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-hydraulic-hlp-46" data-name="Gazpromneft Hydraulic HLP 46 Industrial">
+        <b>Gazpromneft Hydraulic HLP 46</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-hydraulic-hlp-68" data-name="Gazpromneft Hydraulic HLP 68 Industrial">
+        <b>Gazpromneft Hydraulic HLP 68</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-hydraulic-hvlp-15" data-name="Gazpromneft Hydraulic HVLP 15 Industrial">
+        <b>Gazpromneft Hydraulic HVLP 15</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-hydraulic-hvlp-32" data-name="Gazpromneft Hydraulic HVLP 32 Industrial">
+        <b>Gazpromneft Hydraulic HVLP 32</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-hydraulic-hvlp-46" data-name="Gazpromneft Hydraulic HVLP 46 Industrial">
+        <b>Gazpromneft Hydraulic HVLP 46</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-hydraulic-hvlp-68" data-name="Gazpromneft Hydraulic HVLP 68 Industrial">
+        <b>Gazpromneft Hydraulic HVLP 68</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-gidravlik-32" data-name="Gazpromneft Гидравлик 32 Industrial">
+        <b>Gazpromneft Гидравлик 32</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-gidravlik-46" data-name="Gazpromneft Гидравлик 46 Industrial">
+        <b>Gazpromneft Гидравлик 46</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-gidravlik-68" data-name="Gazpromneft Гидравлик 68 Industrial">
+        <b>Gazpromneft Гидравлик 68</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-reductor-clp-68" data-name="Gazpromneft Reductor CLP 68 Industrial">
+        <b>Gazpromneft Reductor CLP 68</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-reductor-clp-100" data-name="Gazpromneft Reductor CLP 100 Industrial">
+        <b>Gazpromneft Reductor CLP 100</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-reductor-clp-150" data-name="Gazpromneft Reductor CLP 150 Industrial">
+        <b>Gazpromneft Reductor CLP 150</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-reductor-clp-220" data-name="Gazpromneft Reductor CLP 220 Industrial">
+        <b>Gazpromneft Reductor CLP 220</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-reductor-clp-320" data-name="Gazpromneft Reductor CLP 320 Industrial">
+        <b>Gazpromneft Reductor CLP 320</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-reductor-clp-460" data-name="Gazpromneft Reductor CLP 460 Industrial">
+        <b>Gazpromneft Reductor CLP 460</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-reductor-clp-680" data-name="Gazpromneft Reductor CLP 680 Industrial">
+        <b>Gazpromneft Reductor CLP 680</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-reductor-f-synth-150" data-name="Gazpromneft Reductor F Synth 150 Industrial">
+        <b>Gazpromneft Reductor F Synth 150</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-reductor-f-synth-220" data-name="Gazpromneft Reductor F Synth 220 Industrial">
+        <b>Gazpromneft Reductor F Synth 220</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-reductor-f-synth-320" data-name="Gazpromneft Reductor F Synth 320 Industrial">
+        <b>Gazpromneft Reductor F Synth 320</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-reductor-f-synth-460" data-name="Gazpromneft Reductor F Synth 460 Industrial">
+        <b>Gazpromneft Reductor F Synth 460</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-reductor-pao-synth-460" data-name="Gazpromneft Reductor PAO Synth 460 Industrial">
+        <b>Gazpromneft Reductor PAO Synth 460</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-compressor-oil-46" data-name="Gazpromneft Compressor Oil 46 Industrial">
+        <b>Gazpromneft Compressor Oil 46</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-compressor-oil-68" data-name="Gazpromneft Compressor Oil 68 Industrial">
+        <b>Gazpromneft Compressor Oil 68</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-compressor-oil-100" data-name="Gazpromneft Compressor Oil 100 Industrial">
+        <b>Gazpromneft Compressor Oil 100</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-compressor-oil-150" data-name="Gazpromneft Compressor Oil 150 Industrial">
+        <b>Gazpromneft Compressor Oil 150</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-compressor-oil-220" data-name="Gazpromneft Compressor Oil 220 Industrial">
+        <b>Gazpromneft Compressor Oil 220</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-compressor-s-synth-46" data-name="Gazpromneft Compressor S Synth-46 Industrial">
+        <b>Gazpromneft Compressor S Synth-46</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-compressor-s-synth-68" data-name="Gazpromneft Compressor S Synth-68 Industrial">
+        <b>Gazpromneft Compressor S Synth-68</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-compressor-s-synth-100" data-name="Gazpromneft Compressor S Synth-100 Industrial">
+        <b>Gazpromneft Compressor S Synth-100</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-compressor-s-synth-150" data-name="Gazpromneft Compressor S Synth-150 Industrial">
+        <b>Gazpromneft Compressor S Synth-150</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-compressor-f-synth-46" data-name="Gazpromneft Compressor F Synth-46 Industrial">
+        <b>Gazpromneft Compressor F Synth-46</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-ks-19p" data-name="Gazpromneft КС-19п Industrial">
+        <b>Gazpromneft КС-19п</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-tp-22" data-name="Gazpromneft ТП-22 Industrial">
+        <b>Gazpromneft ТП-22</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-tp-30" data-name="Gazpromneft ТП-30 Industrial">
+        <b>Gazpromneft ТП-30</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-turbine-oil-32" data-name="Gazpromneft Turbine Oil 32 Industrial">
+        <b>Gazpromneft Turbine Oil 32</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-gk-m-1" data-name="Gazpromneft ГК м.1 Industrial">
+        <b>Gazpromneft ГК м.1</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-i-20a" data-name="Gazpromneft И-20А Industrial">
+        <b>Gazpromneft И-20А</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-i-40a" data-name="Gazpromneft И-40А Industrial">
+        <b>Gazpromneft И-40А</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-i-50a" data-name="Gazpromneft И-50А Industrial">
+        <b>Gazpromneft И-50А</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-form-oil-135" data-name="Gazpromneft Form Oil 135 Industrial">
+        <b>Gazpromneft Form Oil 135</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-hto-32" data-name="Gazpromneft HTO 32 Industrial">
+        <b>Gazpromneft HTO 32</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-white-oil-15-t" data-name="Gazpromneft White Oil 15 T Industrial">
+        <b>Gazpromneft White Oil 15 T</b>
+        <span><span class="table__label">Toifa: </span>Industrial</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-grease-l-ep-00" data-name="Gazpromneft Grease L EP-00 Plastik moylar">
+        <b>Gazpromneft Grease L EP-00</b>
+        <span><span class="table__label">Toifa: </span>Plastik moylar</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-grease-l-ep-0" data-name="Gazpromneft Grease L EP-0 Plastik moylar">
+        <b>Gazpromneft Grease L EP-0</b>
+        <span><span class="table__label">Toifa: </span>Plastik moylar</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-grease-l-ep-1" data-name="Gazpromneft Grease L EP 1 Plastik moylar">
+        <b>Gazpromneft Grease L EP 1</b>
+        <span><span class="table__label">Toifa: </span>Plastik moylar</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-grease-l-ep-2" data-name="Gazpromneft Grease L EP 2 Plastik moylar">
         <b>Gazpromneft Grease L EP 2</b>
         <span><span class="table__label">Toifa: </span>Plastik moylar</span>
-        <span><span class="table__label">Yangilangan: </span>11.2025</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
         <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
       </div>
-      <div class="table__row" data-name="Gazpromneft Antifreeze SF 40 Suyuqliklar">
-        <b>Gazpromneft Antifreeze SF 40</b>
+      <div class="table__row" id="doc-grease-l-ep-3" data-name="Gazpromneft Grease L EP 3 Plastik moylar">
+        <b>Gazpromneft Grease L EP 3</b>
+        <span><span class="table__label">Toifa: </span>Plastik moylar</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-grease-lx-ep-2" data-name="Gazpromneft Grease LX EP 2 Plastik moylar">
+        <b>Gazpromneft Grease LX EP 2</b>
+        <span><span class="table__label">Toifa: </span>Plastik moylar</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-grease-synth-lx-ep-2" data-name="Gazpromneft Grease Synth LX EP 2 Plastik moylar">
+        <b>Gazpromneft Grease Synth LX EP 2</b>
+        <span><span class="table__label">Toifa: </span>Plastik moylar</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-premium-grease-ep-1" data-name="Gazpromneft Premium Grease EP 1 Plastik moylar">
+        <b>Gazpromneft Premium Grease EP 1</b>
+        <span><span class="table__label">Toifa: </span>Plastik moylar</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-premium-grease-ep-2" data-name="Gazpromneft Premium Grease EP 2 Plastik moylar">
+        <b>Gazpromneft Premium Grease EP 2</b>
+        <span><span class="table__label">Toifa: </span>Plastik moylar</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-er-2" data-name="Gazpromneft ЕР-2 Plastik moylar">
+        <b>Gazpromneft ЕР-2</b>
+        <span><span class="table__label">Toifa: </span>Plastik moylar</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-er-3" data-name="Gazpromneft ЕР-3 Plastik moylar">
+        <b>Gazpromneft ЕР-3</b>
+        <span><span class="table__label">Toifa: </span>Plastik moylar</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-litol-24" data-name="Gazpromneft Литол-24 Plastik moylar">
+        <b>Gazpromneft Литол-24</b>
+        <span><span class="table__label">Toifa: </span>Plastik moylar</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-dot-4" data-name="Gazpromneft DOT 4 Suyuqliklar">
+        <b>Gazpromneft DOT 4</b>
         <span><span class="table__label">Toifa: </span>Suyuqliklar</span>
-        <span><span class="table__label">Yangilangan: </span>11.2025</span>
+        <span><span class="table__label">Marka: </span>Gazpromneft</span>
+        <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
+      </div>
+      <div class="table__row" id="doc-g-energy-expert-dot-4" data-name="G-Energy Expert DOT 4 Suyuqliklar">
+        <b>G-Energy Expert DOT 4</b>
+        <span><span class="table__label">Toifa: </span>Suyuqliklar</span>
+        <span><span class="table__label">Marka: </span>G-Energy</span>
         <div class="table__files table__files--btn"><a href="#zapros">TDS soʻrash</a><a href="#zapros">MSDS soʻrash</a></div>
       </div>
   </div>
