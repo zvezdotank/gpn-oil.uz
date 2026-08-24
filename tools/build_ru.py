@@ -6,6 +6,9 @@ import os as _os
 ROOT = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
 import io
 import re, os
+import sys
+sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+import nomen
 
 OUT = ROOT
 SITE = "https://gpn-oil.uz"
@@ -56,7 +59,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=26">
+<link rel="stylesheet" href="/site.css?v=27">
 <script type="speculationrules">
 {{"prefetch":[{{"source":"document","where":{{"href_matches":"/*"}},"eagerness":"moderate"}}]}}
 </script>
@@ -210,27 +213,40 @@ def products_ld(rows, path, img, brand="Gazpromneft"):
     Размечаем то, что правда: название позиции, марку, характеристику, фасовку,
     наличие и продавца. Поиск из этого понимает, что страница коммерческая,
     а не статья, и связывает позиции с брендом.
+
+    Наличие берём из перечня склада: что лежит в Ташкенте — InStock, что везём
+    под заказ — BackOrder. Помечать всё подряд как InStock нельзя: это прямое
+    расхождение разметки с текстом страницы, и поиск его ловит.
     """
+    rows = flatten(rows)
     if not rows:
         return ""
     items = []
     for i, r in enumerate(rows, 1):
         name = r[0].replace('"', "'")
-        spec = " · ".join(str(x).replace('"', "'") for x in r[1:] if x)
+        spec = " · ".join(str(x).replace('"', "'") for x in r[1:3] if x and x != "—")
         b = "G-Energy" if name.startswith("G-Energy") else brand
+        avail = "InStock" if (len(r) < 4 or r[3]) else "BackOrder"
         items.append(
             '{"@type":"ListItem","position":%d,"item":{"@type":"Product",'
             '"name":"%s","brand":{"@type":"Brand","name":"%s"},'
             '"description":"%s","image":"%s/img/%s.webp","url":"%s%s",'
-            '"offers":{"@type":"Offer","availability":"https://schema.org/InStock",'
+            '"offers":{"@type":"Offer","availability":"https://schema.org/%s",'
             '"priceCurrency":"UZS","areaServed":"UZ","url":"%s%s",'
             '"seller":{"@type":"Organization","name":"Smart Energy Eco Trade"}}}}'
-            % (i, name, b, spec, SITE, img, SITE, path, SITE, path))
+            % (i, name, b, spec, SITE, img, SITE, path, avail, SITE, path))
     return ('<script type="application/ld+json">\n'
             '{"@context":"https://schema.org","@type":"ItemList",'
             '"itemListOrder":"https://schema.org/ItemListUnordered",'
             '"numberOfItems":%d,"itemListElement":[%s]}\n</script>\n'
             % (len(items), ",".join(items)))
+
+
+def flatten(rows):
+    """Позиции страницы одним списком — с подразделами и без."""
+    if rows and isinstance(rows[0][1], list):
+        return [r for _, sub in rows for r in sub]
+    return list(rows or [])
 
 
 def faq_html(items):
@@ -380,32 +396,52 @@ def slug(name):
     s = re.sub(r"[^a-z0-9]+", "-", s).strip("-")
     return s or "poziciya"
 
-def table(rows):
+def table(rows, col="Класс вязкости", title="Позиции на складе в Ташкенте"):
     """Таблица позиций. Данные — из перечня клиента, ничего не досочиняем.
 
     Название каждой позиции — заголовок третьего уровня со своим якорем.
     Так поисковик видит точное «Gazpromneft Hydraulic HLP 32» в заголовке,
     а не в ячейке таблицы, и на позицию можно дать прямую ссылку. Это
     закрывает запросы с названием марки без отдельной страницы на каждую
-    из двадцати одной позиции — такие страницы получились бы пустыми,
-    пока у нас нет паспортов качества.
+    позицию — такие страницы получились бы пустыми, пока у нас нет
+    паспортов качества.
+
+    Позиции можно подать плоским списком или разложить по подразделам:
+    [(«Для газовых двигателей», [позиции]), ...]. На странице, где позиций
+    больше двух десятков, подразделы — единственное, что делает её
+    читаемой глазами, а не поиском по странице.
+
+    У позиции, которой нет на складе, рядом с названием стоит пометка
+    «под заказ». Молча смешивать её со складскими нельзя: человек звонит
+    именно потому, что увидел наличие.
     """
+    grouped = bool(rows) and isinstance(rows[0][1], list)
+    sections = rows if grouped else [(None, rows)]
     body = []
-    for name, grade, pack in rows:
-        body.append("""          <div class="table__row" id="%s">
-            <h3>%s</h3>
-            <span><span class="table__label">Класс вязкости: </span>%s</span>
+    for sub, items in sections:
+        if sub:
+            # У подраздела свой якорь: с него можно дать ссылку из плиток
+            # наверху страницы и из меню категорий.
+            body.append('          <div class="table__group" id="%s">%s</div>'
+                        % (slug(sub), sub))
+        for r in items:
+            name, grade, pack = r[0], r[1], r[2]
+            stock = r[3] if len(r) > 3 else True
+            tag = "" if stock else ' <span class="tag tag--order">под заказ</span>'
+            body.append("""          <div class="table__row" id="%s">
+            <h3>%s%s</h3>
+            <span><span class="table__label">%s: </span>%s</span>
             <span><span class="table__label">Фасовка: </span>%s</span>
             <div class="table__files"><a href="/docs">TDS · MSDS</a></div>
-          </div>""" % (slug(name), name, grade, pack))
-    return """        <h2 class="table__title">Позиции на складе в Ташкенте</h2>
+          </div>""" % (slug(name), name, tag, col, grade, pack))
+    return """        <h2 class="table__title">%s</h2>
         <div class="table">
           <div class="table__head">
-            <div>Наименование</div><div>Класс вязкости</div><div>Фасовка</div><div>Документы</div>
+            <div>Наименование</div><div>%s</div><div>Фасовка</div><div>Документы</div>
           </div>
 %s
         </div>
-        <p class="table__note">Показаны основные позиции. Полный перечень и цены — по запросу у менеджера.</p>""" % "\n".join(body)
+        <p class="table__note">Перечень со склада в Ташкенте на 1 июля 2026 года. Позиции, которых нет в списке, привозим под заказ — спросите менеджера.</p>""" % (title, col, "\n".join(body))
 
 
 EMPTY = """        <div class="empty">
@@ -459,7 +495,8 @@ def leadform(source, title, sub, button, cls="", preset=None, anchor=None):
 
 def category(path, fname, crumb, h1, title, desc, lead, img, img_size, alt,
              rows=None, chips=None, longread=None, active="products", parent=None,
-             uses=None, faq=None, preset=None):
+             uses=None, faq=None, preset=None, col="Класс вязкости",
+             table_title="Позиции на складе в Ташкенте", note=None):
     crumb_items = [("Главная", "/"), ("Продукция", "/products")]
     if parent:
         crumb_items.append(parent)
@@ -485,27 +522,35 @@ def category(path, fname, crumb, h1, title, desc, lead, img, img_size, alt,
     if chips:
         chips_html = '\n        <div class="chips">\n' + "\n".join(
             '          <a class="chip" href="%s">%s</a>' % (u, n) for n, u in chips) + '\n        </div>'
-    if rows:
-        content = table(rows)
-    else:
-        # Перечня позиций нет — но пустая страница выкидывает человека обратно
-        # в выдачу. Показываем, под какие задачи подбираем, и просим заявку.
+    # Блок «что подбираем» показываем и там, где перечень позиций есть:
+    # список марок отвечает тому, кто знает, что ему нужно, а плитки — тому,
+    # кто пришёл от техники и названия марок ему ничего не говорят.
+    uses_html = ""
+    if uses:
         tiles = "\n".join(
-            '          <div><b>%s</b><span>%s</span></div>' % (n, t) for n, t in (uses or []))
-        content = """        <h2 style="font-size:24px;margin-top:8px">Что подбираем в этой категории</h2>
+            '          <div><b>%s</b><span>%s</span></div>' % (n, t) for n, t in uses)
+        uses_html = """        <h2 style="font-size:24px;margin-top:8px">Что подбираем в этой категории</h2>
         <div class="uses">
 %s
         </div>
-        <div class="checklist">
+""" % tiles
+    if rows:
+        content = uses_html + table(rows, col, table_title)
+        if note:
+            content = uses_html + '        <p class="page__note">%s</p>\n' % note + table(rows, col, table_title)
+    else:
+        # Перечня позиций нет — но пустая страница выкидывает человека обратно
+        # в выдачу. Показываем, под какие задачи подбираем, и просим заявку.
+        content = uses_html + """        <div class="checklist">
           <b>Что написать в заявке, чтобы ответ был точным</b>
           <span>Марка и модель техники или узла</span>
           <span>Какое масло залито сейчас — марка или допуск</span>
           <span>Примерный объём: на одну заправку или на год</span>
           <span>Нужная фасовка: канистра, бочка, кубовая ёмкость</span>
         </div>
-%s""" % (tiles, leadform(("Заявка со страницы: " + crumb), "Подобрать и узнать цену",
-                         "Пришлём подбор, прайс с наличием и техническое описание.",
-                         "Получить подбор и прайс", preset=preset))
+%s""" % leadform(("Заявка со страницы: " + crumb), "Подобрать и узнать цену",
+                 "Пришлём подбор, прайс с наличием и техническое описание.",
+                 "Получить подбор и прайс", preset=preset)
     long_html = ""
     if longread:
         long_html = """
@@ -560,62 +605,64 @@ def category(path, fname, crumb, h1, title, desc, lead, img, img_size, alt,
 # «Индустриальные масла» собираем как их сумму. Раньше был один список
 # с нарезкой по номерам позиций — стоило добавить марку, и нарезка
 # разъезжалась, показывая на странице чужие позиции.
-HYDRAULIC_ROWS = [
-    ("Gazpromneft Hydraulic HLP 32", "ISO VG 32", "20 / 50 / 205 л"),
-    ("Gazpromneft Hydraulic HLP 46", "ISO VG 46", "20 / 50 / 205 л"),
-    ("Gazpromneft Hydraulic HLP 68", "ISO VG 68", "20 / 205 л"),
-]
+# Позиции берём из общего модуля: тот же перечень собирает и узбекскую
+# версию, иначе списки разъезжаются при первой же правке.
+HYDRAULIC_ROWS = nomen.rows(nomen.HYDRAULIC)
+REDUCTOR_ROWS = nomen.rows(nomen.REDUCTOR)
+COMPRESSOR_ROWS = nomen.rows(nomen.COMPRESSOR)
 
-# Класс вязкости у CLP и у компрессорных читается прямо из обозначения
-# марки, это не домысел. Фасовку по новым позициям клиент пока не дал —
-# ставим прочерк, а не выдумываем.
-REDUCTOR_ROWS = [
-    ("Gazpromneft Reductor CLP 68", "ISO VG 68", "—"),
-    ("Gazpromneft Reductor CLP 150", "ISO VG 150", "20 / 205 л"),
-    ("Gazpromneft Reductor CLP 220", "ISO VG 220", "20 / 205 л"),
-    ("Gazpromneft Reductor CLP 320", "ISO VG 320", "—"),
-    ("Gazpromneft Reductor CLP 460", "ISO VG 460", "—"),
-    ("Gazpromneft Reductor CLP 680", "ISO VG 680", "—"),
-]
+INDUSTRIAL_ROWS = nomen.groups([
+    ("Гидравлические", nomen.HYDRAULIC),
+    ("Редукторные", nomen.REDUCTOR),
+    ("Компрессорные", nomen.COMPRESSOR),
+    ("Турбинные", nomen.TURBINE),
+    ("Трансформаторные", nomen.TRANSFORMER),
+    ("Индустриальные общего назначения", nomen.INDUSTRIAL_GP),
+    ("Формовочные", nomen.FORM_OIL),
+    ("Теплоносители", nomen.HTO),
+    ("Белые масла", nomen.WHITE_OIL),
+])
 
-COMPRESSOR_ROWS = [
-    ("Gazpromneft Compressor S Synth-46", "ISO VG 46", "—"),
-    ("Gazpromneft Compressor F Synth-46", "ISO VG 46", "—"),
-    ("Gazpromneft Compressor S Synth-100", "ISO VG 100", "—"),
-    ("Gazpromneft Compressor S Synth-150", "ISO VG 150", "—"),
-    ("Gazpromneft Compressor Oil 46", "ISO VG 46", "20 / 205 л"),
-    ("Gazpromneft Compressor Oil 68", "ISO VG 68", "—"),
-    ("Gazpromneft Compressor Oil 100", "ISO VG 100", "—"),
-    ("Gazpromneft Compressor Oil 150", "ISO VG 150", "—"),
-    ("Gazpromneft Compressor Oil 220", "ISO VG 220", "—"),
-    ("Gazpromneft КС-19п", "—", "—"),
-]
+GPN_ROWS = nomen.groups([
+    ("Грузовая техника и автобусы, линейка G-Profi", nomen.G_PROFI),
+    ("Дизельные двигатели, линейка Diesel", nomen.GPN_DIESEL),
+    ("Тепловозные, судовые и стационарные дизели", nomen.GPN_MARINE),
+    ("Легковой транспорт и лёгкая коммерция", nomen.GPN_LIGHT),
+])
 
-TURBINE_ROWS = [
-    ("Gazpromneft Turbine Oil 32", "ISO VG 32", "205 л"),
-    ("Gazpromneft HTO 32", "ISO VG 32", "205 л"),
-]
+G_ENERGY_ROWS = nomen.rows(nomen.G_ENERGY)
 
-INDUSTRIAL_ROWS = HYDRAULIC_ROWS + REDUCTOR_ROWS + COMPRESSOR_ROWS + TURBINE_ROWS
+TRANSMISSION_ROWS = nomen.groups([
+    ("Автоматические коробки", nomen.ATF),
+    ("Механические коробки, мосты и редукторы", nomen.MKPP),
+    ("Универсальное трансмиссионно-гидравлическое", nomen.UTTO),
+])
+
+GREASE_ROWS = nomen.rows(nomen.GREASE, "кг")
+FLUIDS_ROWS = nomen.rows(nomen.BRAKE)
 
 category("/industrial", "industrial.html", "Индустриальные масла",
          "Индустриальные масла Газпромнефть в Ташкенте",
          "Индустриальные масла Газпромнефть в Ташкенте и Узбекистане",
-         "Индустриальные масла Gazpromneft со склада в Ташкенте: гидравлические HLP 32/46/68, редукторные CLP 68–680, компрессорные и турбинные. Паспорт качества на партию.",
-         "Гидравлические, редукторные, компрессорные, турбинные и трансформаторные масла, теплоносители. Наличие на складе в Ташкенте, фасовка от 20 л до кубовых ёмкостей, паспорт качества на каждую партию.",
+         "Индустриальные масла Gazpromneft со склада в Ташкенте: гидравлические HLP и HVLP, редукторные CLP и F Synth, компрессорные, турбинные ТП-22 и ТП-30, И-20А, ГК. Паспорт качества на партию.",
+         "Гидравлические, редукторные, компрессорные, турбинные и трансформаторные масла, индустриальные общего назначения, формовочные, теплоносители и белые масла. Наличие на складе в Ташкенте, фасовка от 20 л до кубовых ёмкостей, паспорт качества на каждую партию.",
          "industrial", (800, 449),
          "Индустриальные масла Газпромнефть в бочках на складе",
          rows=INDUSTRIAL_ROWS,
          chips=[("Гидравлические", "/hydralic"), ("Редукторные", "/reductor"),
-                ("Компрессорные", "/compressor"), ("Смазки", "/grease"), ("СОЖ", "/fluids")],
+                ("Компрессорные", "/compressor"), ("Турбинные", "#turbinnye"),
+                ("Трансформаторные", "#transformatornye"),
+                ("Индустриальные общего назначения", "#industrialnye-obschego-naznacheniya"),
+                ("Формовочные", "#formovochnye"), ("Теплоносители", "#teplonositeli"),
+                ("Белые масла", "#belye-masla"), ("Смазки", "/grease")],
          longread=("Подбор и замена импортных марок",
                    "Подбираем аналоги Shell Tellus, Mobil DTE, Total Azolla и других марок по классу вязкости ISO VG, уровню очистки и требованиям производителя оборудования. При переходе предоставляем протокол сравнения характеристик и рекомендации по промывке системы — смотрите <a href=\"/analogi\" style=\"color:var(--blue);font-weight:600\">таблицу соответствий</a>."))
 
 category("/hydralic", "hydralic.html", "Гидравлические масла",
          "Гидравлические масла Газпромнефть в Ташкенте",
-         "Гидравлические масла Газпромнефть — HLP 32, 46, 68",
-         "Гидравлические масла Gazpromneft Hydraulic HLP 32, 46 и 68 со склада в Ташкенте. Фасовка 20, 50 и 205 л, подбор аналогов Shell Tellus и Mobil DTE.",
-         "Серия Gazpromneft Hydraulic для гидросистем карьерной, строительной и промышленной техники. Классы ISO VG 32, 46 и 68, фасовка от 20 л до кубовых ёмкостей.",
+         "Гидравлические масла Газпромнефть — HLP, HVLP, Гидравлик",
+         "Гидравлические масла Gazpromneft: HLP 32/46/68, всесезонные HVLP 15–68 и базовая линейка Гидравлик. Склад в Ташкенте, фасовка 20, 50 и 205 л, подбор аналогов Shell Tellus и Mobil DTE.",
+         "Три линейки для гидросистем карьерной, строительной и промышленной техники: HLP с противоизносными присадками, всесезонная загущённая HVLP и базовая Гидравлик. Классы ISO VG от 15 до 68, фасовка от 20 л до кубовых ёмкостей.",
          "hydralic", (1200, 674),
          "Гидравлика карьерной техники — гидравлические масла Газпромнефть",
          rows=HYDRAULIC_ROWS,
@@ -625,9 +672,9 @@ category("/hydralic", "hydralic.html", "Гидравлические масла"
 
 category("/reductor", "reductor.html", "Редукторные масла",
          "Редукторные масла Газпромнефть в Ташкенте",
-         "Редукторные масла Газпромнефть — CLP 68, 150, 220, 320, 460, 680",
-         "Редукторные масла Gazpromneft Reductor CLP от 68 до 680 со склада в Ташкенте. Паспорт качества на партию, подбор по нагрузке и рабочей температуре узла.",
-         "Серия Gazpromneft Reductor для промышленных редукторов и приводов. Классы вязкости ISO VG от 68 до 680, наличие на складе в Ташкенте.",
+         "Редукторные масла Газпромнефть — CLP 68–680 и F Synth",
+         "Редукторные масла Gazpromneft Reductor: минеральные CLP от 68 до 680 и синтетические F Synth и PAO Synth. Склад в Ташкенте, подбор по нагрузке и рабочей температуре узла.",
+         "Серия Gazpromneft Reductor для промышленных редукторов и приводов: минеральные CLP классов ISO VG от 68 до 680 и синтетические F Synth 150–460 и PAO Synth 460 для тяжёлых и горячих узлов.",
          "reductor", (1200, 674),
          "Промышленный редуктор — редукторные масла Газпромнефть",
          rows=REDUCTOR_ROWS,
@@ -650,10 +697,11 @@ category("/compressor", "compressor.html", "Компрессорные масл�
 category("/gpn", "gpn.html", "Моторные масла Газпромнефть",
          "Моторные масла Газпромнефть в Ташкенте",
          "Моторные масла Газпромнефть в Узбекистане со склада в Ташкенте",
-         "Моторные масла Gazpromneft и G-Profi для грузового транспорта, автобусов и спецтехники. Склад в Ташкенте, подбор по допускам производителя, документы на каждую партию.",
+         "Моторные масла Gazpromneft и G-Profi со склада в Ташкенте: G-Profi для грузовой техники, Diesel Premium и Extra, Premium L, Standard, Super. Подбор по допускам, документы на партию.",
          "Для коммерческого транспорта, спецтехники и автопарков. Подбираем по допускам производителя двигателя и условиям эксплуатации, поставляем со склада в Ташкенте с паспортом качества на каждую партию.",
          "gpn", (1200, 673),
          "Производство моторных масел Газпромнефть",
+         rows=GPN_ROWS,
                   preset="Моторные масла для грузовой техники и спецтехники",
          uses=[("Грузовики и тягачи", "Дизельные масла по допускам MAN, Scania, Volvo, Mercedes-Benz"),
                ("Карьерная и строительная техника", "Для работы в пыли и на высоких температурах"),
@@ -671,10 +719,11 @@ category("/gpn", "gpn.html", "Моторные масла Газпромнефт
 category("/g-energy", "g-energy.html", "Моторные масла G-Energy",
          "Моторные масла G-Energy в Ташкенте",
          "Моторные масла G-Energy в Узбекистане",
-         "Моторные масла G-Energy для легкового транспорта: синтетика и полусинтетика. Официальная поставка со склада в Ташкенте, фасовки от 1 л, документы на партию.",
-         "Синтетика и полусинтетика для легкового транспорта. Официальная продукция со склада в Ташкенте, фасовки от литровой канистры до бочки, паспорт качества на каждую партию.",
+         "Моторные масла G-Energy для легкового транспорта: Synthetic Far East, Long Life, Super Start, Active и Expert L. Склад в Ташкенте и поставка под заказ, фасовки от 1 л до бочки.",
+         "Синтетика и полусинтетика для легкового транспорта. Часть позиций держим на складе в Ташкенте, остальные привозим под заказ — срок называем сразу. Фасовки от литровой канистры до бочки, паспорт качества на каждую партию.",
          "g-energy", (1024, 575),
          "G-Energy — моторные масла для легкового транспорта",
+         rows=G_ENERGY_ROWS, table_title="Позиции G-Energy",
                   preset="Моторные масла для легкового транспорта",
          uses=[("Сервисные центры и СТО", "Синтетика и полусинтетика ходовых вязкостей"),
                ("Магазины автотоваров", "Фасовки 1, 4 и 5 л под розничную полку"),
@@ -710,14 +759,15 @@ category("/g-energy-retail", "g-energy-retail.html", "G-Energy — рознич�
 category("/transmission", "transmission.html", "Трансмиссионные масла",
          "Трансмиссионные масла Газпромнефть в Ташкенте",
          "Трансмиссионные масла Газпромнефть в Узбекистане",
-         "Трансмиссионные масла Gazpromneft для МКПП, АКПП, мостов и ГУР, включая ATF. Поставка со склада в Ташкенте, подбор по допускам, документы на партию.",
+         "Трансмиссионные масла Gazpromneft: GL-4 и GL-5 для МКПП и мостов, ATF Dexron III и VI для автоматов, UTTO. Склад в Ташкенте, подбор по допускам.",
          "Для МКПП, АКПП, мостов и ГУР, включая ATF. Подбираем по классу вязкости SAE, уровню API и допускам производителя узла, отгружаем со склада в Ташкенте.",
          None, None, None,
+         rows=TRANSMISSION_ROWS,
                   preset="Трансмиссионные масла",
          uses=[("МКПП и раздаточные коробки", "Масла классов GL-4 и GL-5 по вязкости SAE"),
                ("Автоматические коробки", "Жидкости ATF под требования производителя"),
                ("Ведущие мосты и редукторы", "Для высоких нагрузок и пыльных условий"),
-               ("Гидроусилители руля", "Специальные жидкости ГУР")],
+               ("Сельхоз- и спецтехника", "Универсальное трансмиссионно-гидравлическое UTTO")],
          faq=[("Как понять, какое масло нужно в мост?",
                "По руководству на технику: класс API GL-4 или GL-5, вязкость SAE и наличие требования по противозадирным присадкам. Если документации нет, скажите марку и модель — подберём по каталогу."),
               ("Можно ли одним маслом закрыть весь парк?",
@@ -728,34 +778,38 @@ category("/transmission", "transmission.html", "Трансмиссионные �
 category("/grease", "grease.html", "Пластичные смазки",
          "Пластичные смазки Газпромнефть в Ташкенте",
          "Пластичные смазки Газпромнефть в Узбекистане и Ташкенте",
-         "Пластичные смазки Gazpromneft: литиевые, кальциевые, высокотемпературные, Steelgrease. Склад в Ташкенте, фасовки от картриджа до бочки, документы на партию.",
-         "Литиевые, кальциевые, высокотемпературные смазки и линейка Steelgrease. Фасовки от картриджа до бочки, наличие на складе в Ташкенте, паспорт качества на каждую партию.",
+         "Пластичные смазки Gazpromneft: Grease L EP, LX EP, Synth LX, Premium Grease, ЕР-2 и Литол-24. Склад в Ташкенте, фасовки от 400 г до бочки 180 кг.",
+         "Литиевые смазки Grease L EP классов NLGI от 00 до 3, литиевый комплекс LX EP, синтетическая Synth LX и Литол-24. Фасовки от 400 г до бочки 180 кг, наличие на складе в Ташкенте.",
          "grease", (1200, 674),
          "Пластичная смазка в подшипнике — смазки Газпромнефть",
+         rows=GREASE_ROWS, col="Класс NLGI",
                   preset="Пластичные смазки",
          uses=[("Подшипники качения и скольжения", "Литиевые смазки общего назначения"),
                ("Высокие температуры", "Металлургия, цементные и стекольные производства"),
                ("Влага и мойка", "Кальциевые и комплексные смазки, стойкие к вымыванию"),
-               ("Открытые узлы и канаты", "Адгезионные составы для карьерной техники")],
+               ("Централизованные системы смазки", "Полужидкие EP-00 и EP-0 для подачи по магистралям")],
          faq=[("Чем заменить Литол-24?",
                "Зависит от того, почему он перестал держать. При высокой температуре нужен другой загуститель, при вымывании — водостойкая смазка, при высокой нагрузке — состав с противозадирными присадками. Опишите узел, подберём."),
               ("В какой фасовке поставляете?",
-               "От картриджа до бочки. Точные фасовки по конкретной позиции уточним при подборе.")],
+               "Картридж 400 г, ведро 18 кг и бочка 180 кг — точные фасовки по каждой позиции указаны в перечне выше. Литол-24 есть ещё в банках 100 и 800 г.")],
          longread=("Как подбираем",
                    "По температуре в узле, нагрузке и наличию влаги или абразива. Там, где универсальная смазка перестаёт держать, обычно нужен переход на другой загуститель, а не увеличение частоты смазывания."))
 
 category("/fluids", "fluids.html", "Технические жидкости и СОЖ",
          "Технические жидкости и СОЖ Газпромнефть в Ташкенте",
          "Антифризы, тормозные жидкости и СОЖ Газпромнефть",
-         "Антифризы, тормозные жидкости и смазочно-охлаждающие жидкости Gazpromneft со склада в Ташкенте. Фасовки от 1 л до кубовых ёмкостей, документы на партию.",
-         "Антифризы, тормозные жидкости, смазочно-охлаждающие жидкости. Фасовки от литра до кубовых ёмкостей, наличие на складе в Ташкенте, паспорт качества на каждую партию.",
+         "Тормозные жидкости Gazpromneft DOT 4 и G-Energy Expert DOT 4 со склада в Ташкенте. Антифризы, СОЖ и промывочные составы — под заказ, срок поставки скажем сразу.",
+         "На складе в Ташкенте — тормозные жидкости DOT 4. Антифризы, смазочно-охлаждающие жидкости и промывочные составы возим под заказ: скажите задачу, назовём позицию и срок.",
          "fluids", (1200, 674),
          "Смазочно-охлаждающая жидкость при обработке металла",
+         rows=FLUIDS_ROWS, col="Спецификация",
+         table_title="Тормозные жидкости на складе в Ташкенте",
+         note="Антифризы, смазочно-охлаждающие жидкости и промывочные составы в перечне склада на 1 июля не значатся — их привозим под заказ. Опишите задачу, подберём позицию и назовём срок поставки.",
                   preset="Антифризы, тормозные жидкости, СОЖ",
-         uses=[("Антифризы", "Под требования производителя техники и климат региона"),
-               ("Смазочно-охлаждающие жидкости", "Под материал заготовки и тип обработки"),
-               ("Тормозные жидкости", "Классы DOT для грузового и легкового транспорта"),
-               ("Промывочные составы", "Для перехода с одной марки масла на другую")],
+         uses=[("Антифризы", "Под заказ — под требования производителя техники и климат региона"),
+               ("Смазочно-охлаждающие жидкости", "Под заказ — под материал заготовки и тип обработки"),
+               ("Тормозные жидкости", "DOT 4 на складе, фасовка 0,45 л"),
+               ("Промывочные составы", "Под заказ — для перехода с одной марки масла на другую")],
          faq=[("Какой антифриз подойдёт для нашей техники?",
                "Смотрим на требование производителя — карбоксилатный, лобридный или традиционный состав, и на температуру в регионе эксплуатации. Скажите марку техники, подберём."),
               ("Как подобрать СОЖ?",
@@ -794,7 +848,7 @@ home = """
   <div class="stats">
     <div class="wrap stats__in">
       <div class="stats__item"><div class="stats__num">3 года</div><div class="stats__label">поставок в Узбекистане</div></div>
-      <div class="stats__item"><div class="stats__num">600+</div><div class="stats__label">позиций на складе</div></div>
+      <div class="stats__item"><div class="stats__num">100+</div><div class="stats__label">позиций на складе</div></div>
       <div class="stats__item"><div class="stats__num">24 часа</div><div class="stats__label">от заявки до отгрузки</div></div>
       <div class="stats__item"><div class="stats__num">НГМК, УзАвто</div><div class="stats__label">среди наших заказчиков</div></div>
     </div>
@@ -998,7 +1052,7 @@ products = """
     </div>
     <div class="page__head">
       <h1>Продукция Газпромнефть в Узбекистане</h1>
-      <p class="page__lead">Более 600 позиций со склада в Ташкенте: индустриальные и моторные масла, трансмиссионные масла, пластичные смазки, антифризы и СОЖ. На каждую партию — паспорт качества, для тендеров готовим полный пакет документов.</p>
+      <p class="page__lead">Более 100 позиций со склада в Ташкенте: индустриальные и моторные масла, трансмиссионные масла, пластичные смазки и тормозные жидкости. Антифризы и СОЖ привозим под заказ. На каждую партию — паспорт качества, для тендеров готовим полный пакет документов.</p>
     </div>
 
     <div class="cards">
@@ -1015,7 +1069,7 @@ products = """
       <a class="tile" href="/hydralic"><b>Гидравлические</b><span>Gazpromneft Hydraulic HLP 32, 46, 68</span></a>
       <a class="tile" href="/reductor"><b>Редукторные</b><span>Gazpromneft Reductor CLP 68–680</span></a>
       <a class="tile" href="/compressor"><b>Компрессорные</b><span>Gazpromneft Compressor Oil 46</span></a>
-      <a class="tile" href="/industrial"><b>Турбинные и теплоносители</b><span>Turbine Oil 32, HTO 32</span></a>
+      <a class="tile" href="/industrial"><b>Турбинные и теплоносители</b><span>ТП-22, ТП-30, HTO 32</span></a>
     </div>
 
     <div class="layout" style="margin-top:44px">
@@ -1109,7 +1163,7 @@ company = """
   <div class="stats">
     <div class="wrap stats__in">
       <div class="stats__item"><div class="stats__num">2023</div><div class="stats__label">год начала поставок</div></div>
-      <div class="stats__item"><div class="stats__num">600+</div><div class="stats__label">позиций ассортимента</div></div>
+      <div class="stats__item"><div class="stats__num">100+</div><div class="stats__label">позиций ассортимента</div></div>
       <div class="stats__item"><div class="stats__num">12 регионов</div><div class="stats__label">география поставок</div></div>
       <div class="stats__item"><div class="stats__num">100%</div><div class="stats__label">официальная продукция</div></div>
     </div>
@@ -1494,7 +1548,7 @@ ANALOG_ROWS = [
  ("Редукторные, ISO VG 150", "Shell Omala S2 G 150, Mobilgear 600 XP 150", "Gazpromneft Reductor CLP 150"),
  ("Редукторные, ISO VG 220", "Shell Omala S2 G 220, Mobilgear 600 XP 220", "Gazpromneft Reductor CLP 220"),
  ("Компрессорные, ISO VG 46", "Shell Corena S2 P 46, Mobil Rarus 425", "Gazpromneft Compressor Oil 46"),
- ("Турбинные, ISO VG 32", "Shell Turbo T 32, Mobil DTE 797", "Gazpromneft Turbine Oil 32"),
+ ("Турбинные, ISO VG 32", "Shell Turbo T 32, Mobil DTE 797", "Gazpromneft ТП-22"),
 ]
 analog_rows_html = "\n".join('''        <div class="table__row">
           <b>%s</b>
@@ -1584,7 +1638,7 @@ ind_html = "\n".join('''        <a class="tile" href="%s">
 
 otrasli_blocks = '''    <p class="page__lead" style="max-width:820px">Поставляем смазочные материалы предприятиям промышленности, автопаркам и сервисным центрам по всему Узбекистану. Ниже — отрасли, с которыми работаем чаще всего, и то, что обычно нужно в каждой из них.</p>
 
-    <div class="tiles" style="grid-template-columns:repeat(4,1fr);margin-top:32px">
+    <div class="tiles" style="margin-top:32px">
 %s
     </div>
 

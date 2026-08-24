@@ -322,6 +322,24 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
 .table__note{font-size:14px;color:var(--muted-2)}
 .table__label{display:none;font-size:12px;color:var(--muted-2);letter-spacing:.04em;text-transform:uppercase}
 
+/* Подраздел внутри перечня. На странице индустриальных позиций больше сорока,
+   и без разделителей она читается только поиском по странице. */
+.table__group{grid-column:1/-1;padding:16px 24px 10px;background:var(--surface);
+  border-top:1px solid var(--rule);font-size:12px;font-weight:600;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--ink);scroll-margin-top:90px}
+.table__row{scroll-margin-top:90px}
+
+/* Пометка у позиции, которой нет на складе. Оранжевую заливку не берём:
+   оранжевый на сайте означает «нажми», а это просто факт о наличии. */
+.tag{display:inline-block;margin-left:8px;padding:2px 7px;border-radius:2px;
+  font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  white-space:nowrap;vertical-align:1px}
+.tag--order{color:var(--muted);background:var(--surface);border:1px solid var(--rule-2)}
+
+/* Оговорка над перечнем — например, что часть категории идёт под заказ. */
+.page__note{margin:0 0 16px;padding:14px 16px;background:var(--surface-2);
+  border-left:3px solid var(--rule-2);font-size:15px;color:var(--muted)}
+
 .asidebox{display:flex;flex-direction:column;gap:10px;padding:22px;background:#fff;border:1px solid var(--rule);border-radius:var(--r)}
 .asidebox b{font-size:16px;font-weight:600}
 .asidebox div{display:flex;flex-direction:column;gap:8px;font-size:15px;color:var(--muted)}
@@ -646,6 +664,7 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
   .table{--cols:1fr !important}
   .table__head{display:none}
   .table__row{gap:6px;padding:20px 20px}
+  .table__group{padding:14px 20px 8px}
   .table__label{display:inline}
   .table__files{padding-top:6px}
   .cta__in{padding-top:36px;padding-bottom:36px}

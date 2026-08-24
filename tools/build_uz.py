@@ -8,6 +8,9 @@ import os as _os
 ROOT = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
 import io
 import re, os
+import sys
+sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+import nomen
 from PIL import Image as _Image
 
 OUT = ROOT
@@ -70,7 +73,7 @@ HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/img/logo-mark.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/plex-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plex-700.woff2" as="font" type="font/woff2" crossorigin>{preload}
-<link rel="stylesheet" href="/site.css?v=26">
+<link rel="stylesheet" href="/site.css?v=27">
 <script type="speculationrules">
 {{"prefetch":[{{"source":"document","where":{{"href_matches":"/*"}},"eagerness":"moderate"}}]}}
 </script>
@@ -211,6 +214,13 @@ def crumbs_ld(items):
             '</script>\n' % ",".join(parts))
 
 
+def flatten(rows):
+    """Sahifadagi pozitsiyalar bitta roʻyxatda — boʻlimlar bilan ham, ularsiz ham."""
+    if rows and isinstance(rows[0][1], list):
+        return [r for _, sub in rows for r in sub]
+    return list(rows or [])
+
+
 def products_ld(rows, path, img, brand="Gazpromneft"):
     """Toifadagi haqiqiy pozitsiyalar roʻyxati.
 
@@ -218,21 +228,23 @@ def products_ld(rows, path, img, brand="Gazpromneft"):
     oʻylab topilmaydi. Faqat haqiqat belgilanadi: nomi, brendi, tavsifi,
     qadoqlanishi, mavjudligi va sotuvchisi.
     """
+    rows = flatten(rows)
     if not rows:
         return ""
     items = []
     for i, r in enumerate(rows, 1):
         name = r[0].replace('"', "'")
-        spec = " · ".join(str(x).replace('"', "'") for x in r[1:] if x)
+        spec = " · ".join(str(x).replace('"', "'") for x in r[1:3] if x and x != "—")
         b = "G-Energy" if name.startswith("G-Energy") else brand
+        avail = "InStock" if (len(r) < 4 or r[3]) else "BackOrder"
         items.append(
             '{"@type":"ListItem","position":%d,"item":{"@type":"Product",'
             '"name":"%s","brand":{"@type":"Brand","name":"%s"},'
             '"description":"%s","image":"%s/img/%s.webp","url":"%s%s",'
-            '"offers":{"@type":"Offer","availability":"https://schema.org/InStock",'
+            '"offers":{"@type":"Offer","availability":"https://schema.org/%s",'
             '"priceCurrency":"UZS","areaServed":"UZ","url":"%s%s",'
             '"seller":{"@type":"Organization","name":"Smart Energy Eco Trade"}}}}'
-            % (i, name, b, spec, SITE, img, SITE, path, SITE, path))
+            % (i, name, b, spec, SITE, img, SITE, path, avail, SITE, path))
     return ('<script type="application/ld+json">\n'
             '{"@context":"https://schema.org","@type":"ItemList",'
             '"itemListOrder":"https://schema.org/ItemListUnordered",'
@@ -391,24 +403,38 @@ def slug(name):
     return s or "poziciya"
 
 
-def table(rows):
+def table(rows, col="Qovushqoqlik sinfi", title="Toshkentdagi omborda mavjud pozitsiyalar"):
     """Har bir pozitsiya nomi — oʻz yakoriga ega uchinchi daraja sarlavhasi.
     Shunda qidiruv tizimi aniq markani jadval katagida emas, sarlavhada
-    koʻradi va pozitsiyaga toʻgʻridan-toʻgʻri havola berish mumkin."""
-    body = ["""          <div class="table__row" id="%s">
-            <h3>%s</h3>
-            <span><span class="table__label">Qovushqoqlik sinfi: </span>%s</span>
+    koʻradi va pozitsiyaga toʻgʻridan-toʻgʻri havola berish mumkin.
+
+    Pozitsiyalarni tekis roʻyxat bilan ham, boʻlimlarga ajratib ham berish
+    mumkin. Omborda yoʻq pozitsiya yonida «buyurtma ostida» belgisi turadi.
+    """
+    grouped = bool(rows) and isinstance(rows[0][1], list)
+    sections = rows if grouped else [(None, rows)]
+    body = []
+    for sub, items in sections:
+        if sub:
+            body.append('          <div class="table__group" id="%s">%s</div>'
+                        % (slug(sub), sub))
+        for r in items:
+            stock = r[3] if len(r) > 3 else True
+            tag = "" if stock else ' <span class="tag tag--order">buyurtma ostida</span>'
+            body.append("""          <div class="table__row" id="%s">
+            <h3>%s%s</h3>
+            <span><span class="table__label">%s: </span>%s</span>
             <span><span class="table__label">Qadoq: </span>%s</span>
             <div class="table__files"><a href="/uz/docs">TDS · MSDS</a></div>
-          </div>""" % (slug(r[0]), r[0], r[1], r[2]) for r in rows]
-    return """        <h2 class="table__title">Toshkentdagi omborda mavjud pozitsiyalar</h2>
+          </div>""" % (slug(r[0]), r[0], tag, col, r[1], r[2]))
+    return """        <h2 class="table__title">%s</h2>
         <div class="table">
           <div class="table__head">
-            <div>Nomi</div><div>Qovushqoqlik sinfi</div><div>Qadoq</div><div>Hujjatlar</div>
+            <div>Nomi</div><div>%s</div><div>Qadoq</div><div>Hujjatlar</div>
           </div>
 %s
         </div>
-        <p class="table__note">Asosiy pozitsiyalar koʻrsatilgan. Toʻliq roʻyxat va narxlar — menejerdan soʻrov boʻyicha.</p>""" % "\n".join(body)
+        <p class="table__note">2026-yil 1-iyul holatiga Toshkentdagi ombor roʻyxati. Roʻyxatda yoʻq pozitsiyalarni buyurtma ostida olib kelamiz — menejerdan soʻrang.</p>""" % (title, col, "\n".join(body))
 
 
 CHECKLIST = """        <div class="checklist">
@@ -422,7 +448,8 @@ CHECKLIST = """        <div class="checklist">
 
 def category(path, fname, crumb, h1, title, desc, lead, img, alt,
              rows=None, chips=None, longread=None, parent=None,
-             uses=None, faq=None, preset=None):
+             uses=None, faq=None, preset=None, col="Qovushqoqlik sinfi",
+             table_title="Toshkentdagi omborda mavjud pozitsiyalar", note=None):
     items = [("Bosh sahifa", "/uz/"), ("Mahsulotlar", "/uz/products")]
     ch = '<a href="/uz/">Bosh sahifa</a><span>/</span><a href="/uz/products">Mahsulotlar</a><span>/</span>'
     if parent:
@@ -444,16 +471,22 @@ def category(path, fname, crumb, h1, title, desc, lead, img, alt,
         chips_html = '\n        <div class="chips">\n' + "\n".join(
             '          <a class="chip" href="%s">%s</a>' % (u, n) for n, u in chips) + '\n        </div>'
 
-    if rows:
-        content = table(rows)
-    else:
-        tiles = "\n".join('          <div><b>%s</b><span>%s</span></div>' % (n, t) for n, t in (uses or []))
-        content = """        <h2 style="font-size:24px;margin-top:8px">Bu toifada nimani tanlaymiz</h2>
+    uses_html = ""
+    if uses:
+        tiles = "\n".join('          <div><b>%s</b><span>%s</span></div>' % (n, t) for n, t in uses)
+        uses_html = """        <h2 style="font-size:24px;margin-top:8px">Bu toifada nimani tanlaymiz</h2>
         <div class="uses">
 %s
         </div>
-%s
-%s""" % (tiles, CHECKLIST,
+""" % tiles
+    if rows:
+        content = uses_html
+        if note:
+            content += '        <p class="page__note">%s</p>\n' % note
+        content += table(rows, col, table_title)
+    else:
+        content = uses_html + """%s
+%s""" % (CHECKLIST,
          leadform("Ariza (uz): " + crumb, "Tanlab berish va narx",
                   "Tanlov, ombordagi mavjudlik bilan narxlar va texnik tavsifni yuboramiz.",
                   "Tanlov va narxlarni olish", preset=preset))
@@ -511,43 +544,42 @@ def category(path, fname, crumb, h1, title, desc, lead, img, alt,
 # sahifasi esa ularning yigʻindisi. Ilgari bitta roʻyxat pozitsiya raqami
 # boʻyicha kesilardi — yangi marka qoʻshilishi bilan kesim siljib, sahifada
 # begona pozitsiyalar chiqardi.
-HYDRAULIC_ROWS = [
-    ("Gazpromneft Hydraulic HLP 32", "ISO VG 32", "20 / 50 / 205 l"),
-    ("Gazpromneft Hydraulic HLP 46", "ISO VG 46", "20 / 50 / 205 l"),
-    ("Gazpromneft Hydraulic HLP 68", "ISO VG 68", "20 / 205 l"),
-]
+# Pozitsiyalar umumiy modulda: bir xil roʻyxat ruscha versiyani ham
+# yigʻadi, aks holda ular birinchi tahrirdayoq bir-biridan uzoqlashadi.
+UZ = dict(lang="uz")
+HYDRAULIC_ROWS = nomen.rows(nomen.HYDRAULIC, **UZ)
+REDUCTOR_ROWS = nomen.rows(nomen.REDUCTOR, **UZ)
+COMPRESSOR_ROWS = nomen.rows(nomen.COMPRESSOR, **UZ)
 
-# CLP va kompressor moylarida qovushqoqlik sinfi marka belgisidan oʻqiladi.
-# Yangi pozitsiyalar boʻyicha qadoqni mijoz hali bermadi — chiziqcha
-# qoʻyamiz, oʻylab topmaymiz.
-REDUCTOR_ROWS = [
-    ("Gazpromneft Reductor CLP 68", "ISO VG 68", "—"),
-    ("Gazpromneft Reductor CLP 150", "ISO VG 150", "20 / 205 l"),
-    ("Gazpromneft Reductor CLP 220", "ISO VG 220", "20 / 205 l"),
-    ("Gazpromneft Reductor CLP 320", "ISO VG 320", "—"),
-    ("Gazpromneft Reductor CLP 460", "ISO VG 460", "—"),
-    ("Gazpromneft Reductor CLP 680", "ISO VG 680", "—"),
-]
+INDUSTRIAL_ROWS = nomen.groups([
+    ("Gidravlik", nomen.HYDRAULIC),
+    ("Reduktor", nomen.REDUCTOR),
+    ("Kompressor", nomen.COMPRESSOR),
+    ("Turbina", nomen.TURBINE),
+    ("Transformator", nomen.TRANSFORMER),
+    ("Umumiy maqsadli industrial", nomen.INDUSTRIAL_GP),
+    ("Qolipli", nomen.FORM_OIL),
+    ("Issiqlik tashuvchilar", nomen.HTO),
+    ("Oq moylar", nomen.WHITE_OIL),
+], **UZ)
 
-COMPRESSOR_ROWS = [
-    ("Gazpromneft Compressor S Synth-46", "ISO VG 46", "—"),
-    ("Gazpromneft Compressor F Synth-46", "ISO VG 46", "—"),
-    ("Gazpromneft Compressor S Synth-100", "ISO VG 100", "—"),
-    ("Gazpromneft Compressor S Synth-150", "ISO VG 150", "—"),
-    ("Gazpromneft Compressor Oil 46", "ISO VG 46", "20 / 205 l"),
-    ("Gazpromneft Compressor Oil 68", "ISO VG 68", "—"),
-    ("Gazpromneft Compressor Oil 100", "ISO VG 100", "—"),
-    ("Gazpromneft Compressor Oil 150", "ISO VG 150", "—"),
-    ("Gazpromneft Compressor Oil 220", "ISO VG 220", "—"),
-    ("Gazpromneft КС-19п", "—", "—"),
-]
+GPN_ROWS = nomen.groups([
+    ("Yuk texnikasi va avtobuslar, G-Profi liniyasi", nomen.G_PROFI),
+    ("Dizel dvigatellar, Diesel liniyasi", nomen.GPN_DIESEL),
+    ("Teplovoz, kema va statsionar dizellar", nomen.GPN_MARINE),
+    ("Yengil avtomobil va yengil tijorat", nomen.GPN_LIGHT),
+], **UZ)
 
-TURBINE_ROWS = [
-    ("Gazpromneft Turbine Oil 32", "ISO VG 32", "205 l"),
-    ("Gazpromneft HTO 32", "ISO VG 32", "205 l"),
-]
+G_ENERGY_ROWS = nomen.rows(nomen.G_ENERGY, **UZ)
 
-INDUSTRIAL_ROWS = HYDRAULIC_ROWS + REDUCTOR_ROWS + COMPRESSOR_ROWS + TURBINE_ROWS
+TRANSMISSION_ROWS = nomen.groups([
+    ("Avtomat qutilar", nomen.ATF),
+    ("Mexanik qutilar, koʻpriklar va reduktorlar", nomen.MKPP),
+    ("Universal transmissiya-gidravlika", nomen.UTTO),
+], **UZ)
+
+GREASE_ROWS = nomen.rows(nomen.GREASE, "кг", **UZ)
+FLUIDS_ROWS = nomen.rows(nomen.BRAKE, **UZ)
 
 category("/uz/industrial", "industrial.html", "Industrial moylar",
          "Toshkentda Gazpromneft industrial moylari",
@@ -557,7 +589,11 @@ category("/uz/industrial", "industrial.html", "Industrial moylar",
          "industrial", "Gazpromneft industrial moylari ombordagi bochkalarda",
          rows=INDUSTRIAL_ROWS,
          chips=[("Gidravlik", "/uz/hydralic"), ("Reduktor", "/uz/reductor"),
-                ("Kompressor", "/uz/compressor"), ("Plastik moylar", "/uz/grease"), ("SOJ", "/uz/fluids")],
+                ("Kompressor", "/uz/compressor"), ("Turbina", "#turbina"),
+                ("Transformator", "#transformator"),
+                ("Umumiy maqsadli industrial", "#umumiy-maqsadli-industrial"),
+                ("Qolipli", "#qolipli"), ("Issiqlik tashuvchilar", "#issiqlik-tashuvchilar"),
+                ("Oq moylar", "#oq-moylar"), ("Plastik moylar", "/uz/grease")],
          longread=("Import markalarni tanlash va almashtirish",
                    "Shell Tellus, Mobil DTE, Total Azolla va boshqa markalarga analogni ISO VG qovushqoqlik sinfi, tozalik darajasi va uskuna ishlab chiqaruvchisining talablari boʻyicha tanlaymiz. Oʻtishda tavsiflar solishtirmasi va tizimni yuvish boʻyicha tavsiyalarni beramiz — <a href=\"/uz/analogi\" style=\"color:var(--blue);font-weight:600\">moslik jadvaliga</a> qarang."))
 
@@ -597,6 +633,7 @@ category("/uz/gpn", "gpn.html", "Gazpromneft motor moylari",
          "Yuk transporti, avtobuslar va maxsus texnika uchun Gazpromneft va G-Profi motor moylari. Toshkentdagi ombor, ruxsatnomalar boʻyicha tanlash, har partiyaga hujjatlar.",
          "Tijorat transporti, maxsus texnika va avtoparklar uchun. Dvigatel ishlab chiqaruvchisining ruxsatnomasi va ish sharoitiga qarab tanlaymiz, Toshkentdagi ombordan sifat pasporti bilan yetkazamiz.",
          "gpn", "Gazpromneft motor moylari ishlab chiqarish liniyasi",
+         rows=GPN_ROWS,
          preset="Yuk va maxsus texnika uchun motor moylari",
          uses=[("Yuk mashinalari va tortqilar", "MAN, Scania, Volvo, Mercedes-Benz ruxsatnomalari boʻyicha dizel moylari"),
                ("Karyer va qurilish texnikasi", "Chang va yuqori haroratda ishlash uchun"),
@@ -614,9 +651,10 @@ category("/uz/gpn", "gpn.html", "Gazpromneft motor moylari",
 category("/uz/g-energy", "g-energy.html", "G-Energy motor moylari",
          "Toshkentda G-Energy motor moylari",
          "Oʻzbekistonda G-Energy motor moylari",
-         "Yengil transport uchun G-Energy motor moylari: sintetika va yarim sintetika. Toshkentdagi ombordan rasmiy yetkazib berish, qadoq 1 litrdan, partiyaga hujjatlar.",
-         "Yengil transport uchun sintetika va yarim sintetika. Toshkentdagi ombordan rasmiy mahsulot, qadoq bir litrlik kanistrdan bochkagacha, har partiyaga sifat pasporti.",
+         "Yengil transport uchun G-Energy motor moylari: Synthetic Far East, Long Life, Super Start, Active va Expert L. Toshkentdagi ombor va buyurtma ostida yetkazish, qadoq 1 litrdan bochkagacha.",
+         "Yengil transport uchun sintetika va yarim sintetika. Pozitsiyalarning bir qismi Toshkentdagi omborda, qolganini buyurtma ostida olib kelamiz — muddatni darhol aytamiz. Qadoq bir litrlik kanistrdan bochkagacha, har partiyaga sifat pasporti.",
          "g-energy", "G-Energy — yengil transport uchun motor moylari",
+         rows=G_ENERGY_ROWS, table_title="G-Energy pozitsiyalari",
          preset="Yengil transport uchun motor moylari",
          uses=[("Servis markazlari va STO", "Sintetika va yarim sintetika, keng tarqalgan qovushqoqliklar"),
                ("Avtotovarlar doʻkonlari", "Chakana javon uchun 1, 4 va 5 litrlik qadoq"),
@@ -652,14 +690,15 @@ category("/uz/g-energy-retail", "g-energy-retail.html", "G-Energy — chakana ta
 category("/uz/transmission", "transmission.html", "Transmissiya moylari",
          "Toshkentda Gazpromneft transmissiya moylari",
          "Oʻzbekistonda Gazpromneft transmissiya moylari",
-         "MUK, AUK, koʻpriklar va gidrokuchaytirgich uchun Gazpromneft transmissiya moylari, ATF ham bor. Toshkentdagi ombordan yetkazib berish, ruxsatnomalar boʻyicha tanlash.",
+         "Gazpromneft transmissiya moylari: MUK va koʻpriklar uchun GL-4 va GL-5, avtomatlar uchun ATF Dexron III va VI, UTTO. Toshkentdagi ombor, ruxsatnomalar boʻyicha tanlash.",
          "MUK, AUK, koʻpriklar va gidrokuchaytirgich uchun, ATF ham bor. SAE qovushqoqlik sinfi, API darajasi va uzel ishlab chiqaruvchisining ruxsatnomasi boʻyicha tanlaymiz.",
          None, None,
+         rows=TRANSMISSION_ROWS,
          preset="Transmissiya moylari",
          uses=[("MUK va tarqatuvchi qutilar", "SAE qovushqoqligi boʻyicha GL-4 va GL-5 sinflari"),
                ("Avtomatik uzatmalar qutisi", "Ishlab chiqaruvchi talabiga mos ATF suyuqliklari"),
                ("Yetakchi koʻpriklar va reduktorlar", "Yuqori yuklama va changli sharoitlar uchun"),
-               ("Gidrokuchaytirgichlar", "Maxsus gidrokuchaytirgich suyuqliklari")],
+               ("Qishloq xoʻjaligi va maxsus texnika", "Universal transmissiya-gidravlika UTTO")],
          faq=[("Koʻprikka qanday moy kerakligini qanday bilish mumkin?",
                "Texnika qoʻllanmasi boʻyicha: API GL-4 yoki GL-5 sinfi, SAE qovushqoqligi va zadirga qarshi qoʻshimchalar talabi. Hujjat boʻlmasa, marka va modelni ayting — katalog boʻyicha tanlaymiz."),
               ("Butun parkni bitta moy bilan yopish mumkinmi?",
@@ -670,32 +709,36 @@ category("/uz/transmission", "transmission.html", "Transmissiya moylari",
 category("/uz/grease", "grease.html", "Plastik moylar",
          "Toshkentda Gazpromneft plastik moylari",
          "Oʻzbekistonda Gazpromneft plastik moylari",
-         "Gazpromneft plastik moylari: litiy, kalsiy, yuqori haroratli va Steelgrease. Toshkentdagi ombor, kartrijdan bochkagacha qadoq, partiyaga hujjatlar.",
-         "Litiy, kalsiy, yuqori haroratli moylar va Steelgrease liniyasi. Kartrijdan bochkagacha qadoq, Toshkentdagi omborda mavjud, har partiyaga sifat pasporti.",
+         "Gazpromneft plastik moylari: Grease L EP, LX EP, Synth LX, Premium Grease, YeR-2 va Litol-24. Toshkentdagi ombor, 400 grammdan 180 kg bochkagacha qadoq.",
+         "NLGI 00 dan 3 gacha Grease L EP litiy moylari, LX EP litiy kompleksi, sintetik Synth LX va Litol-24. 400 grammdan 180 kg bochkagacha qadoq, Toshkentdagi omborda mavjud.",
          "grease", "Podshipnikdagi plastik moy — Gazpromneft moylari",
+         rows=GREASE_ROWS, col="NLGI sinfi",
          preset="Plastik moylar",
          uses=[("Dumalanish va sirpanish podshipniklari", "Umumiy maqsadli litiy moylari"),
                ("Yuqori haroratlar", "Metallurgiya, sement va shisha ishlab chiqarish"),
                ("Nam va yuvish", "Yuvilishga chidamli kalsiy va kompleks moylar"),
-               ("Ochiq uzellar va arqonlar", "Karyer texnikasi uchun adgeziv tarkiblar")],
+               ("Markazlashgan moylash tizimlari", "Magistral boʻylab uzatish uchun yarim suyuq EP-00 va EP-0")],
          faq=[("Litol-24 oʻrniga nima ishlatish mumkin?",
                "Nega ushlab turmaganiga bogʻliq. Harorat yuqori boʻlsa — boshqa quyultirgich, yuvilib ketsa — suvga chidamli moy, yuklama katta boʻlsa — zadirga qarshi qoʻshimchali tarkib kerak. Uzelni tasvirlang, tanlaymiz."),
               ("Qanday qadoqda yetkazasiz?",
-               "Kartrijdan bochkagacha. Aniq pozitsiya boʻyicha qadoqni tanlash paytida aniqlaymiz.")],
+               "400 grammlik kartrij, 18 kg chelak va 180 kg bochka — har bir pozitsiya boʻyicha aniq qadoq yuqoridagi roʻyxatda koʻrsatilgan. Litol-24 yana 100 va 800 grammlik bankalarda bor.")],
          longread=("Qanday tanlaymiz",
                    "Uzeldagi harorat, yuklama va nam yoki abraziv borligiga qarab. Universal moy ushlab turmay qolgan joyda odatda moylash chastotasini emas, quyultirgichni oʻzgartirish kerak."))
 
 category("/uz/fluids", "fluids.html", "Texnik suyuqliklar va SOJ",
          "Toshkentda Gazpromneft texnik suyuqliklari va SOJ",
          "Gazpromneft antifrizlari, tormoz suyuqliklari va SOJ",
-         "Toshkentdagi ombordan Gazpromneft antifrizlari, tormoz suyuqliklari va moylab-sovutuvchi suyuqliklari. Qadoq 1 litrdan kub sigʻimgacha, partiyaga hujjatlar.",
-         "Antifrizlar, tormoz suyuqliklari, moylab-sovutuvchi suyuqliklar. Qadoq bir litrdan kub sigʻimgacha, Toshkentdagi omborda mavjud, har partiyaga sifat pasporti.",
+         "Toshkentdagi ombordan Gazpromneft DOT 4 va G-Energy Expert DOT 4 tormoz suyuqliklari. Antifriz, SOJ va yuvish tarkiblari — buyurtma ostida, muddatni darhol aytamiz.",
+         "Toshkentdagi omborda — DOT 4 tormoz suyuqliklari. Antifriz, moylab-sovutuvchi suyuqlik va yuvish tarkiblarini buyurtma ostida olib kelamiz: vazifani ayting, pozitsiya va muddatni aytamiz.",
          "fluids", "Metallga ishlov berishda moylab-sovutuvchi suyuqlik",
+         rows=FLUIDS_ROWS, col="Spetsifikatsiya",
+         table_title="Toshkentdagi omborda tormoz suyuqliklari",
+         note="1-iyul holatiga ombor roʻyxatida antifriz, moylab-sovutuvchi suyuqlik va yuvish tarkiblari yoʻq — ularni buyurtma ostida olib kelamiz. Vazifani tasvirlang, pozitsiyani tanlaymiz va muddatni aytamiz.",
          preset="Antifriz, tormoz suyuqligi, SOJ",
-         uses=[("Antifrizlar", "Texnika ishlab chiqaruvchisi talabi va mintaqa iqlimiga qarab"),
-               ("Moylab-sovutuvchi suyuqliklar", "Zagotovka materiali va ishlov turiga qarab"),
-               ("Tormoz suyuqliklari", "Yuk va yengil transport uchun DOT sinflari"),
-               ("Yuvish tarkiblari", "Bir markadan boshqasiga oʻtish uchun")],
+         uses=[("Antifrizlar", "Buyurtma ostida — texnika ishlab chiqaruvchisi talabi va mintaqa iqlimiga qarab"),
+               ("Moylab-sovutuvchi suyuqliklar", "Buyurtma ostida — zagotovka materiali va ishlov turiga qarab"),
+               ("Tormoz suyuqliklari", "Omborda DOT 4, qadoq 0,45 l"),
+               ("Yuvish tarkiblari", "Buyurtma ostida — bir markadan boshqasiga oʻtish uchun")],
          faq=[("Texnikamizga qaysi antifriz toʻgʻri keladi?",
                "Ishlab chiqaruvchi talabiga qaraymiz — karboksilat, lobrid yoki anʼanaviy tarkib, hamda mintaqadagi haroratga. Texnika markasini ayting, tanlaymiz."),
               ("SOJni qanday tanlash kerak?",
@@ -747,7 +790,7 @@ home = """
   <div class="stats">
     <div class="wrap stats__in">
       <div class="stats__item"><div class="stats__num">3 yil</div><div class="stats__label">Oʻzbekistonga yetkazib beramiz</div></div>
-      <div class="stats__item"><div class="stats__num">600+</div><div class="stats__label">omborda pozitsiya</div></div>
+      <div class="stats__item"><div class="stats__num">100+</div><div class="stats__label">omborda pozitsiya</div></div>
       <div class="stats__item"><div class="stats__num">24 soat</div><div class="stats__label">arizadan joʻnatishgacha</div></div>
       <div class="stats__item"><div class="stats__num">NKMK, UzAuto</div><div class="stats__label">buyurtmachilarimiz orasida</div></div>
     </div>
@@ -954,7 +997,7 @@ products = """
     </div>
     <div class="page__head">
       <h1>Oʻzbekistonda Gazpromneft mahsulotlari</h1>
-      <p class="page__lead">Toshkentdagi ombordan 600 dan ortiq pozitsiya: industrial va motor moylari, transmissiya moylari, plastik moylar, antifrizlar va SOJ. Har partiyaga sifat pasporti, tenderlar uchun toʻliq hujjatlar paketi.</p>
+      <p class="page__lead">Toshkentdagi ombordan 100 dan ortiq pozitsiya: industrial va motor moylari, transmissiya moylari, plastik moylar va tormoz suyuqliklari. Antifriz va SOJni buyurtma ostida olib kelamiz. Har partiyaga sifat pasporti, tenderlar uchun toʻliq hujjatlar paketi.</p>
     </div>
 
     <div class="cards">
@@ -971,7 +1014,7 @@ products = """
       <a class="tile" href="/uz/hydralic"><b>Gidravlik</b><span>Gazpromneft Hydraulic HLP 32, 46, 68</span></a>
       <a class="tile" href="/uz/reductor"><b>Reduktor</b><span>Gazpromneft Reductor CLP 68–680</span></a>
       <a class="tile" href="/uz/compressor"><b>Kompressor</b><span>Gazpromneft Compressor Oil 46</span></a>
-      <a class="tile" href="/uz/industrial"><b>Turbina va issiqlik tashuvchilar</b><span>Turbine Oil 32, HTO 32</span></a>
+      <a class="tile" href="/uz/industrial"><b>Turbina va issiqlik tashuvchilar</b><span>TP-22, TP-30, HTO 32</span></a>
     </div>
 
     <div class="layout" style="margin-top:40px">
@@ -1080,7 +1123,7 @@ ANALOG_ROWS = [
  ("Reduktor, ISO VG 150", "Shell Omala S2 G 150, Mobilgear 600 XP 150", "Gazpromneft Reductor CLP 150"),
  ("Reduktor, ISO VG 220", "Shell Omala S2 G 220, Mobilgear 600 XP 220", "Gazpromneft Reductor CLP 220"),
  ("Kompressor, ISO VG 46", "Shell Corena S2 P 46, Mobil Rarus 425", "Gazpromneft Compressor Oil 46"),
- ("Turbina, ISO VG 32", "Shell Turbo T 32, Mobil DTE 797", "Gazpromneft Turbine Oil 32"),
+ ("Turbina, ISO VG 32", "Shell Turbo T 32, Mobil DTE 797", "Gazpromneft TP-22"),
 ]
 analog_rows_html = "\n".join('''        <div class="table__row">
           <b>%s</b>
@@ -1155,7 +1198,7 @@ ind_html = "\n".join('''        <a class="tile" href="%s">
 
 otrasli_blocks = '''    <p class="page__lead" style="max-width:820px">Oʻzbekiston boʻylab sanoat korxonalari, avtoparklar va servis markazlariga moylash materiallarini yetkazib beramiz. Quyida — koʻproq ishlaydigan tarmoqlarimiz va ularda odatda nima kerak boʻlishi.</p>
 
-    <div class="tiles" style="grid-template-columns:repeat(4,1fr);margin-top:28px">
+    <div class="tiles" style="margin-top:28px">
 %s
     </div>
 
@@ -1298,7 +1341,7 @@ company_body = """
   <div class="stats">
     <div class="wrap stats__in">
       <div class="stats__item"><div class="stats__num">2023</div><div class="stats__label">yetkazib berish boshlangan yil</div></div>
-      <div class="stats__item"><div class="stats__num">600+</div><div class="stats__label">assortiment pozitsiyasi</div></div>
+      <div class="stats__item"><div class="stats__num">100+</div><div class="stats__label">assortiment pozitsiyasi</div></div>
       <div class="stats__item"><div class="stats__num">12 hudud</div><div class="stats__label">yetkazib berish geografiyasi</div></div>
       <div class="stats__item"><div class="stats__num">100%</div><div class="stats__label">rasmiy mahsulot</div></div>
     </div>
