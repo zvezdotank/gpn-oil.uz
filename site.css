@@ -178,6 +178,10 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
 .hero__shot{
   position:relative;align-self:stretch;min-height:460px;overflow:hidden;
   margin-right:calc(-1 * var(--pad) - (100vw - min(100vw, var(--maxw))) / 2);
+  /* Вверх снимок тоже выходит за отступ секции: у первого экрана padding-top
+     56px, слева он не виден на тёмном фоне, а справа читался как пустая
+     полоса над фотографией. Тексту отступ нужен, снимку — нет. */
+  margin-top:-56px;
 }
 .hero__shot img{width:100%;height:100%;object-fit:cover;display:block}
 .hero__shot::after{
@@ -627,7 +631,7 @@ img[class*="__media"],.pagehero img{object-fit:cover;width:100%;background:var(-
   .hero{padding-top:40px}
   .hero__grid{grid-template-columns:1fr;gap:0}
   .hero__body{padding-bottom:36px}
-  .hero__shot{min-height:0;height:260px;margin-left:calc(var(--pad) * -1);margin-right:calc(var(--pad) * -1)}
+  .hero__shot{min-height:0;height:260px;margin-top:0;margin-left:calc(var(--pad) * -1);margin-right:calc(var(--pad) * -1)}
   /* на телефоне картинка идёт под текстом — размывать нечего, убираем шторку */
   .hero__shot::after{background:linear-gradient(0deg, rgba(10,28,40,.28) 0%, transparent 40%)}
   .split,.intro,.contacts{grid-template-columns:1fr;gap:0}
