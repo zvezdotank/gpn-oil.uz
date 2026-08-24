@@ -955,9 +955,9 @@ home = """
         </div>
         <div class="map">
         <picture>
-          <source type="image/avif" srcset="/img/map-sm.avif?v=2 600w, /img/map.avif?v=2 1200w" sizes="(max-width:900px) 100vw, 50vw">
-          <source type="image/webp" srcset="/img/map-sm.webp?v=2 600w, /img/map.webp?v=2 1200w" sizes="(max-width:900px) 100vw, 50vw">
-          <img src="/img/map.webp?v=2" alt="Smart Energy Eco Trade ofisi Toshkentda xaritada" width="1200" height="600" loading="lazy" decoding="async">
+          <source type="image/avif" srcset="/img/map-sm.avif?v=3 600w, /img/map.avif?v=3 1200w" sizes="(max-width:900px) 100vw, 50vw">
+          <source type="image/webp" srcset="/img/map-sm.webp?v=3 600w, /img/map.webp?v=3 1200w" sizes="(max-width:900px) 100vw, 50vw">
+          <img src="/img/map.webp?v=3" alt="Smart Energy Eco Trade ofisi Toshkentda xaritada" width="1200" height="600" loading="lazy" decoding="async">
         </picture>
         <div class="map__go">
           <span class="map__hint">Yoʻnalishni ochish:</span>
@@ -1486,9 +1486,9 @@ contacts_body = """
     <div class="contacts__col">
       <div class="map">
         <picture>
-          <source type="image/avif" srcset="/img/map-sm.avif?v=2 600w, /img/map.avif?v=2 1200w" sizes="(max-width:900px) 100vw, 50vw">
-          <source type="image/webp" srcset="/img/map-sm.webp?v=2 600w, /img/map.webp?v=2 1200w" sizes="(max-width:900px) 100vw, 50vw">
-          <img src="/img/map.webp?v=2" alt="Smart Energy Eco Trade ofisi Toshkentda xaritada" width="1200" height="600" loading="lazy" decoding="async">
+          <source type="image/avif" srcset="/img/map-sm.avif?v=3 600w, /img/map.avif?v=3 1200w" sizes="(max-width:900px) 100vw, 50vw">
+          <source type="image/webp" srcset="/img/map-sm.webp?v=3 600w, /img/map.webp?v=3 1200w" sizes="(max-width:900px) 100vw, 50vw">
+          <img src="/img/map.webp?v=3" alt="Smart Energy Eco Trade ofisi Toshkentda xaritada" width="1200" height="600" loading="lazy" decoding="async">
         </picture>
         <div class="map__go">
           <span class="map__hint">Yoʻnalishni ochish:</span>
